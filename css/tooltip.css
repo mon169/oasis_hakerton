@@ -1,0 +1,37 @@
+@charset "UTF-8";
+.hoverGroup {
+    transition: fill 0.3s, stroke 0.3s;
+}
+
+.hoverGroup[data-opacity="1"] {
+    fill: #fefefe;
+}
+
+.hoverGroup[data-opacity="1"]:hover {
+    fill: #b0c565; /* 색상 변경 예시 */
+    cursor: pointer;
+}
+
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+    position: fixed; /* fixed를 사용해 스크롤 시에도 따라다니게 함 */
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column; /* 세로 정렬을 위해 flex-direction 추가 */
+    align-items: center; /* 중앙 정렬 */
+}
+
+.tooltip img {
+    max-width: 100px;
+    margin-bottom: 10px; /* 이미지와 텍스트 사이의 간격 */
+}
+
+.tooltip p {
+    margin: 0;
+}

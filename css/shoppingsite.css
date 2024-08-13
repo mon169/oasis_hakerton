@@ -1,0 +1,11 @@
+.product-name {
+    font-size: 0.9rem; 
+}
+.product-price {
+    font-size: 15px; 
+}
+.product-image {
+    width: 100%; /* 또는 특정 픽셀값 (예: 200px) */
+    height: 150px; /* 비율을 유지하면서 높이를 자동으로 조정 */
+    max-width: 300px; /* 최대 너비 설정 */
+}

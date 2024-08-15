@@ -12,6 +12,20 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <!-- 주아체 폰트임 --
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">
+        <!--메인화면에 대한 효과 css-->
+        <link href="css/mainicon.css" rel="stylesheet" />
+        <style>
+            * {
+                font-family: "Gowun Dodum", sans-serif;
+            }
+        </style>
     </head>
     <body>
         <!-- Navigation-->
@@ -35,9 +49,7 @@
                     </ul>
                     <form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            LOGIN
                         </button>
                     </form>
                 </div>
@@ -45,77 +57,94 @@
         </nav>
         <!-- Product section-->
         <section class="py-5">
-            <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <header class="py-5">
                         <div class="container px-lg-5">
-                            <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+                            <div class="p-4 p-lg-5 rounded-3 text-center">
                                 <div class="m-4 m-lg-5">
-                                    <h1 class="display-5 fw-bold">여행지 추천</h1>
-                                    <p class="fs-4">Bootstrap utility classes are used to create this jumbotron since the old component has been removed from the framework. Why create custom CSS when you can use utilities?</p>
-                                    <a class="btn btn-primary btn-lg" href="#!">떠나보기</a>
+                                    <h1 class="display-5 fw-bold">"호남지역으로 떠나는 친환경 여행!"</h1>
+                                    <a data-bs-toggle="modal" data-bs-target="#portfolioModal1"><button class="btn btn-primary btn-jelly">About</button></a>
+                                    </div>
+
+
+                                    <!-- Portfolio Modals-->
+        <!-- Portfolio Modal 1-->
+        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body text-center pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">탄소 배출량 줄이고 친환경 여행하자!</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <h3><br>Q : 친환경 여행이 왜 필요할까?<br></h3>
+                                    <h4>전 세계 온실가스 배출량은 약 약 6억 7,664만tCO2eq.<br> 이 중 관광업이 1/10을 차지하는데요.<br></h4>
+                                    <h4>다양한 영역에서 탄소발자국이 짙게 드러나고 있습니다.<br><br></h4>
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="icon/팝업이미지.png">
+                                    <!-- Portfolio Modal - Text-->
+                                    <h3>Q : 친환경 여행 실천 방법은?</h3>
+                                    <button class="btn btn-primary" data-bs-dismiss="modal">
+                                        <i class="fas fa-xmark fa-fw"></i>
+                                        Close Window
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+                                    <section class="py-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5">
+                        
+                            <div class="📺" OnClick="location.href ='tripmain.html'" style="cursor:pointer;">
+                                <div class="🍌"></div>
+                                <div class="🍦"></div>
+                                <div class="🍇"></div>
+                              </div>
+                    
+                    </div>
+                    
+                    <div class="col mb-5">
+                        <div class="👫🏼" OnClick="location.href ='communitysite.html'" style="cursor:pointer;">
+                            <div class="🔆"></div>
+                            <div class="🚶🏼‍♂️"></div>
+                            <div class="🌸"></div>
+                          </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="🏘️" OnClick="location.href ='shoppingsite.html'" style="cursor:pointer;">
+                            <div class="🌳"></div>
+                            <div class="🏠"></div>
+                            <div class="🍄"></div>
+                          </div>
+                    </div>
+
+
                                 </div>
                             </div>
                         </div>
                     </header>
-                </div>
             </div>
         </section>
-        <!-- Related items section-->
-        <section class="py-5 bg-light">
-            <div class="container px-4 px-lg-5 mt-5">
-                <h2 class="fw-bolder mb-4"></h2>
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5"  OnClick="location.href ='tripmain.html'" style="cursor:pointer;">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="icon\eco-car-icon-eco-friendly-car-icon_564974-1446.avif" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">친환경 여행 가이드</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col mb-5" OnClick="location.href ='communitysite.html'" style="cursor:pointer;">
-                        <div class="card h-100">
-                            <!-- Sale badge-->
-                            <!-- Product image-->
-                            <img class="card-img-top" src="icon\141468.png" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">여행자 커뮤니티</h5>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="col mb-5" OnClick="location.href ='shoppingsite.html'" style="cursor:pointer;">
-                        <div class="card h-100">
-                            <!-- Sale badge-->
-                            <!-- Product image-->
-                            <img class="card-img-top" src="icon\117634.png" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">친환경 상점</h5>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>

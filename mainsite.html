@@ -21,11 +21,18 @@
         <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">
         <!--메인화면에 대한 효과 css-->
         <link href="css/mainicon.css" rel="stylesheet" />
+		<!--로그인&회원가입 모달 css-->
+        <link href="css/login_sign.css" rel="stylesheet" />
+
         <style>
             * {
                 font-family: "Gowun Dodum", sans-serif;
             }
         </style>
+
+
+</head>
+<body>
     </head>
     <body>
         <!-- Navigation-->
@@ -48,9 +55,10 @@
                         </li>
                     </ul>
                     <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            LOGIN
-                        </button>
+
+                        <a class="btn btn-outline-dark js-signin-modal-trigger" href="#0" data-signin="login">
+                            로그인
+                        </a>
                     </form>
                 </div>
             </div>
@@ -67,7 +75,7 @@
                                     </div>
 
 
-                                    <!-- Portfolio Modals-->
+        <!-- Portfolio Modals-->
         <!-- Portfolio Modal 1-->
         <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
             <div class="modal-dialog modal-xl">
@@ -104,13 +112,15 @@
             </div>
         </div>
 
+		
 
 
 
 
 
 
-                                    <section class="py-5">
+
+              <section class="py-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5">
                         
@@ -143,8 +153,98 @@
                         </div>
                     </header>
             </div>
-        </section>
-       
+
+            
+          
+              
+                
+           
+            
+          
+                      
+            <div class="cd-signin-modal js-signin-modal"> <!-- this is the entire modal form, including the background -->
+              <div class="cd-signin-modal__container"> <!-- this is the container wrapper -->
+                <ul class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
+                  <li><a href="#0" data-signin="login" data-type="login">로그인</a></li>
+                  <li><a href="#0" data-signin="signup" data-type="signup">회원가입</a></li>
+                </ul>
+          
+                <div class="cd-signin-modal__block js-signin-modal-block" data-type="login"> <!-- log in form -->
+                  <form class="cd-signin-modal__form">
+                    <p class="cd-signin-modal__fieldset">
+                      <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signin-email">이메일</label>
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="E-mail">
+                      <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+          
+                    <p class="cd-signin-modal__fieldset">
+                      <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">비밀번호</label>
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="text"  placeholder="Password">
+                      <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Hide</a>
+                      <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+          
+                    <p class="cd-signin-modal__fieldset">
+                      <input type="checkbox" id="remember-me" checked class="cd-signin-modal__input ">
+                      <label for="remember-me">내 정보 기억하기</label>
+                    </p>
+          
+                    <p class="cd-signin-modal__fieldset">
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Login">
+                    </p>
+                  </form>
+                  
+                  <p class="cd-signin-modal__bottom-message js-signin-modal-trigger"><a href="#0" data-signin="reset">비밀번호를 잊으셨나요?</a></p>
+                </div> <!-- cd-signin-modal__block -->
+          
+                <div class="cd-signin-modal__block js-signin-modal-block" data-type="signup"> <!-- sign up form -->
+                  <form class="cd-signin-modal__form">
+                    <p class="cd-signin-modal__fieldset">
+                      <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">이름</label>
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="Username">
+                      <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+          
+                    <p class="cd-signin-modal__fieldset">
+                      <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">이메일</label>
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="E-mail">
+                      <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+          
+                    <p class="cd-signin-modal__fieldset">
+                      <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">비밀번호</label>
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="text"  placeholder="Password">
+                      <a href="#0" class="cd-signin-modal__hide-password js-hide-password">Hide</a>
+                      <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+          
+                    <p class="cd-signin-modal__fieldset">
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" type="submit" value="Create account">
+                    </p>
+                  </form>
+                </div> <!-- cd-signin-modal__block -->
+          
+                <div class="cd-signin-modal__block js-signin-modal-block" data-type="reset"> <!-- reset password form -->
+                  <p class="cd-signin-modal__message"><br><br><br><br><br>비밀번호를 잊어버리셨나요? 이메일 주소를 입력해주시면 새로운 비밀번호를 보내드릴게요.</p>
+          
+                  <form class="cd-signin-modal__form">
+                    <p class="cd-signin-modal__fieldset">
+                      <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="reset-email">이메일</label>
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="reset-email" type="email" placeholder="E-mail">
+                      <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+          
+                    <p class="cd-signin-modal__fieldset">
+                      <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding" type="submit" value="Reset password">
+                    </p>
+                  </form>
+          
+                  <p class="cd-signin-modal__bottom-message js-signin-modal-trigger"><a href="#0" data-signin="login">로그인창으로 되돌아가기</a></p>
+                </div> <!-- cd-signin-modal__block -->
+                <a href="#0" class="cd-signin-modal__close js-close">Close</a>
+              </div> <!-- cd-signin-modal__container -->
+            </div> <!-- cd-signin-modal -->
+              
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
@@ -153,5 +253,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+		    <script src="js/placeholders.min.js"></script> <!-- polyfill for the HTML5 placeholder attribute -->
+	      <script src="js/main.js"></script> <!-- Resource JavaScript -->
+          <script src="js/login_sign.js"></script> <!--로그인 및 회원가입 모달 js-->
     </body>
 </html>

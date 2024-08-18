@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,6 +14,16 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/shoppingsite.css" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/ff0ee1a3e7.js" crossorigin="anonymous"></script>
+        <!-- 폰트-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">
+        <style>
+            * {
+               font-family: "Gowun Dodum", sans-serif;
+            }
+        </style>
     </head>
     <body id="localFood">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -34,13 +45,11 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <button class="btn btn-outline-dark" type="submit">
+                    <a class="btn btn-outline-dark" href="shopping_cart.html">
                         <i class="bi-cart-fill me-1"></i>
                         장바구니
                         <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                    </button>
-                </form>
+                    </a>
             </div>
         </div>
         </nav>
@@ -48,6 +57,13 @@
         <section id="localFood" class="py-5 bg-light">
             <div class="container px-4 px-lg-5 mt-5">
                 <h2 class="fw-bolder mb-4">로컬푸드</h2>
+                <form class="search-box" action="" method="get">
+                    <!-- 검색창 -->
+                    <input class="search-txt" type="text" name="" placeholder="검색어를 입력하세요.">
+                    <button class="search-btn" type="submit">
+                        <i class="fa-duotone fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     
                 </div>

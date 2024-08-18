@@ -1,128 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shop Item - Start Bootstrap Template</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">ECO-FRENDLY TRIP</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop Item - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <!-- 주아체 폰트임 --
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">
+    <!--메인화면에 대한 효과 css-->
+    <link href="css/mainicon.css" rel="stylesheet" />
+<!--로그인&회원가입 모달 css-->
+    <link href="css/login_sign.css" rel="stylesheet" />
+
+    <style>
+        * {
+            font-family: "Gowun Dodum", sans-serif;
+        }
+    </style>
+
+
+</head>
+<body>
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">ECO-FRENDLY TRIP</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="local_food.html">로컬푸드</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="eco_product.html">친환경 제품</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="gift.html">상품권 교환</a></li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-        <!-- Product section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="row gx-4 gx-lg-5 align-items-center">
-                    <header class="py-5">
-                        <div class="container px-lg-5">
-                            <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
-                                <div class="m-4 m-lg-5">
-                                    <h1 class="display-5 fw-bold">여행지 추천</h1>
-                                    <p class="fs-4">Bootstrap utility classes are used to create this jumbotron since the old component has been removed from the framework. Why create custom CSS when you can use utilities?</p>
-                                    <a class="btn btn-primary btn-lg" href="#!">떠나보기</a>
-                                </div>
+                </li>
+            </ul>
+            <form class="d-flex">
+
+                <a class="btn btn-outline-dark js-signin-modal-trigger" href="#0" data-signin="login">
+                    로그인
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- Product section-->
+<section class="py-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <header class="py-5">
+                <div class="container px-lg-5">
+                    <div class="p-4 p-lg-5 rounded-3 text-center">
+                        <div class="m-4 m-lg-5">
+                            <h1 class="display-5 fw-bold">"호남지역으로 떠나는 친환경 여행!"</h1>
+                            <a data-bs-toggle="modal" data-bs-target="#portfolioModal1"><button class="btn btn-primary btn-jelly">About</button></a>
                             </div>
-                        </div>
-                    </header>
-                </div>
-            </div>
-        </section>
-        <!-- Related items section-->
-        <section class="py-5 bg-light">
-            <div class="container px-4 px-lg-5 mt-5">
-                <h2 class="fw-bolder mb-4"></h2>
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5"  OnClick="location.href ='tripmain.html'" style="cursor:pointer;">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="icon\eco-car-icon-eco-friendly-car-icon_564974-1446.avif" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">친환경 여행 가이드</h5>
-                                </div>
+
+
+<!-- Portfolio Modals-->
+<!-- Portfolio Modal 1-->
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Portfolio Modal - Title-->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">탄소 배출량 줄이고 친환경 여행하자!</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                <div class="divider-custom-line"></div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col mb-5" OnClick="location.href ='communitysite.html'" style="cursor:pointer;">
-                        <div class="card h-100">
-                            <!-- Sale badge-->
-                            <!-- Product image-->
-                            <img class="card-img-top" src="icon\141468.png" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">여행자 커뮤니티</h5>
-                                </div>
-                            </div>
-                            
+                            <h3><br>Q : 친환경 여행이 왜 필요할까?<br></h3>
+                            <h4>전 세계 온실가스 배출량은 약 약 6억 7,664만tCO2eq.<br> 이 중 관광업이 1/10을 차지하는데요.<br></h4>
+                            <h4>다양한 영역에서 탄소발자국이 짙게 드러나고 있습니다.<br><br></h4>
+                            <!-- Portfolio Modal - Image-->
+                            <img class="img-fluid rounded mb-5" src="icon/팝업이미지.png">
+                            <!-- Portfolio Modal - Text-->
+                            <h3>Q : 친환경 여행 실천 방법은?</h3>
+                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw"></i>
+                                Close Window
+                            </button>
                         </div>
                     </div>
-                    <div class="col mb-5" OnClick="location.href ='shoppingsite.html'" style="cursor:pointer;">
-                        <div class="card h-100">
-                            <!-- Sale badge-->
-                            <!-- Product image-->
-                            <img class="card-img-top" src="icon\117634.png" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">친환경 상점</h5>
-                                </div>
-                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+      <section class="py-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="col mb-5">
+                
+                    <div class="📺" OnClick="location.href ='tripmain.html'" style="cursor:pointer;">
+                        <div class="🍌"></div>
+                        <div class="🍦"></div>
+                        <div class="🍇"></div>
+                      </div>
+            
+            </div>
+            
+            <div class="col mb-5">
+                <div class="👫🏼" OnClick="location.href ='communitylist.html'" style="cursor:pointer;">
+                    <div class="🔆"></div>
+                    <div class="🚶🏼‍♂️"></div>
+                    <div class="🌸"></div>
+                  </div>
+            </div>
+            <div class="col mb-5">
+                <div class="🏘️" OnClick="location.href ='local_food.html'" style="cursor:pointer;">
+                    <div class="🌳"></div>
+                    <div class="🏠"></div>
+                    <div class="🍄"></div>
+                  </div>
+            </div>
+
 
                         </div>
                     </div>
-
-                        </div>
-                    </div>
                 </div>
+            </header>
+    </div>
+
+
+
+        </div>
+    </div>
+</div>
+</header>
+</div>
+
+    <!-- Content section... -->
+    <div class="cd-signin-modal js-signin-modal">
+        <div class="cd-signin-modal__container">
+            <ul class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
+                <li><a href="#0" data-signin="login" data-type="login">로그인</a></li>
+                <li><a href="#0" data-signin="signup" data-type="signup">회원가입</a></li>
+            </ul>
+            <div class="cd-signin-modal__block js-signin-modal-block" data-type="login">
+                <form class="cd-signin-modal__form" id="login-form">
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signin-email">이메일</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="E-mail" required>
+                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">비밀번호</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password" placeholder="Password" required>
+                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+                    <p class="cd-signin-modal__fieldset">
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Login">
+                    </p>
+                </form>
             </div>
-        </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
+            <div class="cd-signin-modal__block js-signin-modal-block" data-type="signup">
+                <form class="cd-signin-modal__form" id="signup-form">
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">이름</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="Username" required>
+                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">이메일</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="E-mail" required>
+                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+                    <p class="cd-signin-modal__fieldset">
+                        <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">비밀번호</label>
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="Password" required>
+                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                    </p>
+                    <p class="cd-signin-modal__fieldset">
+                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Create account">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase JS -->
+    <script type="module">
+        // Import Firebase dependencies
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
+            authDomain: "oasis-783c1.firebaseapp.com",
+            projectId: "oasis-783c1",
+            storageBucket: "oasis-783c1.appspot.com",
+            messagingSenderId: "36960403673",
+            appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
+            measurementId: "G-80936TQC87"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Sign up function
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    alert('회원가입이 완료되었습니다.');
+                    console.log('User signed up:', user);
+                    // Close the modal or redirect to another page
+                })
+                .catch((error) => {
+                    console.error('Error during sign-up:', error.code, error.message);
+                    alert('회원가입에 실패했습니다: ' + error.message);
+                    // Display error message to the user
+                });
+        });
+
+        // Sign in function
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    alert('로그인에 성공했습니다.');
+                    console.log('User signed in:', user);
+                    // Close the modal or redirect to another page
+                })
+                .catch((error) => {
+                    console.error('Error during sign-in:', error.code, error.message);
+                    alert('로그인에 실패했습니다: ' + error.message);
+                    // Display error message to the user
+                });
+        });
+    </script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="js/placeholders.min.js"></script> <!-- polyfill for the HTML5 placeholder attribute -->
+    <script src="js/main.js"></script> <!-- Resource JavaScript -->
+    <script src="js/login_sign.js"></script> <!--로그인 및 회원가입 모달 js-->
+</body>
 </html>

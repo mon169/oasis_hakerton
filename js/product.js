@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('productModal');
+    const addToCartButton = modal.querySelector('.btn-primary');
+
+    // 모달이 표시될 때 제품 정보를 설정
     modal.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget;
         const name = button.getAttribute('data-name');
@@ -13,7 +16,29 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.querySelector('#modalProductDescription').innerHTML = description;
     });
 
+    // 장바구니 추가 버튼 클릭 시
+    if (addToCartButton) {
+        addToCartButton.addEventListener('click', function() {
+            const name = modal.querySelector('#modalProductName').textContent;
+            const price = modal.querySelector('#modalProductPrice').textContent;
+            const image = modal.querySelector('#modalProductImage').src;
+            const description = modal.querySelector('#modalProductDescription').textContent;
+
+            const product = { name, price, image, description };
+            console.log('Adding to cart:', product);
+            alert('장바구니에 추가되었습니다!');
+
+            // 장바구니에 제품 추가 (로컬 저장소 사용 예시)
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        });
+    } else {
+        console.error('Add to Cart button not found.');
+    }
+
     
+    //제품 데이터
     const products = {
         localFood: [
             {
@@ -81,8 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const pageId = document.body.id; // 현재 페이지의 id를 가져옴
         const container = document.querySelector(`#${pageId} .row`); // 페이지의 .row 요소 선택
-        
-        console.log('Page ID:', pageId); // 페이지 ID 확인
     
         if (container) {
             loadProducts(pageId, container); // pageId와 container를 인자로 전달
@@ -112,9 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `).join('');
-        } else {
-            console.error('Container not found for:', pageId);
-        }
+        } 
     }
-});  
+    
+});
+
  

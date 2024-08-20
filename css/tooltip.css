@@ -4,7 +4,7 @@
 }
 
 .hoverGroup[data-opacity="1"] {
-    fill: #fefefe;
+    fill: rgb(238 246 234);
 }
 
 .hoverGroup[data-opacity="1"]:hover {

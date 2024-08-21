@@ -2,459 +2,678 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Shop Item - Start Bootstrap Template</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <!-- 주아체 폰트임 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
     <!-- 메인화면에 대한 효과 css -->
     <link href="css/mainicon.css" rel="stylesheet" />
     <!-- 로그인&회원가입 모달 css -->
     <link href="css/login_sign.css" rel="stylesheet" />
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-        import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-            authDomain: "oasis-783c1.firebaseapp.com",
-            projectId: "oasis-783c1",
-            storageBucket: "oasis-783c1.appspot.com",
-            messagingSenderId: "36960403673",
-            appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-            measurementId: "G-80936TQC87"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        // Kakao Map and target locations
-        const targetLocations = [
-            { name: "써미트", latitude: 35.9610, longitude: 126.7366 },
-            { name: "광화문", latitude: 37.5759, longitude: 126.9769 },
-            { name: "여의도", latitude: 37.5264, longitude: 126.9334 },
-            { name: "조은빌", latitude: 35.8428, longitude: 127.1436 }
-        ];
-        const allowedRadius = 100; // 허용 반경 (단위: 미터)
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const mapContainer = document.getElementById('map');
-            const mapOption = {
-                center: new kakao.maps.LatLng(targetLocations[0].latitude, targetLocations[0].longitude),
-                level: 5
-            };
-            const map = new kakao.maps.Map(mapContainer, mapOption);
-
-            targetLocations.forEach(location => {
-                new kakao.maps.Marker({
-                    position: new kakao.maps.LatLng(location.latitude, location.longitude),
-                    map: map
-                });
-            });
-
-            // Function to display user location on map
-            function displayUserLocation(latitude, longitude) {
-                const userPosition = new kakao.maps.LatLng(latitude, longitude);
-                new kakao.maps.Marker({
-                    position: userPosition,
-                    map: map
-                });
-                map.setCenter(userPosition);
-            }
-
-            // Calculate distance between two points
-            function calculateDistance(lat1, lon1, lat2, lon2) {
-                const R = 6371e3; // Earth radius in meters
-                const φ1 = lat1 * Math.PI / 180;
-                const φ2 = lat2 * Math.PI / 180;
-                const Δφ = (lat2 - lat1) * Math.PI / 180;
-                const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-                const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-                          Math.cos(φ1) * Math.cos(φ2) *
-                          Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-                return R * c; // Distance in meters
-            }
-
-            // Handle location check button click
-            document.getElementById('mapbtn').addEventListener('click', () => {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(async (position) => {
-                        const userLatitude = position.coords.latitude;
-                        const userLongitude = position.coords.longitude;
-
-                        displayUserLocation(userLatitude, userLongitude);
-
-                        let isWithinTarget = false;
-
-                        for (const location of targetLocations) {
-                            const distance = calculateDistance(userLatitude, userLongitude, location.latitude, location.longitude);
-                            if (distance <= allowedRadius) {
-                                document.getElementById('result').textContent = `축하합니다! ${location.name}에 도착하여 포인트를 획득했습니다.`;
-                                isWithinTarget = true;
-                                
-                                // Update points in Firestore
-                                await updatePoints();
-                                break;
-                            }
-                        }
-
-                        if (!isWithinTarget) {
-                            document.getElementById('result').textContent = "지정된 위치에 도착하지 않았습니다.";
-                        }
-                    }, showError);
-                } else {
-                    alert("이 브라우저는 Geolocation을 지원하지 않습니다.");
-                }
-            });
-
-            // Handle geolocation errors
-            function showError(error) {
-                switch(error.code) {
-                    case error.PERMISSION_DENIED:
-                        alert("사용자가 위치 정보를 허용하지 않았습니다.");
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        alert("위치 정보를 사용할 수 없습니다.");
-                        break;
-                    case error.TIMEOUT:
-                        alert("위치 정보 요청이 시간이 초과되었습니다.");
-                        break;
-                    case error.UNKNOWN_ERROR:
-                        alert("알 수 없는 오류가 발생했습니다.");
-                        break;
-                }
-            }
-
-            // Function to update points
-            async function updatePoints() {
-                const pointsToAdd = 100; // 포인트를 100으로 설정
-
-                const user = auth.currentUser;
-                if (user) {
-                    try {
-                        const userRef = doc(db, "users", user.uid);
-                        await updateDoc(userRef, {
-                            points: increment(pointsToAdd)
-                        });
-                        console.log("Points updated successfully.");
-                        alert("포인트가 100 추가되었습니다!");
-                    } catch (error) {
-                        console.error("Error updating points:", error);
-                        alert("포인트 업데이트 중 오류 발생: " + error.message);
-                    }
-                } else {
-                    alert("로그인된 사용자가 없습니다.");
-                    window.location.href = "login.html"; // 로그인 페이지로 리디렉션
-                }
-            }
-
-            // Check if user is signed in
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    document.getElementById('userEmail').textContent = `로그인된 사용자: ${user.email}`;
-                } else {
-                    window.location.href = "login.html"; // 로그인 페이지로 리디렉션
-                }
-            });
-        });
-    </script>
-
     <style>
-        * {
-            font-family: "Gowun Dodum", sans-serif;
-        }
+      * {
+        font-family: "Gowun Dodum", sans-serif;
+      }
 
-        /* 로그인 후 적용될 CSS 스타일 */
-        .logged-in-button {
-            background-color: #ffffff; /* 로그인 후 버튼 색상 */
-            color: white;
-        }
+      /* 로그인 후 적용될 CSS 스타일 */
+      .logged-in-button {
+        background-color: #ffffff; /* 로그인 후 버튼 색상 */
+        color: white;
+      }
 
-        /* 버튼 안의 이미지 스타일 */
-        .logged-in-button img {
-            height: 3rem;
-        }
-
-        #mapbtn {
-            width: 10rem;
-        }
+      /* 버튼 안의 이미지 스타일 */
+      .logged-in-button img {
+        height: 3rem;
+      }
     </style>
   </head>
-<body>
-        <!-- Navigation-->
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">ECO-FRENDLY TRIP</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="local_food.html">로컬푸드</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="eco_product.html">친환경 제품</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="gift.html">상품권 교환</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-        
-                    <li class="nav-item dropdown d-none" id="userDropdown">
-                        <a class="nav-link dropdown-toggle logged-in-button" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="icon/로그인이미지.png" alt="User">
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="mileage.html">마일리지 적립</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" id="logout" href="#">로그아웃</a></li>
-                        </ul>
-                    </li>
-                </ul>
+  <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">ECO-FRENDLY TRIP</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#!">Home</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Shop</a
+              >
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="local_food.html">로컬푸드</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="eco_product.html"
+                    >친환경 제품</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="gift.html">상품권 교환</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
 
-                    <form class="d-flex">
-                        <a class="btn btn-outline-dark js-signin-modal-trigger" href="#0" data-signin="login">
-                            로그인
-                        </a>
-                    </form>
+          <li class="nav-item dropdown d-none" id="userDropdown">
+            <a
+              class="nav-link dropdown-toggle logged-in-button"
+              id="navbarDropdown"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src="icon/로그인이미지.png" alt="User" />
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="mypage.html">마이페이지</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item" href="mileage.html">마일리지 적립</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item" id="logout" href="#">로그아웃</a>
+              </li>
+            </ul>
+          </li>
+
+          <form class="d-flex">
+            <a
+              class="btn btn-outline-dark js-signin-modal-trigger"
+              href="#0"
+              data-signin="login"
+            >
+              로그인
+            </a>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <!-- Header - set the background image for the header in the line below-->
+    <header
+      class="py-5 bg-image-full"
+      style="
+        background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900');
+      "
+    >
+      <div class="text-center my-5">
+        <img
+          class="img-fluid rounded-circle mb-4"
+          src="icon/로그인이미지.png"
+          alt="..."
+        />
+        <h1 class="fs-3 fw-bolder">유소민</h1>
+        <h2>Email :</h2>
+        <div>
+          <h1>지정된 위치에 도착하면 포인트를 받을 수 있습니다!</h1>
+          <div id="map" style="width: 100%; height: 350px"></div>
+          <button id="checkLocationBtn">내 위치 확인하기</button>
+          <p id="result"></p>
+          <div id="userEmail"></div>
+        </div>
+      </div>
+    </header>
+    <!-- Content section-->
+    <section class="py-5 bg-light">
+      <div class="container px-4 px-lg-5 mt-5">
+        <div
+          class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+        >
+          <div class="col mb-5">
+            <div class="card h-100">
+              <!-- Product image-->
+              <img
+                class="card-img-top"
+                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                alt="..."
+              />
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 class="fw-bolder">현재 등급 :</h5>
+                  <!-- Product price-->
+                  적립 마일리지 :
                 </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark mt-auto" href="#">더보기</a>
+                </div>
+              </div>
             </div>
-        </nav>
-                <!-- Header - set the background image for the header in the line below-->
-                <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
-                    <div class="text-center my-5">
-                        <h1>호남권에 있는 친환경 여행지를 관광하고 마일리지를 받아요!</h1>
-                        <div id="map" style="width:100%;height:350px;"></div>
-                        <button id="mapbtn" class="btn btn-primary btn-jelly">내 위치 확인</button>
-                        <p id="result"></p>
-                        <div id="userEmail"></div>
-                        <h1 class="fs-3 fw-bolder">여행지 리스트를 확인해 보세요!</h1>
-                    </div>
-                </header>
-                <!-- Content section-->
-                <section class="py-5 bg-light">
-                    <div class="container px-4 px-lg-5 mt-5">
-                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <!-- Product image-->
-                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">현재 등급 : </h5>
-                                            <!-- Product price-->
-                                            적립 마일리지 : 
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">더보기</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <!-- Sale badge-->
-                                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                                    <!-- Product image-->
-                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">Special Item</h5>
-                                            <!-- Product reviews-->
-                                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                            </div>
-                                            <!-- Product price-->
-                                            <span class="text-muted text-decoration-line-through">$20.00</span>
-                                            $18.00
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+          </div>
+          <div class="col mb-5">
+            <div class="card h-100">
+              <!-- Sale badge-->
+              <div
+                class="badge bg-dark text-white position-absolute"
+                style="top: 0.5rem; right: 0.5rem"
+              >
+                Sale
+              </div>
+              <!-- Product image-->
+              <img
+                class="card-img-top"
+                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                alt="..."
+              />
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 class="fw-bolder">Special Item</h5>
+                  <!-- Product reviews-->
+                  <div
+                    class="d-flex justify-content-center small text-warning mb-2"
+                  >
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                  </div>
+                  <!-- Product price-->
+                  <span class="text-muted text-decoration-line-through"
+                    >$20.00</span
+                  >
+                  $18.00
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark mt-auto" href="#"
+                    >Add to cart</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div></div>
+    </section>
 
     <!-- Content section... -->
     <div class="cd-signin-modal js-signin-modal">
-        <div class="cd-signin-modal__container">
-            <ul class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
-                <li><a href="#0" data-signin="login" data-type="login">로그인</a></li>
-                <li><a href="#0" data-signin="signup" data-type="signup">회원가입</a></li>
-            </ul>
-            <div class="cd-signin-modal__block js-signin-modal-block" data-type="login">
-                <form class="cd-signin-modal__form" id="login-form">
-                    <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signin-email">이메일</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="E-mail" required>
-                    </p>
-                    <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">비밀번호</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password" placeholder="Password" required>
-                    </p>
-                    <p class="cd-signin-modal__fieldset">
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Login">
-                    </p>
-                </form>
-            </div>
-            <div class="cd-signin-modal__block js-signin-modal-block" data-type="signup">
-                <form class="cd-signin-modal__form" id="signup-form">
-                    <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">이름</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="Username" required>
-                    </p>
-                    <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">이메일</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="E-mail" required>
-                    </p>
-                    <p class="cd-signin-modal__fieldset">
-                        <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">비밀번호</label>
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="Password" required>
-                    </p>
-                    <p class="cd-signin-modal__fieldset">
-                        <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Create account">
-                    </p>
-                </form>
-            </div>
+      <div class="cd-signin-modal__container">
+        <ul
+          class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger"
+        >
+          <li><a href="#0" data-signin="login" data-type="login">로그인</a></li>
+          <li>
+            <a href="#0" data-signin="signup" data-type="signup">회원가입</a>
+          </li>
+        </ul>
+        <div
+          class="cd-signin-modal__block js-signin-modal-block"
+          data-type="login"
+        >
+          <form class="cd-signin-modal__form" id="login-form">
+            <p class="cd-signin-modal__fieldset">
+              <label
+                class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
+                for="signin-email"
+                >이메일</label
+              >
+              <input
+                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
+                id="signin-email"
+                type="email"
+                placeholder="E-mail"
+                required
+              />
+            </p>
+            <p class="cd-signin-modal__fieldset">
+              <label
+                class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
+                for="signin-password"
+                >비밀번호</label
+              >
+              <input
+                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
+                id="signin-password"
+                type="password"
+                placeholder="Password"
+                required
+              />
+            </p>
+            <p class="cd-signin-modal__fieldset">
+              <input
+                class="cd-signin-modal__input cd-signin-modal__input--full-width"
+                type="submit"
+                value="Login"
+              />
+            </p>
+          </form>
         </div>
+        <div
+          class="cd-signin-modal__block js-signin-modal-block"
+          data-type="signup"
+        >
+          <form class="cd-signin-modal__form" id="signup-form">
+            <p class="cd-signin-modal__fieldset">
+              <label
+                class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace"
+                for="signup-username"
+                >이름</label
+              >
+              <input
+                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
+                id="signup-username"
+                type="text"
+                placeholder="Username"
+                required
+              />
+            </p>
+            <p class="cd-signin-modal__fieldset">
+              <label
+                class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
+                for="signup-email"
+                >이메일</label
+              >
+              <input
+                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
+                id="signup-email"
+                type="email"
+                placeholder="E-mail"
+                required
+              />
+            </p>
+            <p class="cd-signin-modal__fieldset">
+              <label
+                class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
+                for="signup-password"
+                >비밀번호</label
+              >
+              <input
+                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
+                id="signup-password"
+                type="password"
+                placeholder="Password"
+                required
+              />
+            </p>
+            <p class="cd-signin-modal__fieldset">
+              <input
+                class="cd-signin-modal__input cd-signin-modal__input--full-width"
+                type="submit"
+                value="Create account"
+              />
+            </p>
+          </form>
+        </div>
+      </div>
     </div>
     <!-- Footer-->
     <footer class="py-5 bg-dark">
-        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Your Website 2023
+        </p>
+      </div>
     </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Firebase JS -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-    
-        const firebaseConfig = {
-            apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-            authDomain: "oasis-783c1.firebaseapp.com",
-            projectId: "oasis-783c1",
-            storageBucket: "oasis-783c1.appspot.com",
-            messagingSenderId: "36960403673",
-            appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-            measurementId: "G-80936TQC87"
-        };
-    
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-    
-        // Sign up function
-        document.getElementById('signup-form').addEventListener('submit', async function(event) {
-                event.preventDefault();
-                
-                const username = document.getElementById('signup-username').value;
-                const email = document.getElementById('signup-email').value;
-                const password = document.getElementById('signup-password').value;
-        
-                try {
-                    // Create a new user with email and password
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-        
-                    // Save additional user info to Firestore
-                    await setDoc(doc(db, "users", user.uid), {
-                        email: user.email,
-                        username: username, // Save username here
-                        points: 50 // Example additional data
-                    });
-        
-                    alert('회원가입이 완료되었습니다.');
-                    console.log('User signed up:', user);
-        
-                    // Optionally, redirect after signup
-                    // window.location.href = "map.html";
-                } catch (error) {
-                    console.error('Error during sign-up:', error.code, error.message);
-                    alert('회원가입에 실패했습니다: ' + error.message);
-                }
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
+        authDomain: "oasis-783c1.firebaseapp.com",
+        projectId: "oasis-783c1",
+        storageBucket: "oasis-783c1.appspot.com",
+        messagingSenderId: "36960403673",
+        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
+        measurementId: "G-80936TQC87",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Sign up function
+      document
+        .getElementById("signup-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const username = document.getElementById("signup-username").value;
+          const email = document.getElementById("signup-email").value;
+          const password = document.getElementById("signup-password").value;
+
+          try {
+            // Create a new user with email and password
+            const userCredential = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+            const user = userCredential.user;
+
+            // Save additional user info to Firestore
+            await setDoc(doc(db, "users", user.uid), {
+              email: user.email,
+              username: username, // Save username here
+              points: 50, // Example additional data
+            });
+
+            alert("회원가입이 완료되었습니다.");
+            console.log("User signed up:", user);
+
+            // Optionally, redirect after signup
+            // window.location.href = "map.html";
+          } catch (error) {
+            console.error("Error during sign-up:", error.code, error.message);
+            alert("회원가입에 실패했습니다: " + error.message);
+          }
         });
-    
-        // Sign in function
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('signin-email').value;
-            const password = document.getElementById('signin-password').value;
-    
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    alert('로그인에 성공했습니다.');
-                    console.log('User signed in:', user);
-    
-                    // 로그인 성공 시 UI 변경
-                    document.querySelector('.navbar').classList.add('logged-in-navbar');
-                    document.querySelector('.js-signin-modal-trigger').classList.add('d-none');
-                    document.getElementById('userDropdown').classList.remove('d-none');
-    
-                    // 모달창 닫기
-                    const modal = document.querySelector('.cd-signin-modal');
-                    modal.classList.remove('cd-signin-modal--is-visible');
-    
-                    // 로그아웃 기능 구현
-                    document.getElementById('logout').addEventListener('click', function(event) {
-                        event.preventDefault();
-                        signOut(auth).then(() => {
-                            alert('로그아웃 되었습니다.');
-                            location.reload(); // 로그아웃 후 페이지 새로고침
-                        }).catch((error) => {
-                            console.error('Error during sign-out:', error.code, error.message);
-                            alert('로그아웃에 실패했습니다: ' + error.message);
-                        });
+
+      // Sign in function
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const email = document.getElementById("signin-email").value;
+          const password = document.getElementById("signin-password").value;
+
+          signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              const user = userCredential.user;
+              alert("로그인에 성공했습니다.");
+              console.log("User signed in:", user);
+
+              // 로그인 성공 시 UI 변경
+              document
+                .querySelector(".navbar")
+                .classList.add("logged-in-navbar");
+              document
+                .querySelector(".js-signin-modal-trigger")
+                .classList.add("d-none");
+              document
+                .getElementById("userDropdown")
+                .classList.remove("d-none");
+
+              // 모달창 닫기
+              const modal = document.querySelector(".cd-signin-modal");
+              modal.classList.remove("cd-signin-modal--is-visible");
+
+              // 로그아웃 기능 구현
+              document
+                .getElementById("logout")
+                .addEventListener("click", function (event) {
+                  event.preventDefault();
+                  signOut(auth)
+                    .then(() => {
+                      alert("로그아웃 되었습니다.");
+                      // 로그아웃 후 메인 페이지로 리디렉션
+                      window.location.href = "mainsite.html";
+                    })
+                    .catch((error) => {
+                      console.error(
+                        "Error during sign-out:",
+                        error.code,
+                        error.message
+                      );
+                      alert("로그아웃에 실패했습니다: " + error.message);
                     });
-    
-                })
-                .catch((error) => {
-                    console.error('Error during sign-in:', error.code, error.message);
-                    alert('로그인에 실패했습니다: ' + error.message);
                 });
+            })
+            .catch((error) => {
+              console.error("Error during sign-in:", error.code, error.message);
+              alert("로그인에 실패했습니다: " + error.message);
+            });
         });
-        </script>
+    </script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"
+    ></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        updateDoc,
+        increment,
+      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
+        authDomain: "oasis-783c1.firebaseapp.com",
+        projectId: "oasis-783c1",
+        storageBucket: "oasis-783c1.appspot.com",
+        messagingSenderId: "36960403673",
+        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
+        measurementId: "G-80936TQC87",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Kakao Map and target locations
+      const targetLocations = [
+        { name: "써미트", latitude: 35.961, longitude: 126.7366 },
+        { name: "광화문", latitude: 37.5759, longitude: 126.9769 },
+        { name: "여의도", latitude: 37.5264, longitude: 126.9334 },
+        { name: "조은빌", latitude: 35.8428, longitude: 127.1436 },
+      ];
+      const allowedRadius = 100; // 허용 반경 (단위: 미터)
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const mapContainer = document.getElementById("map");
+        const mapOption = {
+          center: new kakao.maps.LatLng(
+            targetLocations[0].latitude,
+            targetLocations[0].longitude
+          ),
+          level: 5,
+        };
+        const map = new kakao.maps.Map(mapContainer, mapOption);
+
+        targetLocations.forEach((location) => {
+          new kakao.maps.Marker({
+            position: new kakao.maps.LatLng(
+              location.latitude,
+              location.longitude
+            ),
+            map: map,
+          });
+        });
+
+        // Function to display user location on map
+        function displayUserLocation(latitude, longitude) {
+          const userPosition = new kakao.maps.LatLng(latitude, longitude);
+          new kakao.maps.Marker({
+            position: userPosition,
+            map: map,
+          });
+          map.setCenter(userPosition);
+        }
+
+        // Calculate distance between two points
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+          const R = 6371e3; // Earth radius in meters
+          const φ1 = (lat1 * Math.PI) / 180;
+          const φ2 = (lat2 * Math.PI) / 180;
+          const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+          const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+          const a =
+            Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+            Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+          return R * c; // Distance in meters
+        }
+
+        // Handle location check button click
+        document
+          .getElementById("checkLocationBtn")
+          .addEventListener("click", () => {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(async (position) => {
+                const userLatitude = position.coords.latitude;
+                const userLongitude = position.coords.longitude;
+
+                displayUserLocation(userLatitude, userLongitude);
+
+                let isWithinTarget = false;
+
+                for (const location of targetLocations) {
+                  const distance = calculateDistance(
+                    userLatitude,
+                    userLongitude,
+                    location.latitude,
+                    location.longitude
+                  );
+                  if (distance <= allowedRadius) {
+                    document.getElementById(
+                      "result"
+                    ).textContent = `축하합니다! ${location.name}에 도착하여 포인트를 획득했습니다.`;
+                    isWithinTarget = true;
+
+                    // Update points in Firestore
+                    await updatePoints();
+                    break;
+                  }
+                }
+
+                if (!isWithinTarget) {
+                  document.getElementById("result").textContent =
+                    "지정된 위치에 도착하지 않았습니다.";
+                }
+              }, showError);
+            } else {
+              alert("이 브라우저는 Geolocation을 지원하지 않습니다.");
+            }
+          });
+
+        // Handle geolocation errors
+        function showError(error) {
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              alert("사용자가 위치 정보를 허용하지 않았습니다.");
+              break;
+            case error.POSITION_UNAVAILABLE:
+              alert("위치 정보를 사용할 수 없습니다.");
+              break;
+            case error.TIMEOUT:
+              alert("위치 정보 요청이 시간이 초과되었습니다.");
+              break;
+            case error.UNKNOWN_ERROR:
+              alert("알 수 없는 오류가 발생했습니다.");
+              break;
+          }
+        }
+
+        // Function to update points
+        async function updatePoints() {
+          const pointsToAdd = 100; // 포인트를 100으로 설정
+
+          const user = auth.currentUser;
+          if (user) {
+            try {
+              const userRef = doc(db, "users", user.uid);
+              await updateDoc(userRef, {
+                points: increment(pointsToAdd),
+              });
+              console.log("Points updated successfully.");
+              alert("포인트가 100 추가되었습니다!");
+            } catch (error) {
+              console.error("Error updating points:", error);
+              alert("포인트 업데이트 중 오류 발생: " + error.message);
+            }
+          } else {
+            alert("로그인된 사용자가 없습니다.");
+            window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+          }
+        }
+
+        // Check if user is signed in
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            document.getElementById(
+              "userEmail"
+            ).textContent = `로그인된 사용자: ${user.email}`;
+          } else {
+            window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+          }
+        });
+      });
+    </script>
+
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
-    <script src="js/placeholders.min.js"></script> <!-- polyfill for the HTML5 placeholder attribute -->
-    <script src="js/main.js"></script> <!-- Resource JavaScript -->
-</body>
+    <script src="js/placeholders.min.js"></script>
+    <!-- polyfill for the HTML5 placeholder attribute -->
+    <script src="js/main.js"></script>
+  </body>
 </html>

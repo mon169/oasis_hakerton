@@ -199,12 +199,12 @@
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signin-email">이메일</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="E-mail" required>
-                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                        
                     </p>
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">비밀번호</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password" placeholder="Password" required>
-                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                        
                     </p>
                     <p class="cd-signin-modal__fieldset">
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Login">
@@ -216,17 +216,17 @@
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">이름</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="Username" required>
-                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                        
                     </p>
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">이메일</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="E-mail" required>
-                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                        
                     </p>
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">비밀번호</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="Password" required>
-                        <span class="cd-signin-modal__error">이곳을 입력해주세요!</span>
+                        
                     </p>
                     <p class="cd-signin-modal__fieldset">
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Create account">
@@ -243,76 +243,95 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Firebase JS -->
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-        authDomain: "oasis-783c1.firebaseapp.com",
-        projectId: "oasis-783c1",
-        storageBucket: "oasis-783c1.appspot.com",
-        messagingSenderId: "36960403673",
-        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-        measurementId: "G-80936TQC87"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // Sign up function
-    document.getElementById('signup-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const email = document.getElementById('signup-email').value;
-        const password = document.getElementById('signup-password').value;
-
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                alert('회원가입이 완료되었습니다.');
-                console.log('User signed up:', user);
-            })
-            .catch((error) => {
-                console.error('Error during sign-up:', error.code, error.message);
-                alert('회원가입에 실패했습니다: ' + error.message);
-            });
-    });
-
-    // Sign in function
-    document.getElementById('login-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const email = document.getElementById('signin-email').value;
-        const password = document.getElementById('signin-password').value;
-
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                alert('로그인에 성공했습니다.');
-                console.log('User signed in:', user);
-
-                // 로그인 성공 시 UI 변경
-                document.querySelector('.navbar').classList.add('logged-in-navbar');
-                document.querySelector('.js-signin-modal-trigger').classList.add('d-none');
-                document.getElementById('userDropdown').classList.remove('d-none');
-
-                // 로그아웃 기능 구현
-                document.getElementById('logout').addEventListener('click', function(event) {
-                    event.preventDefault();
-                    signOut(auth).then(() => {
-                        alert('로그아웃 되었습니다.');
-                        location.reload(); // 로그아웃 후 페이지 새로고침
-                    }).catch((error) => {
-                        console.error('Error during sign-out:', error.code, error.message);
-                        alert('로그아웃에 실패했습니다: ' + error.message);
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
+            authDomain: "oasis-783c1.firebaseapp.com",
+            projectId: "oasis-783c1",
+            storageBucket: "oasis-783c1.appspot.com",
+            messagingSenderId: "36960403673",
+            appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
+            measurementId: "G-80936TQC87"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+    
+        // Sign up function
+        document.getElementById('signup-form').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                
+                const username = document.getElementById('signup-username').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+        
+                try {
+                    // Create a new user with email and password
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+        
+                    // Save additional user info to Firestore
+                    await setDoc(doc(db, "users", user.uid), {
+                        email: user.email,
+                        username: username, // Save username here
+                        points: 50 // Example additional data
                     });
+        
+                    alert('회원가입이 완료되었습니다.');
+                    console.log('User signed up:', user);
+        
+                    // Optionally, redirect after signup
+                    // window.location.href = "map.html";
+                } catch (error) {
+                    console.error('Error during sign-up:', error.code, error.message);
+                    alert('회원가입에 실패했습니다: ' + error.message);
+                }
+        });
+    
+        // Sign in function
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+    
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    alert('로그인에 성공했습니다.');
+                    console.log('User signed in:', user);
+    
+                    // 로그인 성공 시 UI 변경
+                    document.querySelector('.navbar').classList.add('logged-in-navbar');
+                    document.querySelector('.js-signin-modal-trigger').classList.add('d-none');
+                    document.getElementById('userDropdown').classList.remove('d-none');
+    
+                    // 모달창 닫기
+                    const modal = document.querySelector('.cd-signin-modal');
+                    modal.classList.remove('cd-signin-modal--is-visible');
+    
+                    // 로그아웃 기능 구현
+                    document.getElementById('logout').addEventListener('click', function(event) {
+                        event.preventDefault();
+                        signOut(auth).then(() => {
+                            alert('로그아웃 되었습니다.');
+                            location.reload(); // 로그아웃 후 페이지 새로고침
+                        }).catch((error) => {
+                            console.error('Error during sign-out:', error.code, error.message);
+                            alert('로그아웃에 실패했습니다: ' + error.message);
+                        });
+                    });
+    
+                })
+                .catch((error) => {
+                    console.error('Error during sign-in:', error.code, error.message);
+                    alert('로그인에 실패했습니다: ' + error.message);
                 });
-
-            })
-            .catch((error) => {
-                console.error('Error during sign-in:', error.code, error.message);
-                alert('로그인에 실패했습니다: ' + error.message);
-            });
-    });
-    </script>
+        });
+        </script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script src="js/placeholders.min.js"></script> <!-- polyfill for the HTML5 placeholder attribute -->

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>커뮤니티</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <!--폰트-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/community.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/css.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">
+        <style>
+            * {
+                font-family: "Gowun Dodum", sans-serif;
+            }
+            .special-title {
+                color: red;
+            }
+            .post-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: auto;
+                border-bottom: 1px solid #ddd;
+                padding: 10px 0;
+            }
+            .post-item:last-child {
+                border-bottom: none;
+            }
+        </style>        
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="mainsite.html">ECO-FRENDLY TRIP</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="mainsite.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="local_food.html">로컬푸드</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="eco_product.html">친환경 제품</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="gift.html">상품권 교환</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            장바구니
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    <section class="community_py-5">
+        <div class="table-responsive board_wrap">
+            <div class="board_title">
+                <strong>현지인과 소통하는 색다른 커뮤니티!</strong>
+                <p>현지주민들과 다양한 이야기를 나누어 보세요!</p>
+            </div>
+            <div class="board_list_wrap">
+                <div class="board_list">
+                    <div class="top">
+                        <div class="num">번호</div>
+                        <div class="title">제목</div>
+                        <div class="writer">글쓴이</div>
+                        <div class="date">작성일</div>
+                        <div class="count">조회</div>
+                    </div>
+                    <div id="boardList"></div>
+                </div>
+                <div class="board_page" id="pagination"></div>
+                <div class="bt_wrap">
+                    <a href="communitywrite.html" class="on">등록</a>
+                </div>
+            </div>
+        </div>
+        <div class="title" style="flex-grow: 1;">
+            <a href="communityview${start + index + 1}.html" class="${post.title === '커뮤니티 이용안내' ? 'special-title' : ''}">${post.title}</a>
+        </div>
+    </section>
+
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const posts = [
+            { title: '커뮤니티 이용안내', writer: '운영자', date: '2024.8.25', count: 8532 },
+            { title: '수많은 철새를 볼 수 있는 3대 철새 도래지인 <br>군산의 금강 생태습지 공원!', writer: '유소민', date: '2024.8.25', count: 3654 },
+            { title: '조금만 관심을 가진다면 만날 수 있는 작은 곤충의 세계! <br>금마 서동 생태관광지', writer: '최윤서', date: '2024.8.25', count: 2895 },
+            { title: '호남의 금강이라 불리며 조선 8경의 하나인 <br>내장산 국립공원!', writer: '김민재', date: '2024.8.25', count: 1465 },
+            { title: '프랑스미슐랭그린가이드에서 만점을 받은 대한민국 <br>최고의 명소! 반디랜드', writer: '강태훈', date: '2024.8.25', count: 786 },
+            { title: '군산에 놀러왔는데 가볼만 한 여행지 추천해주세요!', writer: '유소민', date: '2024.8.25', count: 387 },
+            { title: '익산에서 아이들과 가볼만 한 여행지가 있을까요?', writer: '최윤서', date: '2024.8.25', count: 456 },
+            { title: '정읍에서 힐링받을 만한 곳 있을까요?', writer: '김민재', date: '2024.8.25', count: 789 },
+            { title: '무주에서 아이 셋과 같이 갈만한 곳 추천해주세요!', writer: '강태훈', date: '2024.8.25', count: 325 },
+            { title: '새로운 게시글 예시 5', writer: '최지우', date: '2024.8.26', count: 654 },
+            { title: '새로운 게시글 예시 6', writer: '정하늘', date: '2024.8.26', count: 987 },
+        ];
+    
+        const postsPerPage = 5;
+        let currentPage = 1;
+    
+        function displayPosts(page) {
+            const start = (page - 1) * postsPerPage;
+            const end = start + postsPerPage;
+            const postsToDisplay = posts.slice(start, end);
+            const boardList = document.getElementById('boardList');
+            boardList.innerHTML = '';
+    
+            postsToDisplay.forEach((post, index) => {
+                boardList.innerHTML += `
+                    <div style="display: flex; align-items: center; justify-content: space-between; height: auto;">
+                        <div class="num" style="font-size: 24px;">${start + index + 1}</div>
+                        <div class="title" style="flex-grow: 1;">
+                            <a href="communityview${start + index + 1}.html" class="${post.title === '커뮤니티 이용안내' ? 'special-title' : ''}">${post.title}</a>
+                        </div>
+                        <div class="writer" style="margin-left: 100px;">${post.writer}</div>
+                        <div class="date" style="margin-left: 10px;">${post.date}</div>
+                        <div class="count" style="margin-left: 10px;">${post.count}</div>
+                    </div>
+                    <hr style="border: 1px solid #ccc; margin: 0px 0;">
+                `;
+            });
+        }
+    
+        function setupPagination() {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(posts.length / postsPerPage);
+            pagination.innerHTML = '';
+    
+            const firstPageButton = `<a href="#" class="bt" onclick="changePage(1)"><<</a>`;
+            pagination.innerHTML += firstPageButton;
+    
+            const prevPageButton = `<a href="#" class="bt ${currentPage === 1 ? 'disabled' : ''}" onclick="changePage(${currentPage - 1})"><</a>`;
+            pagination.innerHTML += prevPageButton;
+    
+            for (let i = 1; i <= totalPages; i++) {
+                pagination.innerHTML += `<a href="#" class="num ${i === currentPage ? 'on' : ''}" onclick="changePage(${i})">${i}</a>`;
+            }
+    
+            const nextPageButton = `<a href="#" class="bt ${currentPage === totalPages ? 'disabled' : ''}" onclick="changePage(${currentPage + 1})">></a>`;
+            pagination.innerHTML += nextPageButton;
+    
+            const lastPageButton = `<a href="#" class="bt" onclick="changePage(${totalPages})">>></a>`;
+            pagination.innerHTML += lastPageButton;
+        }
+    
+        function changePage(page) {
+            if (page < 1 || page > Math.ceil(posts.length / postsPerPage)) return;
+            currentPage = page;
+            displayPosts(currentPage);
+            setupPagination();
+        }
+    
+        displayPosts(currentPage);
+        setupPagination();
+    </script>    
+</body>
+</html>

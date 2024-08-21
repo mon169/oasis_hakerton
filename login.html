@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Auth Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+        }
+        .tab {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .tab button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+        .tab button.active {
+            border-bottom: 2px solid #007bff;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
+            authDomain: "oasis-783c1.firebaseapp.com",
+            projectId: "oasis-783c1",
+            storageBucket: "oasis-783c1.appspot.com",
+            messagingSenderId: "36960403673",
+            appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
+            measurementId: "G-80936TQC87"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Handle sign up
+        window.signUp = async function() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                await setDoc(doc(db, "users", user.uid), {
+                    points: 50,
+                    email: user.email
+                });
+
+                console.log("User registered and data saved to Firestore.");
+                alert("회원가입 성공");
+                window.location.href = "map.html";
+            } catch (error) {
+                console.error("Error signing up:", error);
+                alert("Error signing up: " + error.message);
+            }
+        }
+
+        // Handle login
+        window.login = async function() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                console.log("User logged in successfully.");
+                alert("로그인 성공");
+                window.location.href = "map.html";
+            } catch (error) {
+                console.error("Error logging in:", error);
+                alert("Error logging in: " + error.message);
+            }
+        }
+
+        // Initialize tabs and form switching
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab button');
+            const forms = document.querySelectorAll('.form-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(btn => btn.classList.remove('active'));
+                    tab.classList.add('active');
+                    const target = tab.getAttribute('data-target');
+                    forms.forEach(form => {
+                        form.classList.remove('active');
+                        if (form.id === target) form.classList.add('active');
+                    });
+                });
+            });
+
+            // Activate the first tab (Login) by default
+            tabs[0].click(); // Ensure the login tab is clicked by default
+        });
+
+        // Handle Enter key press for forms
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const activeForm = document.querySelector('.form-section.active');
+                if (activeForm) {
+                    const submitButton = activeForm.querySelector('button[type="button"]');
+                    if (submitButton) {
+                        submitButton.click();
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="tab">
+            <button data-target="loginForm" class="active">Login</button>
+            <button data-target="signUpForm">Sign Up</button>
+        </div>
+
+        <div id="loginForm" class="form-section active">
+            <h2>Login</h2>
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" required>
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" required>
+            <button type="button" onclick="login()">Login</button>
+        </div>
+
+        <div id="signUpForm" class="form-section">
+            <h2>Sign Up</h2>
+            <label for="signupEmail">Email:</label>
+            <input type="email" id="signupEmail" required>
+            <label for="signupPassword">Password:</label>
+            <input type="password" id="signupPassword" required>
+            <button type="button" onclick="signUp()">Sign Up</button>
+        </div>
+    </div>
+</body>
+</html>

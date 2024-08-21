@@ -21,6 +21,162 @@
     <!-- 로그인&회원가입 모달 css -->
     <link href="css/login_sign.css" rel="stylesheet" />
 
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+        import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
+            authDomain: "oasis-783c1.firebaseapp.com",
+            projectId: "oasis-783c1",
+            storageBucket: "oasis-783c1.appspot.com",
+            messagingSenderId: "36960403673",
+            appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
+            measurementId: "G-80936TQC87"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Kakao Map and target locations
+        const targetLocations = [
+            { name: "써미트", latitude: 35.9610, longitude: 126.7366 },
+            { name: "광화문", latitude: 37.5759, longitude: 126.9769 },
+            { name: "여의도", latitude: 37.5264, longitude: 126.9334 },
+            { name: "조은빌", latitude: 35.8428, longitude: 127.1436 }
+        ];
+        const allowedRadius = 100; // 허용 반경 (단위: 미터)
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapContainer = document.getElementById('map');
+            const mapOption = {
+                center: new kakao.maps.LatLng(targetLocations[0].latitude, targetLocations[0].longitude),
+                level: 5
+            };
+            const map = new kakao.maps.Map(mapContainer, mapOption);
+
+            targetLocations.forEach(location => {
+                new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(location.latitude, location.longitude),
+                    map: map
+                });
+            });
+
+            // Function to display user location on map
+            function displayUserLocation(latitude, longitude) {
+                const userPosition = new kakao.maps.LatLng(latitude, longitude);
+                new kakao.maps.Marker({
+                    position: userPosition,
+                    map: map
+                });
+                map.setCenter(userPosition);
+            }
+
+            // Calculate distance between two points
+            function calculateDistance(lat1, lon1, lat2, lon2) {
+                const R = 6371e3; // Earth radius in meters
+                const φ1 = lat1 * Math.PI / 180;
+                const φ2 = lat2 * Math.PI / 180;
+                const Δφ = (lat2 - lat1) * Math.PI / 180;
+                const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+                const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                          Math.cos(φ1) * Math.cos(φ2) *
+                          Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+                return R * c; // Distance in meters
+            }
+
+            // Handle location check button click
+            document.getElementById('mapbtn').addEventListener('click', () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(async (position) => {
+                        const userLatitude = position.coords.latitude;
+                        const userLongitude = position.coords.longitude;
+
+                        displayUserLocation(userLatitude, userLongitude);
+
+                        let isWithinTarget = false;
+
+                        for (const location of targetLocations) {
+                            const distance = calculateDistance(userLatitude, userLongitude, location.latitude, location.longitude);
+                            if (distance <= allowedRadius) {
+                                document.getElementById('result').textContent = `축하합니다! ${location.name}에 도착하여 포인트를 획득했습니다.`;
+                                isWithinTarget = true;
+                                
+                                // Update points in Firestore
+                                await updatePoints();
+                                break;
+                            }
+                        }
+
+                        if (!isWithinTarget) {
+                            document.getElementById('result').textContent = "지정된 위치에 도착하지 않았습니다.";
+                        }
+                    }, showError);
+                } else {
+                    alert("이 브라우저는 Geolocation을 지원하지 않습니다.");
+                }
+            });
+
+            // Handle geolocation errors
+            function showError(error) {
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert("사용자가 위치 정보를 허용하지 않았습니다.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("위치 정보를 사용할 수 없습니다.");
+                        break;
+                    case error.TIMEOUT:
+                        alert("위치 정보 요청이 시간이 초과되었습니다.");
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        alert("알 수 없는 오류가 발생했습니다.");
+                        break;
+                }
+            }
+
+            // Function to update points
+            async function updatePoints() {
+                const pointsToAdd = 100; // 포인트를 100으로 설정
+
+                const user = auth.currentUser;
+                if (user) {
+                    try {
+                        const userRef = doc(db, "users", user.uid);
+                        await updateDoc(userRef, {
+                            points: increment(pointsToAdd)
+                        });
+                        console.log("Points updated successfully.");
+                        alert("포인트가 100 추가되었습니다!");
+                    } catch (error) {
+                        console.error("Error updating points:", error);
+                        alert("포인트 업데이트 중 오류 발생: " + error.message);
+                    }
+                } else {
+                    alert("로그인된 사용자가 없습니다.");
+                    window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+                }
+            }
+
+            // Check if user is signed in
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    document.getElementById('userEmail').textContent = `로그인된 사용자: ${user.email}`;
+                } else {
+                    window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+                }
+            });
+        });
+    </script>
+
     <style>
         * {
             font-family: "Gowun Dodum", sans-serif;
@@ -35,6 +191,10 @@
         /* 버튼 안의 이미지 스타일 */
         .logged-in-button img {
             height: 3rem;
+        }
+
+        #mapbtn {
+            width: 10rem;
         }
     </style>
   </head>
@@ -85,9 +245,12 @@
                 <!-- Header - set the background image for the header in the line below-->
                 <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
                     <div class="text-center my-5">
-                        <img class="img-fluid rounded-circle mb-4" src="icon/로그인이미지.png" alt="..." />
-                        <h1 class="fs-3 fw-bolder">유소민</h1>
-                        <h2>Email : </h2>
+                        <h1>호남권에 있는 친환경 여행지를 관광하고 마일리지를 받아요!</h1>
+                        <div id="map" style="width:100%;height:350px;"></div>
+                        <button id="mapbtn" class="btn btn-primary btn-jelly">내 위치 확인</button>
+                        <p id="result"></p>
+                        <div id="userEmail"></div>
+                        <h1 class="fs-3 fw-bolder">여행지 리스트를 확인해 보세요!</h1>
                     </div>
                 </header>
                 <!-- Content section-->

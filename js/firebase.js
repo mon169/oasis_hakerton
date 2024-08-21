@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getDatabase, ref, set, push, onValue } from "firebase/database"; //
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,12 +14,17 @@ const firebaseConfig = {
   measurementId: "G-80936TQC87"
 };
 
-// Initialize Firebaseconst app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-// Initialize Firebase Authentication and get a reference to the serviceconst auth = getAuth();
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth();
 
-// Function to sign up a new userexport function signUp(email, password) {
+const database = getDatabase(app);
+
+// Function to sign up a new user
+export function signUp(email, password) {
   return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Successfully signed up
@@ -32,6 +38,7 @@ const analytics = getAnalytics(app);
       console.error('Error during sign-up:', errorCode, errorMessage);
       throw error;
     });
+  }
 
 
 // Function to sign in an existing user
@@ -49,4 +56,37 @@ export function signIn(email, password) {
       console.error('Error during sign-in:', errorCode, errorMessage);
       throw error;
     });
+}
+
+export function saveProductData(product) {
+  const productRef = push(ref(database, 'products')); // 'products' 경로에 새 데이터 추가
+  return set(productRef, product)
+    .then(() => {
+      console.log('Product data saved successfully.');
+      return productRef.key; // 저장된 데이터의 고유 키 반환
+    })
+    .catch((error) => {
+      console.error('Error saving product data:', error);
+      throw error;
+    });
+}
+
+export function getAllProducts() {
+  const productsRef = ref(database, 'products');
+  return new Promise((resolve, reject) => {
+    onValue(productsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const products = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key],
+        }));
+        resolve(products);
+      } else {
+        resolve([]);
+      }
+    }, (error) => {
+      reject(error);
+    });
+  });
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -28,11 +27,11 @@
     <body id="localFood">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="mainsite.html">ECO-FRENDLY TRIP</a>
+            <a class="navbar-brand" href="index.html">ECO-FRENDLY TRIP</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="mainsite.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
@@ -57,20 +56,66 @@
         <section id="localFood" class="py-5 bg-light">
             <div class="container px-4 px-lg-5 mt-5">
                 <h2 class="fw-bolder mb-4">로컬푸드</h2>
-                <form class="search-box" action="" method="get">
+                <div class="button-container">
                     <!-- 검색창 -->
-                    <input class="search-txt" type="text" name="" placeholder="검색어를 입력하세요.">
-                    <button class="search-btn" type="submit">
-                        <i class="fa-duotone fa-solid fa-magnifying-glass"></i>
+                    <form class="search-box" action="" method="get">
+                        <input class="search-txt" type="text" name="" placeholder="검색어를 입력하세요.">
+                        <button class="search-btn" type="submit">
+                            <i class="fa-duotone fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+
+                    <button class="submit-btn" type="button" data-bs-toggle="modal" data-bs-target="#submittModal">
+                        상품 등록
                     </button>
-                </form>
+                </div>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     
                 </div>
             </div>
         </section>
 
-        <!-- Modal -->
+        <!-- 상품 등록 팝업 -->
+        <div class="modal fade" id="submittModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">로컬푸드 상품 등록</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="productForm">
+                            <!-- 상품명 -->
+                            <div class="mb-3">
+                                <label for="productName" class="form-label">상품명</label>
+                                <input type="text" class="form-control" id="productName" placeholder="상품명을 입력하세요" required>
+                            </div>
+                            <!-- 가격 -->
+                            <div class="mb-3">
+                                <label for="productPrice" class="form-label">가격</label>
+                                <input type="number" class="form-control" id="productPrice" placeholder="가격을 입력하세요" required>
+                            </div>
+                            <!-- 이미지 업로드 -->
+                            <div class="mb-3">
+                                <label for="productImage" class="form-label">상품 이미지</label>
+                                <input type="file" class="form-control" id="productImage" accept="image/*" required>
+                            </div>
+                            <!-- 상세정보 -->
+                            <div class="mb-3">
+                                <label for="productDescription" class="form-label">상세정보</label>
+                                <textarea class="form-control" id="productDescription" rows="4" placeholder="상품 상세정보를 입력하세요" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary" form="productForm">게시</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상세정보 확인 팝업 -->
         <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -102,5 +147,7 @@
         <!-- Core theme JS--> 
         <script src="js/scripts.js"></script>
         <script src="js/product.js"></script>
+        <script src="js/firebase.js" type="module"></script>
+        <script src="js/product_submit.js" type="module"></script>
     </body>
 </html>

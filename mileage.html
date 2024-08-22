@@ -45,6 +45,9 @@
       .logged-in-button img {
         height: 3rem;
       }
+      #checkLocationBtn {
+        width: 12rem;
+      }
     </style>
   </head>
   <body>
@@ -114,7 +117,7 @@
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
-                <a class="dropdown-item" href="mileage.html">마일리지 적립</a>
+                <a class="dropdown-item" href="eco_product.html">마일리지 적립</a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
@@ -128,6 +131,7 @@
               class="btn btn-outline-dark js-signin-modal-trigger"
               href="#0"
               data-signin="login"
+              id="loginButton"
             >
               로그인
             </a>
@@ -135,32 +139,31 @@
         </div>
       </div>
     </nav>
+    
     <!-- Header - set the background image for the header in the line below-->
     <header
       class="py-5 bg-image-full"
       style="
         background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900');
       "
-    >
-      <div class="text-center my-5">
-        <img
-          class="img-fluid rounded-circle mb-4"
-          src="icon/로그인이미지.png"
-          alt="..."
-        />
-        <h1 class="fs-3 fw-bolder">유소민</h1>
-        <h2>Email :</h2>
-        <div>
-          <h1>지정된 위치에 도착하면 포인트를 받을 수 있습니다!</h1>
-          <div id="map" style="width: 100%; height: 350px"></div>
-          <button id="checkLocationBtn">내 위치 확인하기</button>
-          <p id="result"></p>
-          <div id="userEmail"></div>
+    ><div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="text-center my-5">
+                <h1>친환경 여행지에 도착하면 마일리지를 받을 수 있어요!<br><br></h1>
+                <div id="map" style="width: 100%; height: 350px"></div>
+                <button id="checkLocationBtn" class="btn btn-primary btn-jelly">내 위치 확인하기</button>
+                <p id="result"></p>
+                <div id="userEmail"></div>
+            </div>
+          </div>
         </div>
-      </div>
     </header>
     <!-- Content section-->
     <section class="py-5 bg-light">
+        <div class="text-center my-5">
+            <h1>여행지 목록을 살펴봐요!</h1>
+        </div>
       <div class="container px-4 px-lg-5 mt-5">
         <div
           class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
@@ -371,11 +374,14 @@
         createUserWithEmailAndPassword,
         signInWithEmailAndPassword,
         signOut,
+        onAuthStateChanged,
       } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
       import {
         getFirestore,
         doc,
         setDoc,
+        updateDoc,
+        increment,
       } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -391,6 +397,19 @@
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
+
+      // 로그인 시 로그아웃 메뉴 활성화
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          document.getElementById("userDropdown").classList.remove("d-none");
+          document.getElementById("loginButton").classList.add("d-none");
+          document.getElementById("userEmail").textContent = `로그인된 사용자: ${user.email}`;
+        } else {
+          document.getElementById("userDropdown").classList.add("d-none");
+          document.getElementById("loginButton").classList.remove("d-none");
+          window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+        }
+      });
 
       // Sign up function
       document
@@ -445,9 +464,6 @@
 
               // 로그인 성공 시 UI 변경
               document
-                .querySelector(".navbar")
-                .classList.add("logged-in-navbar");
-              document
                 .querySelector(".js-signin-modal-trigger")
                 .classList.add("d-none");
               document
@@ -458,65 +474,29 @@
               const modal = document.querySelector(".cd-signin-modal");
               modal.classList.remove("cd-signin-modal--is-visible");
 
-              // 로그아웃 기능 구현
-              document
-                .getElementById("logout")
-                .addEventListener("click", function (event) {
-                  event.preventDefault();
-                  signOut(auth)
-                    .then(() => {
-                      alert("로그아웃 되었습니다.");
-                      // 로그아웃 후 메인 페이지로 리디렉션
-                      window.location.href = "mainsite.html";
-                    })
-                    .catch((error) => {
-                      console.error(
-                        "Error during sign-out:",
-                        error.code,
-                        error.message
-                      );
-                      alert("로그아웃에 실패했습니다: " + error.message);
-                    });
-                });
+              // 로그인된 사용자 정보 표시
+              document.getElementById("userEmail").textContent = `로그인된 사용자: ${user.email}`;
             })
             .catch((error) => {
               console.error("Error during sign-in:", error.code, error.message);
               alert("로그인에 실패했습니다: " + error.message);
             });
         });
-    </script>
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"
-    ></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-      import {
-        getAuth,
-        onAuthStateChanged,
-      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-      import {
-        getFirestore,
-        doc,
-        updateDoc,
-        increment,
-      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-      // Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-        authDomain: "oasis-783c1.firebaseapp.com",
-        projectId: "oasis-783c1",
-        storageBucket: "oasis-783c1.appspot.com",
-        messagingSenderId: "36960403673",
-        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-        measurementId: "G-80936TQC87",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+      // 로그아웃 기능 구현
+      document.getElementById("logout").addEventListener("click", function (event) {
+        event.preventDefault();
+        signOut(auth)
+          .then(() => {
+            alert("로그아웃 되었습니다.");
+            // 로그아웃 후 메인 페이지로 리디렉션
+            window.location.href = "mainsite.html";
+          })
+          .catch((error) => {
+            console.error("Error during sign-out:", error.code, error.message);
+            alert("로그아웃에 실패했습니다: " + error.message);
+          });
+      });
 
       // Kakao Map and target locations
       const targetLocations = [
@@ -608,7 +588,7 @@
 
                 if (!isWithinTarget) {
                   document.getElementById("result").textContent =
-                    "지정된 위치에 도착하지 않았습니다.";
+                    "친환경 여행지가 아닙니다.";
                 }
               }, showError);
             } else {
@@ -646,14 +626,14 @@
                 points: increment(pointsToAdd),
               });
               console.log("Points updated successfully.");
-              alert("포인트가 100 추가되었습니다!");
+              alert("500 마일리지가 추가되었습니다!");
             } catch (error) {
               console.error("Error updating points:", error);
               alert("포인트 업데이트 중 오류 발생: " + error.message);
             }
           } else {
             alert("로그인된 사용자가 없습니다.");
-            window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+            window.location.href = "mainsite.html"; // 로그인 페이지로 리디렉션
           }
         }
 
@@ -664,13 +644,15 @@
               "userEmail"
             ).textContent = `로그인된 사용자: ${user.email}`;
           } else {
-            window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+            window.location.href = "mainsite.html"; // 로그인 페이지로 리디렉션
           }
         });
       });
     </script>
-
-    <!-- Core theme JS-->
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"
+    ></script>
     <script src="js/scripts.js"></script>
     <script src="js/placeholders.min.js"></script>
     <!-- polyfill for the HTML5 placeholder attribute -->

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Shop Item - Start Bootstrap Template</title>
+        <title>게시글 등록</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -22,6 +22,17 @@
         * {
             font-family: "Gowun Dodum", sans-serif;
         }
+            #registerBtn {
+                display: inline-block;
+                min-width: 80px;
+                margin-left: 10px;
+                padding: 10px;
+                border: 1px solid #000;
+                border-radius: 2px;
+                font-size: 1.4rem;
+                background: #476e37;
+                color: #fff;
+            }
     </style>
     </head>
     <body>
@@ -83,9 +94,9 @@
                         </div>
                     </div>
                     <div class="bt_wrap">
-                        <a href="communityview.html" class="on">등록</a>
+                        <button id="registerBtn" class="on">등록</button>
                         <a href="communitylist.html">취소</a>
-                    </div>
+                    </div>            
                 </div>
         </div>
         </section>
@@ -97,5 +108,30 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <script>
+            document.getElementById('registerBtn').addEventListener('click', function() {
+                const title = document.querySelector('.title input').value;
+                const writer = document.querySelector('.info input').value;
+                const content = document.querySelector('.cont textarea').value;
+        
+                if (title && writer && content) {
+                    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+                    const newPost = {
+                        title: title,
+                        writer: writer,
+                        date: new Date().toISOString().split('T')[0], // 현재 날짜를 "YYYY-MM-DD" 형식으로 저장
+                        count: 0
+                    };
+                    posts.push(newPost);
+                    localStorage.setItem('posts', JSON.stringify(posts));
+        
+                    alert('게시글이 등록되었습니다!');
+                    window.location.href = 'communitylist.html'; // 게시글 목록 페이지로 이동
+                } else {
+                    alert('모든 필드를 채워주세요.');
+                }
+            });
+        </script>
+        
     </body>
 </html>

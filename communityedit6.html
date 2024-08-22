@@ -78,25 +78,45 @@
                                 <dd><input type="password" placeholder="비밀번호 입력" value="1234"></dd>
                             </dl>
                         </div>
+                        <div class="file-upload">
+                            <dl>
+                                <dd>
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                </dd>
+                            </dl>
+                        </div>
                         <div class="cont">
                             <textarea placeholder="내용 입력">
 군산에 남자친구와 놀러왔는데 가볼만 한 여행지가 있을까요?</textarea>
                         </div>
                     </div>
                     <div class="bt_wrap">
-                        <a href="communityview6.html" class="on">수정</a>
-                        <a href="communityview6.html">취소</a>
+                        <div class="bt_wrap">
+                            <a href="communityview6.html" class="on">수정</a>
+                            <a href="javascript:void(0);" onclick="confirmDelete(0)" class="delete-btn">삭제</a> <!-- 인덱스 0으로 하드코딩 -->
+                        </div>                            
                     </div>
                 </div>
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+            </section>
+            <!-- Footer-->
+            <footer class="py-5 bg-dark">
+                <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+            </footer>
+            <!-- Bootstrap core JS-->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Core theme JS-->
+            <script src="js/scripts.js"></script>
+            <script>
+                function confirmDelete(index) {
+                    if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+                        window.location.href = "communitylist.html?delete=" + index;
+                    }
+                }
+            </script>
     </body>
 </html>

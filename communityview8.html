@@ -90,6 +90,18 @@
                 <a href="communitylist.html" class="on">목록</a>
                 <a href="communityedit8.html">수정</a>
             </div>
+<!-- 댓글 섹션 추가 -->
+<div class="comment-section">
+    <h4>댓글 달기</h4>
+    <input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요..." style="width: 100%;"/>
+    <textarea id="commentInput" rows="4" placeholder="댓글을 입력하세요..." style="width: 100%; margin-top: 10px;"></textarea>
+    <button id="submitComment" class="btn btn-primary mt-2">댓글 제출</button>
+    <div id="commentsList" class="mt-4">
+        <h5>댓글 목록</h5>
+        <ul id="comments"></ul>
+    </div>
+</div>
+
         </div>
     </div>
         </section>
@@ -101,5 +113,24 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <script>
+            document.getElementById('submitComment').addEventListener('click', function() {
+                var nickname = document.getElementById('nicknameInput').value;
+                var comment = document.getElementById('commentInput').value;
+                
+                if (nickname && comment) {
+                    var commentsList = document.getElementById('comments');
+                    var listItem = document.createElement('li');
+                    listItem.textContent = nickname + ": " + comment;
+                    commentsList.appendChild(listItem);
+                    
+                    // 입력란 초기화
+                    document.getElementById('nicknameInput').value = '';
+                    document.getElementById('commentInput').value = '';
+                } else {
+                    alert('닉네임과 댓글을 모두 입력해 주세요.');
+                }
+            });
+        </script>
     </body>
 </html>

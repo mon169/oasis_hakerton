@@ -100,7 +100,7 @@
                     피드백과 제안: 현지인들의 조언과 피드백을 열린 마음으로 받아들이고, 여러분도 유익한 정보를 제공하며 커뮤니티에 기여해 주세요.<br><br>
                     5. 안전하고 즐거운 소통을 위한 팁<br><br>
                     개인 정보 보호: 개인 정보를 공유할 때는 신중하게 생각하고, 불필요한 정보는 공개하지 않도록 주의하세요.<br><br>
-                    오프라인 만남 주의: 현지인과의 오프라인 만남을 계획할 경우, 공공장소에서 만남을 가지며, 안전을 최우선으로 고려해 주세요.<br><br>
+                    오프라인 만남 주의: 타인과의 오프라인 만남을 계획할 경우, 공공장소에서 만남을 가지며, 안전을 최우선으로 고려해 주세요.<br><br>
                     친환경 활동: 커뮤니티에서 제안하는 친환경 활동에 적극 참여해 보세요. 함께 지구를 보호하는 작은 실천을 시작할 수 있습니다.<br><br>
                     6. 커뮤니티 관리<br><br>
                     운영자 역할: 운영자는 커뮤니티의 원활한 운영을 위해 노력합니다. 문제가 발생하면 운영자에게 신고해 주세요.<br><br>
@@ -111,6 +111,18 @@
                 <a href="communitylist.html" class="on">목록</a>
                 <a href="communityedit1.html">수정</a>
             </div>
+<!-- 댓글 섹션 추가 -->
+<div class="comment-section">
+    <h4>댓글 달기</h4>
+    <input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요..." style="width: 100%;"/>
+    <textarea id="commentInput" rows="4" placeholder="댓글을 입력하세요..." style="width: 100%; margin-top: 10px;"></textarea>
+    <button id="submitComment" class="btn btn-primary mt-2">댓글 제출</button>
+    <div id="commentsList" class="mt-4">
+        <h5>댓글 목록</h5>
+        <ul id="comments"></ul>
+    </div>
+</div>
+
         </div>
     </div>
         </section>
@@ -122,5 +134,24 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <script>
+            document.getElementById('submitComment').addEventListener('click', function() {
+                var nickname = document.getElementById('nicknameInput').value;
+                var comment = document.getElementById('commentInput').value;
+                
+                if (nickname && comment) {
+                    var commentsList = document.getElementById('comments');
+                    var listItem = document.createElement('li');
+                    listItem.textContent = nickname + ": " + comment;
+                    commentsList.appendChild(listItem);
+                    
+                    // 입력란 초기화
+                    document.getElementById('nicknameInput').value = '';
+                    document.getElementById('commentInput').value = '';
+                } else {
+                    alert('닉네임과 댓글을 모두 입력해 주세요.');
+                }
+            });
+        </script>
     </body>
 </html>

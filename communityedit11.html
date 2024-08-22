@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>질문 - 수정</title>
+        <title>농업에 관심이 생겨서 배우고 싶어요. - 수정</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -19,10 +19,10 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">
         <style>
-        * {
-            font-family: "Gowun Dodum", sans-serif;
-        }
-    </style>
+            * {
+                font-family: "Gowun Dodum", sans-serif;
+            }
+        </style>
     </head>
     <body>
         <!-- Navigation-->
@@ -45,11 +45,11 @@
                             </ul>
                         </li>
                     </ul>
-                        <a class="btn btn-outline-dark" href="shopping_cart.html">
-                            <i class="bi-cart-fill me-1"></i>
-                            장바구니
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </a>
+                    <a class="btn btn-outline-dark" href="shopping_cart.html">
+                        <i class="bi-cart-fill me-1"></i>
+                        장바구니
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -65,28 +65,40 @@
                         <div class="title">
                             <dl>
                                 <dt>제목</dt>
-                                <dd><input type="text" placeholder="제목 입력" value="질문"></dd>
+                                <dd><input type="text" id="postTitle" placeholder="제목 입력" value="농업에 관심이 생겨서 배우고 싶어요."></dd>
                             </dl>
                         </div>
                         <div class="info">
                             <dl>
                                 <dt>글쓴이</dt>
-                                <dd><input type="text" placeholder="글쓴이 입력" value="강태훈"></dd>
+                                <dd><input type="text" placeholder="글쓴이 입력" value="유소민"></dd>
                             </dl>
                             <dl>
                                 <dt>비밀번호</dt>
                                 <dd><input type="password" placeholder="비밀번호 입력" value="1234"></dd>
                             </dl>
                         </div>
+                        <div class="file-upload">
+                            <dl>
+                                <dd>
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                    <input type="file" accept="image/*, .pdf" />
+                                </dd>
+                            </dl>
+                        </div>
                         <div class="cont">
                             <textarea placeholder="내용 입력">
-                            질문</textarea>
+현직 농업에 종사하고 계신 분들 중 알려주실 분 계신가요?</textarea>
                         </div>
                     </div>
                     <div class="bt_wrap">
                         <a href="communityview11.html" class="on">수정</a>
-                        <a href="communityview11.html">취소</a>
-                    </div>
+                        <a href="javascript:void(0);" onclick="confirmDelete(0)" class="delete-btn">삭제</a> <!-- 인덱스 0으로 하드코딩 -->
+                    </div>                            
                 </div>
             </div>
         </section>
@@ -98,5 +110,12 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        <script>
+            function confirmDelete(index) {
+                if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+                    window.location.href = "communitylist.html?delete=" + index;
+                }
+            }
+        </script>
     </body>
 </html>

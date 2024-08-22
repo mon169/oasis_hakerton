@@ -6,27 +6,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitProductButton = modal.querySelector('.btn-primary');
 
     if(submitProductButton) {
-        submitProductButton.addEventListener('click', function() {
+        submitProductButton.addEventListener('click', function(event) {
             event.preventDefault(); // 기본 제출 동작 막기
 
             const name = document.querySelector('#productName').value;
             const price = document.querySelector('#productPrice').value;
-            // const imageFile = document.querySelector('#productImage').files[0];
+            const imageFile = document.querySelector('#productImage').files[0];
             const description = document.querySelector('#productDescription').value;
-            const product = { name, price, description };
+            
+            if (!name || !price || !imageFile || !description) {
+                alert('모든 항목을 입력해주세요.');
+                return;
+            }
 
-            // // 이미지를 Firebase Storage에 업로드
-            // const imageRef = storageRef(storage, `products/${Date.now()}_${imageFile.name}`);
-            // uploadBytes(imageRef, imageFile).then((snapshot) => {
-            //     return getDownloadURL(snapshot.ref);
-            // }).then((imageUrl) => {
-            //     const product = { name, price, image: imageUrl, description };
+            //이미지를 Firebase Storage에 업로드
+            const imageRef = storageRef(storage, `products/${Date.now()}_${imageFile.name}`);
+            uploadBytes(imageRef, imageFile).then((snapshot) => {
+                return getDownloadURL(snapshot.ref);
+            }).then((imageUrl) => {
+                const product = { name, price, image: imageUrl, description };
 
-            //     // 데이터베이스에 저장
-            //     return saveProductData(product)
-            // })
-            saveProductData(product)
-            .then((productId) => {
+                // 데이터베이스에 저장
+                return saveProductData(product)
+            }).then((productId) => {
                 console.log('Product saved with ID:', productId);
                 alert('상품이 성공적으로 등록되었습니다!');
                 loadProducts(); // 등록 후 모든 상품을 다시 로드하여 웹에 표시

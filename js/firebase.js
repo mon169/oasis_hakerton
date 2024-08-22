@@ -9,7 +9,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
   authDomain: "oasis-783c1.firebaseapp.com",
   projectId: "oasis-783c1",
-  storageBucket: "oasis-783c1.appspot.com",
+  storageBucket: "gs://oasis-783c1.appspot.com",
   messagingSenderId: "36960403673",
   appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
   measurementId: "G-80936TQC87"

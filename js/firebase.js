@@ -59,9 +59,9 @@ export function signIn(email, password) {
     });
 }
 
-// 상품 데이터 저장 함수
-export function saveProductData(product) {
-  const productRef = push(ref(database, 'products')); // 'products' 경로에 새 데이터 추가
+// 상품 데이터 등록 함수
+export function saveProductData(pageId, product) {
+  const productRef = push(ref(database, `products/${pageId}`)); // 각 페이지에 해당하는 경로에 새 데이터 추가
   return set(productRef, product)
     .then(() => {
       console.log('Product data saved successfully.');
@@ -73,25 +73,25 @@ export function saveProductData(product) {
     });
 }
 
-export function getAllProducts() {
-  const productsRef = ref(database, 'products');
-  return new Promise((resolve, reject) => {
-    onValue(productsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const products = Object.keys(data).map(key => ({
-          id: key,
-          ...data[key],
-        }));
-        resolve(products);
-      } else {
-        resolve([]);
-      }
-    }, (error) => {
-      reject(error);
-    });
-  });
+export function getAllProducts(pageId, callback) {
+  const productsRef = ref(database, `products/${pageId}`);
+
+  onValue(productsRef, (snapshot) => {
+    const data = snapshot.val();
+    const products = data ? Object.keys(data).map(key => ({
+        id: key,
+        ...data[key],
+    })) : [];
+    
+    // callback 함수로 결과 전달
+    if (typeof callback === 'function') {
+      callback(products);
+  }
+}, (error) => {
+    console.error('Error loading products:', error);
+});
 }
+
     
 
 

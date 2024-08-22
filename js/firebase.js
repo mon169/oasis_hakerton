@@ -1,7 +1,8 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { getDatabase, ref, set, push, onValue } from "firebase/database"; //
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,11 +18,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
-// Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth();
-
 const database = getDatabase(app);
+const storage = getStorage(app);
+
+export { database, storage, ref, set, push, onValue, storageRef, uploadBytes, getDownloadURL };
 
 // Function to sign up a new user
 export function signUp(email, password) {
@@ -58,6 +59,7 @@ export function signIn(email, password) {
     });
 }
 
+// 상품 데이터 저장 함수
 export function saveProductData(product) {
   const productRef = push(ref(database, 'products')); // 'products' 경로에 새 데이터 추가
   return set(productRef, product)
@@ -90,3 +92,6 @@ export function getAllProducts() {
     });
   });
 }
+    
+
+

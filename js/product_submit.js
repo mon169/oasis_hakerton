@@ -1,4 +1,5 @@
-import { getDatabase, ref, set } from "firebase/database";
+import { storage, database, ref, set, push, storageRef, uploadBytes, getDownloadURL } from './firebase.js';
+import { getAllProducts, saveProductData } from './firebase.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('submitModal');
@@ -6,14 +7,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(submitProductButton) {
         submitProductButton.addEventListener('click', function() {
+            event.preventDefault(); // 기본 제출 동작 막기
+
             const name = document.querySelector('#productName').value;
             const price = document.querySelector('#productPrice').value;
-            const image = document.querySelector('#productImage').value; // 이미지 URL 또는 경로
+            // const imageFile = document.querySelector('#productImage').files[0];
             const description = document.querySelector('#productDescription').value;
+            const product = { name, price, description };
 
-            const product = { name, price, image, description };
+            // // 이미지를 Firebase Storage에 업로드
+            // const imageRef = storageRef(storage, `products/${Date.now()}_${imageFile.name}`);
+            // uploadBytes(imageRef, imageFile).then((snapshot) => {
+            //     return getDownloadURL(snapshot.ref);
+            // }).then((imageUrl) => {
+            //     const product = { name, price, image: imageUrl, description };
 
-            // 데이터베이스에 저장
+            //     // 데이터베이스에 저장
+            //     return saveProductData(product)
+            // })
             saveProductData(product)
             .then((productId) => {
                 console.log('Product saved with ID:', productId);

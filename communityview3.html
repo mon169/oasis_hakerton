@@ -83,6 +83,7 @@
                     </dl>
                 </div>
                 <div class="cont">
+                    <div id="postContent">
                     생동! 감동! 서동! 금마 서동 생태공원으로 떠나볼까요?<br>
                     금마서동생태공원은 금마관광단지 내 '서동농촌테마공원', '금마저수지' 및 '금마 서동공원'이 어우러져 있어 역사문화, 자연생태, 농촌체험을 한 데서 경험할 수 있는 곳이에요!<br>
                     <img src="community image/금마서동생태공원 1.jpg" alt="금마서동생태공원 1" width="700" height="500"><br>
@@ -92,6 +93,7 @@
                     또한 근처 미륵산에 올라 한반도 모양의 금마저수지를 바라보는 것 또한 묘미랍니다!<br>
                     <img src="community image/금마서동생태공원 3.jpg" alt="금마서동생태공원 3" width="700" height="500"><br>
                     다양한 체험 프로그램도 진행하고 있으니 아이들과 함께 가서 즐겨보는 것도 나쁘지 않을 것 같아요!<br>
+                    </div>
                 </div>
             </div>
             <div class="bt_wrap">
@@ -139,6 +141,13 @@
                     alert('닉네임과 댓글을 모두 입력해 주세요.');
                 }
             });
+                    // 페이지 로드 시 게시글 불러오기
+        document.addEventListener('DOMContentLoaded', function() {
+            var postContent = localStorage.getItem('postContent');
+            if (postContent) {
+                document.getElementById('postContent').innerHTML = postContent;
+            }
+        });
         </script>
     </body>
 </html>

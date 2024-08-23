@@ -83,6 +83,7 @@
                     </dl>
                 </div>
                 <div class="cont">
+                    <div id="postContent">
                     오늘은 단풍으로 유명한 내장산 국립공원으로 여행을 떠나봤어요.<br>
                     <img src="community image/내장산국립공원 1.png" alt="내장산국립공원 1" width="700" height="500"><br>
                     입장료는 따로 없고 내장사 문화재관람료는 3000원 이라고 해요.<br>
@@ -98,6 +99,7 @@
                     여기는 내장사 내부에요.<br>
                     대웅전이 불에 타서 지금은 볼 수 없지만 하루빨리 복구되었으면 정말 좋겠네요.<br>
                     힐링하고 마음의 편안을 얻고 싶은 분들에게 내장산 국립공원을 추천드려요.
+                    </div>
                 </div>
             </div>
             <div class="bt_wrap">
@@ -145,6 +147,13 @@
                     alert('닉네임과 댓글을 모두 입력해 주세요.');
                 }
             });
+                    // 페이지 로드 시 게시글 불러오기
+        document.addEventListener('DOMContentLoaded', function() {
+            var postContent = localStorage.getItem('postContent');
+            if (postContent) {
+                document.getElementById('postContent').innerHTML = postContent;
+            }
+        });
         </script>
     </body>
 </html>

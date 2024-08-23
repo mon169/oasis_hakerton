@@ -83,6 +83,7 @@
                     </dl>
                 </div>
                 <div class="cont">
+                    <div id="postContent">
                     안녕하세요! 오늘은 프랑스미슐랭그린가이드에서 무려! 만점을 받은 대한민국 명실상부 최고의 명소인 반디랜드로 떠나볼게요!!<br>
                     슝~~~~~~~~~~~~~~~<br>
                     <img src="community image/반디랜드 1.jpg" alt="반디랜드 1" width="700" height="500"><br>
@@ -105,6 +106,7 @@
                     아 그리고 반딧불이 서식지를 방문하는 데에는 몇 가지 주의가 필요하답니다!<br>
                     먼저, 조명은 반딧불이에게 자극을 줄 뿐 아니라 탐사에도 지장을 주기 때문에 플래시 같은 건 절대 터트리면 안된답니다!!<br>
                     그저 가만가만, 조용조용 다니면서 날아다니는 불빛, 멈춰 선 불빛들을 가슴에 담으면 돼요!!
+                    </div>
                 </div>
             </div>
             <div class="bt_wrap">
@@ -152,6 +154,13 @@
                     alert('닉네임과 댓글을 모두 입력해 주세요.');
                 }
             });
+                    // 페이지 로드 시 게시글 불러오기
+        document.addEventListener('DOMContentLoaded', function() {
+            var postContent = localStorage.getItem('postContent');
+            if (postContent) {
+                document.getElementById('postContent').innerHTML = postContent;
+            }
+        });
         </script>
     </body>
 </html>

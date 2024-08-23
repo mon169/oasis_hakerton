@@ -83,7 +83,9 @@
                     </dl>
                 </div>
                 <div class="cont">
+                    <div id="postContent">
                     어린아이들이 좋아할 만한 곳이 있을까요?
+                    </div>
                 </div>
             </div>
             <div class="bt_wrap">
@@ -131,6 +133,13 @@
                     alert('닉네임과 댓글을 모두 입력해 주세요.');
                 }
             });
+                    // 페이지 로드 시 게시글 불러오기
+        document.addEventListener('DOMContentLoaded', function() {
+            var postContent = localStorage.getItem('postContent');
+            if (postContent) {
+                document.getElementById('postContent').innerHTML = postContent;
+            }
+        });
         </script>
     </body>
 </html>

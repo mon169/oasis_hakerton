@@ -74,8 +74,14 @@ export function saveProductData(pageId, product) {
 }
 
 export function getAllProducts(pageId, callback) {
-  const productsRef = ref(database, `products/${pageId}`);
 
+  if (!pageId || typeof pageId !== 'string') {
+    console.error('Invalid pageId:', pageId);
+    return;
+}
+
+  const productsRef = ref(database, `products/${pageId}`);
+  
   onValue(productsRef, (snapshot) => {
     const data = snapshot.val();
     const products = data ? Object.keys(data).map(key => ({

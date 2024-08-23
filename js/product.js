@@ -2,10 +2,23 @@ import { getAllProducts } from './firebase.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const pageId = document.body.id;
-    const container = document.querySelector(`#${pageId} .row`); // 페이지의 .row 요소 선택
+    const container = document.querySelector('#productList');
+    const regionSelect = document.getElementById('regionSelect'); 
 
     const modal = document.getElementById('productModal');
     const addToCartButton = modal.querySelector('.btn-primary');
+
+    if (regionSelect) {
+        regionSelect.addEventListener('change', function() {
+            const selectedRegion = regionSelect.value;
+            loadProducts(pageId, selectedRegion); // 선택된 지역으로 데이터 로드
+        });
+    } else {
+        console.error('Region select element not found.');
+    }
+    // 페이지 로드 시 기본 데이터 로드
+    const defaultRegion = '전남';
+    loadProducts(pageId, defaultRegion);
 
     // 모달이 표시될 때 제품 정보를 설정
     modal.addEventListener('show.bs.modal', function(event) {
@@ -49,10 +62,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
      //데이터베이스에서 불러오기
-     function loadProducts(page) {
-         
-             const container = document.querySelector('#productList'); // 상품 목록을 표시할 컨테이너 요소
-             getAllProducts(page, (products) => {
+     function loadProducts(pageId, region) {
+             const path = region ? `gift/${region}` : pageId;
+
+             if (!container) {
+                console.error('Product list container not found.');
+                return;
+            }
+
+             if (typeof path !== 'string' || path.includes('[object HTMLDivElement]')) {
+                console.error('Invalid path detected:', path);
+                return;
+            }
+
+             getAllProducts(path, (products) => {
                  if (container) {
                      container.innerHTML = products.map(product => `
                      <div class="col mb-5">
@@ -75,5 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
                  }
              });
          }
-     });
+    })
  
+
+
+    

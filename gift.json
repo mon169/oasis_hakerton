@@ -1,0 +1,43 @@
+{
+    "products": {
+        "gift": {
+            "전남": {
+                "목포": {"name": "[목포] 목포사랑상품권", "price": 10000, "image": "", "description": ""},
+                "여수": {"name": "[여수] 여수사랑상품권", "price": 10000, "image": "", "description": ""},
+                "순천": {"name": "[순천] 순천사랑상품권", "price": 10000, "image": "", "description": ""},
+                "나주": {"name": "[나주] 나주사랑상품권", "price": 10000, "image": "", "description": ""},
+                "담양": {"name": "[담양] 담양사랑상품권", "price": 10000, "image": "", "description": ""},
+                "곡성": {"name": "[곡성] 곡성사랑상품권", "price": 10000, "image": "", "description": ""},
+                "구례": {"name": "[구례] 구례사랑상품권", "price": 10000, "image": "", "description": ""},
+                "고흥": {"name": "[고흥] 고흥사랑상품권", "price": 10000, "image": "", "description": ""},
+                "보성": {"name": "[보성] 보성사랑상품권", "price": 10000, "image": "", "description": ""},
+                "화순": {"name": "[화순] 화순사랑상품권", "price": 10000, "image": "", "description": ""},
+                "장흥": {"name": "[장흥] 장흥사랑상품권", "price": 10000, "image": "", "description": ""},
+                "강진": {"name": "[강진] 강진사랑상품권", "price": 10000, "image": "", "description": ""},
+                "해남": {"name": "[해남] 해남사랑상품권", "price": 10000, "image": "", "description": ""},
+                "영암": {"name": "[영암] 영암사랑상품권", "price": 10000, "image": "", "description": ""},
+                "무안": {"name": "[무안] 무안사랑상품권", "price": 10000, "image": "", "description": ""},
+                "함평": {"name": "[함평] 함평사랑상품권", "price": 10000, "image": "", "description": ""},
+                "영광": {"name": "[영광] 영광사랑상품권", "price": 10000, "image": "", "description": ""},
+                "장성": {"name": "[장성] 장성사랑상품권", "price": 10000, "image": "", "description": ""},
+                "완도": {"name": "[완도] 완도사랑상품권", "price": 10000, "image": "", "description": ""},
+                "진도": {"name": "[진도] 진도사랑상품권", "price": 10000, "image": "", "description": ""},
+                "신안": {"name": "[신안] 신안사랑상품권", "price": 10000, "image": "", "description": ""}
+            },
+            "전북": {
+                "전주": {"name": "[전주] 전주사랑상품권", "price": 10000, "image": "", "description": ""},
+                "군산": {"name": "[군산] 군산사랑상품권", "price": 10000, "image": "", "description": ""},
+                "남원": {"name": "[남원] 남원사랑상품권", "price": 10000, "image": "", "description": ""},
+                "김제": {"name": "[김제] 김제사랑상품권", "price": 10000, "image": "", "description": ""},
+                "완주": {"name": "[완주] 완주사랑상품권", "price": 10000, "image": "", "description": ""},
+                "진안": {"name": "[진안] 진안고원행복상품권", "price": 10000, "image": "", "description": ""},
+                "무주": {"name": "[무주] 무주사랑상품권", "price": 10000, "image": "", "description": ""},
+                "장수": {"name": "[장수] 장수사랑상품권", "price": 10000, "image": "", "description": ""},
+                "임실": {"name": "[임실] 임실사랑상품권", "price": 10000, "image": "", "description": ""},
+                "순창": {"name": "[순창] 순창사랑상품권", "price": 10000, "image": "", "description": ""},
+                "고창": {"name": "[고창] 고창사랑상품권", "price": 10000, "image": "", "description": ""},
+                "부안": {"name": "[부안] 부안사랑상품권", "price": 10000, "image": "", "description": ""}
+            }
+        }
+    }
+}

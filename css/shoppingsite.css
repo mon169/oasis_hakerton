@@ -92,3 +92,10 @@
     width: 500px;
     height: 500px;
   }
+
+  .dropdown-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}

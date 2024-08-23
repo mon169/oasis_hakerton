@@ -23,6 +23,8 @@
             font-family: "Gowun Dodum", sans-serif;
         }
     </style>
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     </head>
     <body>
         <!-- Navigation-->
@@ -91,7 +93,7 @@
                             </dl>
                         </div>
                         <div class="cont">
-                            <textarea placeholder="내용 입력">
+                            <textarea name="content" id="editor8">
 요즘 일에 너무 지쳐서 정읍에서 힐링하러 갈만한 곳 있을까요?</textarea>
                         </div>
                     </div>
@@ -116,6 +118,8 @@
                     window.location.href = "communitylist.html?delete=" + index;
                 }
             }
+            // CKEditor 초기화
+            CKEDITOR.replace('editor8');
         </script>
     </body>
 </html>

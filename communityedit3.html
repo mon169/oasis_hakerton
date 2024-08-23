@@ -23,6 +23,8 @@
             font-family: "Gowun Dodum", sans-serif;
         }
     </style>
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     </head>
     <body>
         <!-- Navigation-->
@@ -91,7 +93,7 @@
                             </dl>
                         </div>
                         <div class="cont">
-                            <textarea placeholder="내용 입력">
+                            <textarea name="content" id="editor3">
 생동! 감동! 서동! 금마 서동 생태공원으로 떠나볼까요?
 금마서동생태공원은 금마관광단지 내 '서동농촌테마공원', '금마저수지' 및 '금마 서동공원'이 어우러져 있어 역사문화, 자연생태, 농촌체험을 한 데서 경험할 수 있는 곳이에요!
 <img src="community image/금마서동생태공원 1.jpg" alt="금마서동생태공원 1" width="700" height="500">
@@ -124,6 +126,8 @@
                     window.location.href = "communitylist.html?delete=" + index;
                 }
             }
+            // CKEditor 초기화
+            CKEDITOR.replace('editor3');
         </script>
     </body>
 </html>

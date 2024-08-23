@@ -23,6 +23,8 @@
             font-family: "Gowun Dodum", sans-serif;
         }
     </style>
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     </head>
     <body>
         <!-- Navigation-->
@@ -91,7 +93,7 @@
                             </dl>
                         </div>
                         <div class="cont">
-                            <textarea placeholder="내용 입력">
+                            <textarea name="content" id="editor9">
 어린아이들이 좋아할 만한 곳이 있을까요?</textarea>
                         </div>
                     </div>
@@ -116,6 +118,8 @@
                         window.location.href = "communitylist.html?delete=" + index;
                     }
                 }
+                // CKEditor 초기화
+                CKEDITOR.replace('editor9');
             </script>
     </body>
 </html>

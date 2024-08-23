@@ -23,6 +23,8 @@
             font-family: "Gowun Dodum", sans-serif;
         }
     </style>
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     </head>
     <body>
         <!-- Navigation-->
@@ -91,7 +93,7 @@
                             </dl>
                         </div>
                         <div class="cont">
-                            <textarea placeholder="내용 입력">
+                            <textarea name="content" id="editor4">
 오늘은 단풍으로 유명한 내장산 국립공원으로 여행을 떠나봤어요.
 <img src="community image/내장산국립공원 1.png" alt="내장산국립공원 1" width="700" height="500">
 입장료는 따로 없고 내장사 문화재관람료는 3000원 이라고 해요.
@@ -130,6 +132,8 @@
                     window.location.href = "communitylist.html?delete=" + index;
                 }
             }
+            // CKEditor 초기화
+            CKEDITOR.replace('editor4');
         </script>
     </body>
 </html>

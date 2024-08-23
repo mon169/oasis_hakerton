@@ -23,6 +23,8 @@
             font-family: "Gowun Dodum", sans-serif;
         }
     </style>
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     </head>
     <body>
         <!-- Navigation-->
@@ -91,7 +93,7 @@
                             </dl>
                         </div>
                         <div class="cont">
-                            <textarea placeholder="내용 입력">
+                            <textarea name="content" id="editor5">
 안녕하세요! 오늘은 프랑스미슐랭그린가이드에서 무려! 만점을 받은 대한민국 명실상부 최고의 명소인 반디랜드로 떠나볼게요!!
 슝~~~~~~~~~~~~~~~
 <img src="community image/반디랜드 1.jpg" alt="반디랜드 1" width="700" height="500">
@@ -137,6 +139,8 @@
                     window.location.href = "communitylist.html?delete=" + index;
                 }
             }
+            // CKEditor 초기화
+            CKEDITOR.replace('editor5');
         </script>
     </body>
 </html>

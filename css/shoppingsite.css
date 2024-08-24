@@ -48,6 +48,7 @@
     justify-content: center;
     align-items: center;
 }
+/*로컬푸드 상품 등록 버튼*/
 .submit-btn {
     background-color: #476e37;
     color: white;
@@ -58,6 +59,7 @@
 .submit-btn:hover {
     background-color: #3d5e2f;
 }
+
 .button-container {
     display: flex;
     justify-content: center;
@@ -66,6 +68,7 @@
     gap: 10px;
     margin: 0 auto 30px;
 }
+
 .background {
     position: fixed;
     top: 0;
@@ -98,4 +101,19 @@
     justify-content: flex-start;
     align-items: center;
     padding: 0.5rem 1rem;
+}
+
+/*마일리지 아이콘*/
+.points-icon {
+    color: #74cb51;
+    display: inline-flex;
+    align-items: center; 
+    background-size: 30px 30px;
+    margin-right: 0.5rem;
+    line-height: 1;
+}
+
+#mypage .points-icon {
+    margin-right: 2rem; /* mypage 페이지에서만 간격을 다르게 설정 */
+    font-size: 1.5rem;
 }

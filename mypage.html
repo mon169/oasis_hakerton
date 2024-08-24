@@ -20,7 +20,9 @@
     <link href="css/mainicon.css" rel="stylesheet" />
     <!-- 로그인&회원가입 모달 css -->
     <link href="css/login_sign.css" rel="stylesheet" />
-
+    <link href="css/shoppingsite.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/ff0ee1a3e7.js" crossorigin="anonymous"></script>
+`
     <style>
         * {
             font-family: "Gowun Dodum", sans-serif;
@@ -36,9 +38,9 @@
         .logged-in-button img {
             height: 3rem;
         }
-    </style>
-  </head>
-<body>
+            </style>
+        </head>
+        <body id="mypage">
         <!-- Navigation-->
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
@@ -86,68 +88,17 @@
                 <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
                     <div class="text-center my-5">
                         <img class="img-fluid rounded-circle mb-4" src="icon/로그인이미지.png" alt="..." />
-                        <h1 class="fs-3 fw-bolder">유소민</h1>
-                        <h2>Email : </h2>
-                    </div>
-                </header>
-                <!-- Content section-->
-                <section class="py-5 bg-light">
-                    <div class="container px-4 px-lg-5 mt-5">
-                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <!-- Product image-->
-                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">현재 등급 : </h5>
-                                            <!-- Product price-->
-                                            적립 마일리지 : 
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">더보기</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <!-- Sale badge-->
-                                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                                    <!-- Product image-->
-                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">Special Item</h5>
-                                            <!-- Product reviews-->
-                                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                            </div>
-                                            <!-- Product price-->
-                                            <span class="text-muted text-decoration-line-through">$20.00</span>
-                                            $18.00
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                                </div>
-                            </div>
+                        <!--<사용자 정보 표시> -->
+                        <h1 id="user-name" class="fs-3 fw-bolder"></h1>
+                        <h2 id="user-email"></h2>
+                        <div class="d-flex align-items-center"></div>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-leaf points-icon"></i>
+                            <h3 id="user-points"></h3>
                         </div>
                     </div>
-                </section>
+                </header>
+                
 
     <!-- Content section... -->
     <div class="cd-signin-modal js-signin-modal">
@@ -293,5 +244,7 @@
     <script src="js/scripts.js"></script>
     <script src="js/placeholders.min.js"></script> <!-- polyfill for the HTML5 placeholder attribute -->
     <script src="js/main.js"></script> <!-- Resource JavaScript -->
+    <script src="js/firebase.js" type="module"></script>
+    <script src="js/mypage.js" type="module"></script>
 </body>
 </html>

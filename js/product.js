@@ -13,12 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedRegion = regionSelect.value;
             loadProducts(pageId, selectedRegion); // 선택된 지역으로 데이터 로드
         });
-    } else {
-        console.error('Region select element not found.');
-    }
+    } 
+
     // 페이지 로드 시 기본 데이터 로드
-    const defaultRegion = '전남';
-    loadProducts(pageId, defaultRegion);
+    if (pageId === 'gift') {
+        const defaultRegion = '전남';
+        loadProducts(pageId, defaultRegion);
+    } else {
+        loadProducts(pageId);
+    }
 
     // 모달이 표시될 때 제품 정보를 설정
     modal.addEventListener('show.bs.modal', function(event) {

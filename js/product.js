@@ -66,13 +66,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
      //데이터베이스에서 불러오기
      function loadProducts(pageId, region) {
-             const path = region ? `gift/${region}` : pageId;
+            let path;
 
-             if (!container) {
-                console.error('Product list container not found.');
-                return;
+            if (pageId === 'gift' && region) {
+                path = `gift/${region}`; // gift 페이지에서는 region을 사용해 경로 설정
+            } else {
+                path = pageId; // ecoProducts와 localFood는 pageId만 사용
             }
-
+            
              if (typeof path !== 'string' || path.includes('[object HTMLDivElement]')) {
                 console.error('Invalid path detected:', path);
                 return;

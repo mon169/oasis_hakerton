@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }).then((productId) => {
                 console.log('Product saved with ID:', productId);
                 alert('상품이 성공적으로 등록되었습니다!');
+                loadProducts(pageId);
             })
             .catch((error) => {
                 console.error('Error submitting product:', error);
@@ -47,10 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
     loadProducts(pageId);
 
     //데이터베이스에서 불러오기
-    function loadProducts(page) {
-        
+    function loadProducts(pageId) {
             const container = document.querySelector('#productList'); // 상품 목록을 표시할 컨테이너 요소
-            getAllProducts(page, (products) => {
+            getAllProducts(pageId, (products) => {
                 if (container) {
                     container.innerHTML = products.map(product => `
                     <div class="col mb-5">

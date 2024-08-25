@@ -48,7 +48,7 @@
                     <!-- 적립 마일리지 표시 -->
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-leaf points-icon"></i> <!-- 아이콘 -->
-                        <span id="user-points" style="margin-right: 30px;"></span> <!-- 마일리지 표시 -->
+                        <span id="user-points1" style="margin-right: 30px;"></span> <!-- 마일리지 표시 -->
                     </div>
                     <a class="btn btn-outline-dark" href="shopping_cart.html">
                         <i class="bi-cart-fill me-1"></i>
@@ -83,8 +83,9 @@
                 </div>
             </div>
         </section>
+        
 
-        <!-- Modal -->
+        <!-- 상세 정보 확인 팝업 -->
         <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -101,6 +102,44 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                         <button type="button" class="btn btn-primary">장바구니 추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 구매 팝업 -->
+        <div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">상품 구매</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="modalProductName"></h5>
+                        <p class="modalProductPrice">상품 금액 : </p>
+                        <!-- 배송지 -->
+                        <div class="mb-3">
+                            <label for="shoppingAddress" class="form-label">배송지</label>
+                            <input type="text" class="form-control" id="shoppingAddress" placeholder="배송지를 입력하세요" required>
+                        </div>
+                        <!-- 마일리지 -->
+                        <div class="mb-3">
+                            <i class="fa-solid fa-leaf points-icon"></i>
+                            <label for="mileage" class="form-label">마일리지</label>
+                            <h3 id="user-points2" style="font-size: 15px;">0</h3> <!-- 기본값 설정 -->
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="mileage" placeholder="사용할 포인트를 입력하세요" required>
+                                <button type="button" id="usePointsButton" class="btn btn-primary">사용</button> <!-- 사용 버튼 -->
+                            </div>
+                        </div>
+                        <p id="finalPrice">결제 금액 : </p>      
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="finalPurchaseButton">구매</button>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
+import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,8 +22,9 @@ const analytics = getAnalytics(app);
 const auth = getAuth();
 const database = getDatabase(app);
 const storage = getStorage(app);
+const db = getFirestore(app);
 
-export { database, storage, ref, set, push, onValue, storageRef, uploadBytes, getDownloadURL };
+export { database, storage, ref, set, push, onValue, storageRef, uploadBytes, getDownloadURL, db, doc, updateDoc, getDoc, auth };
 
 // Function to sign up a new user
 export function signUp(email, password) {
@@ -96,6 +98,20 @@ export function getAllProducts(pageId, callback) {
 }, (error) => {
     console.error('Error loading products:', error);
 });
+}
+
+
+// 상점 (구매) - 마일리지 차감 업데이트
+export async function updateUserPoints(userId, newPoints) {
+  const userRef = doc(db, "users", userId);
+
+  try {
+    await updateDoc(userRef, { points: newPoints });
+    console.log("User points updated successfully.");
+  } catch (error) {
+    console.error("Error updating user points: ", error);
+    throw error;
+  }
 }
 
     

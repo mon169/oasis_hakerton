@@ -18,11 +18,14 @@ onAuthStateChanged(auth, async (user) => {
         // HTML 요소에 사용자 정보 표시
         const userNameElement = document.getElementById('user-name');
         const userEmailElement = document.getElementById('user-email');
-        const userPointsElement = document.getElementById('user-points');
+        const userPointsElement1 = document.getElementById('user-points1');
+        const userPointsElement2 = document.getElementById('user-points2');
+
 
         if (userNameElement) userNameElement.textContent = `${userData.username}`;
         if (userEmailElement) userEmailElement.textContent = `Email: ${userData.email}`;
-        if (userPointsElement) userPointsElement.textContent = `마일리지: ${userData.points}`;
+        if (userPointsElement1) userPointsElement1.textContent = `마일리지: ${userData.points}`;
+        if (userPointsElement2) userPointsElement2.textContent = `보유: ${userData.points}`;
       } else {
         console.log("No such document!");
       }

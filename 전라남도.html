@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -93,7 +94,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="mainsite.html">푸른발자국</a>
+        <a class="navbar-brand" href="mainsite.html">ECO-FRENDLY TRIP</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -112,10 +113,10 @@
                 class="nav-link active"
                 aria-current="page"
                 href="mainsite.html"
-                >여행 가이드</a
+                >Home</a
               >
             </li>
-            <li class="nav-item"><a class="nav-link" href="communitylist.html">커뮤니티</a></li>
+            <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -124,7 +125,7 @@
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                >로컬 스토어</a
+                >Shop</a
               >
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
@@ -156,6 +157,12 @@
     <section class="py-5">
       <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
+          <center>
+            <h1>
+              친환경 여행지가 늘어날수록 지구도 살아나요!<br /><br />전남에는
+              어디어디 숨어있을까요?
+            </h1>
+          </center>
           <!--opacity 0.8~는 테두리값임 나중에 쓸수도 있어서 안합침-->
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -1606,18 +1613,18 @@
                 />
               </a>
               <a
-              data-bs-toggle="modal"
-              data-bs-target="#목포"
-              data-id="목포_외달도"
-            >
-              <image
-                href="icon/나무마커.png"
-                x="540"
-                y="730"
-                width="7rem"
-                height="7rem"
-              />
-            </a>
+                data-bs-toggle="modal"
+                data-bs-target="#목포"
+                data-id="목포_외달도"
+              >
+                <image
+                  href="icon/나무마커.png"
+                  x="540"
+                  y="730"
+                  width="7rem"
+                  height="7rem"
+                />
+              </a>
             </g>
           </svg>
         </div>
@@ -4460,7 +4467,7 @@
           const data = docSnap.data();
 
           // 콘솔에 데이터 출력
-          console.log(`Fetched data for locationId: ${locationId}`, data);
+          console.log("Fetched data for locationId:", locationId, data);
 
           // 모달 내부 요소를 업데이트
           modalElement.querySelector("#modal-name").textContent =
@@ -4483,46 +4490,45 @@
       }
 
       async function fetchPlaces() {
-        // 첫 번째 컬렉션 "여행지"에서 데이터 가져오기
-        const travelQuerySnapshot = await getDocs(collection(db, "여행지"));
+        const dataQuerySnapshot = await getDocs(collection(db, "여행지"));
         let placesArray = [];
-        travelQuerySnapshot.forEach((doc) => {
-          placesArray.push({ ...doc.data(), id: doc.id });
-        });
 
-        // 두 번째 컬렉션 "data"에서 데이터 가져오기
-        const dataQuerySnapshot = await getDocs(collection(db, "data"));
         dataQuerySnapshot.forEach((doc) => {
           placesArray.push({ ...doc.data(), id: doc.id });
         });
 
         if (placesArray.length === 0) {
-          console.log("No documents found in '여행지' or 'data' collections!");
+          console.log("No documents found in '여행지' collections!");
           return;
         }
 
+        // 랜덤으로 섞고, 4개의 문서만 선택
         placesArray = placesArray.sort(() => Math.random() - 0.5);
-        const placesContainer = document.getElementById("places");
         const selectedPlaces = placesArray.slice(0, 4);
+
+        const placesContainer = document.getElementById("places");
 
         selectedPlaces.forEach((place) => {
           const placeDiv = document.createElement("div");
           placeDiv.classList.add("col", "mb-5");
           placeDiv.innerHTML = `
-        <div class="card h-100">
-          <img class="card-img-top" src="${place.imageUrl}" alt="${place.name}" />
-          <div class="card-body p-4">
-            <div class="text-center">
-              <h5 class="fw-bolder">${place.name}</h5>
-              ${place.description}
-            </div>
-          </div>
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-              <a class="btn btn-outline-dark mt-auto" href="#" data-id="${place.id}" data-bs-toggle="modal" data-bs-target="#${place.id}">View options</a>
-            </div>
-          </div>
-        </div>`;
+            <div class="card h-100">
+              <img class="card-img-top" src="${place.imageUrl}" alt="${place.name}" />
+              <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                ${place.region}
+              </div>
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <h5 class="fw-bolder">${place.name}</h5>
+                  ${place.description}
+                </div>
+              </div>
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark mt-auto" href="#" data-id="${place.id}" data-bs-toggle="modal" data-bs-target="#${place.id}">더보기</a>
+                </div>
+              </div>
+            </div>`;
           placesContainer.appendChild(placeDiv);
         });
       }

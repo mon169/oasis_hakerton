@@ -127,16 +127,10 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Adding to cart:', product);
             alert('장바구니에 추가되었습니다!');
 
-            // 장바구니에 제품 추가
+            // 장바구니에 제품 추가 (로컬 저장소 사용 예시)
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
-
-            // 모달 창 닫기
-            const modalInstance = bootstrap.Modal.getInstance(modal); // 현재 모달 인스턴스 가져오기
-            if (modalInstance) {
-            modalInstance.hide(); // 모달 숨기기
-        }
         });
     } else {
         console.error('Add to Cart button not found.');

@@ -3911,6 +3911,17 @@
           markerImageOption
         );
 
+        // 두 번째 마커 이미지
+        var markerImageSrc2 = "icon/로드뷰마커.png"; // 두 번째 마커 이미지 경로
+        var markerImageSize2 = new kakao.maps.Size(50, 54); // 두 번째 마커 이미지의 크기
+        var markerImageOption2 = { offset: new kakao.maps.Point(25, 54) }; // 두 번째 마커 이미지의 옵션
+
+        var markerImage2 = new kakao.maps.MarkerImage(
+          markerImageSrc2,
+          markerImageSize2,
+          markerImageOption2
+        );
+
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
           position: mapCenter, // 마커가 표시될 위치
@@ -3943,7 +3954,7 @@
 
         // 드래그가 가능한 마커를 생성합니다
         var draggableMarker = new kakao.maps.Marker({
-          image: markerImage,
+          image: markerImage2,
           position: mapCenter,
           draggable: true,
         });

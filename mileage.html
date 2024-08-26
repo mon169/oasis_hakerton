@@ -1,39 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Shop Item - Start Bootstrap Template</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <!-- 주아체 폰트임 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet" />
     <!-- 메인화면에 대한 효과 css -->
     <link href="css/mainicon.css" rel="stylesheet" />
     <!-- 로그인&회원가입 모달 css -->
     <link href="css/login_sign.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"></script>
 
     <style>
-      * body {
-      font-family: "Gowun Dodum", sans-serif;
-    }
+      * {
+        font-family: "Gowun Dodum", sans-serif;
+      }
+
+      .card-img-top {
+        height: 50%;
+      }
 
       /* 로그인 후 적용될 CSS 스타일 */
       .logged-in-button {
@@ -49,56 +47,54 @@
         width: 12rem;
       }
     </style>
+    <style>
+      * {
+        font-family: "Gowun Dodum", sans-serif;
+        color: black;
+      }
+      .card-img-top {
+        height: 200px;
+        object-fit: cover;
+      }
+      .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .card-body {
+        flex-grow: 1;
+      }
+      .card-footer {
+        margin-top: auto;
+      }
+    </style>
   </head>
   <body>
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">푸른발자국</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#!">여행 가이드</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="communitylist.html">커뮤니티</a></li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >로컬 스토어</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="local_food.html">로컬푸드</a>
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="eco_product.html"
-                    >친환경 제품</a
-                  >
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="gift.html">상품권 교환</a>
-                </li>
+          <a class="navbar-brand" href="mainsite.html"><img
+          src="icon/푸른발자국.png"
+          style="width: 2.5rem"
+        />&nbsp;푸른발자국</a
+      ></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                  <li class="nav-item"><a class="nav-link active" aria-current="page" href="tripmain.html">여행 가이드</a></li>
+                  <li class="nav-item"><a class="nav-link" href="communitylist.html">커뮤니티</a></li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" id="navbarDropdown" href="local_food.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">로컬 스토어</a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="local_food.html">로컬푸드</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="dropdown-item" href="eco_product.html">친환경 제품</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="dropdown-item" href="gift.html">상품권 교환</a></li>
+                      </ul>
+                  </li>
+                  <li class="nav-item"><a class="nav-link" href="여행지추천시스템.html">나만의 여행지</a></li>
               </ul>
-            </li>
-          </ul>
 
           <li class="nav-item dropdown d-none" id="userDropdown">
             <a
@@ -164,199 +160,120 @@
         <div class="text-center my-5">
             <h1>여행지 목록을 살펴봐요!</h1>
         </div>
-      <div class="container px-4 px-lg-5 mt-5">
-        <div
-          class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-        >
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                alt="..."
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">현재 등급 :</h5>
-                  <!-- Product price-->
-                  적립 마일리지 :
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#">더보기</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Sale badge-->
-              <div
-                class="badge bg-dark text-white position-absolute"
-                style="top: 0.5rem; right: 0.5rem"
-              >
-                Sale
-              </div>
-              <!-- Product image-->
-              <img
-                class="card-img-top"
-                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                alt="..."
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">Special Item</h5>
-                  <!-- Product reviews-->
-                  <div
-                    class="d-flex justify-content-center small text-warning mb-2"
-                  >
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
+        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+          <div class="carousel-inner" id="places">
+            <!-- Firebase에서 데이터를 동적으로 추가 -->
+            <div class="portfolio-modal modal fade" id="placeModal" tabindex="-1" aria-labelledby="placeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header border-0">
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <!-- Product price-->
-                  <span class="text-muted text-decoration-line-through"
-                    >$20.00</span
-                  >
-                  $18.00
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#"
-                    >Add to cart</a
-                  >
+                  <div class="modal-body text-center pb-5">
+                    <div class="container">
+                      <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                          <!-- Portfolio Modal - Title -->
+                          <h2 id="modal-name" class="portfolio-modal-title text-secondary text-uppercase mb-0">여행지 이름</h2>
+                          <br />
+                          <!-- Icon Divider -->
+                          <div class="divider-custom">
+                            <div class="divider-custom-line"></div>
+                            <div class="divider-custom-icon">
+                              <i class="fas fa-star"></i>
+                            </div>
+                            <div class="divider-custom-line"></div>
+                          </div>
+                          <h3 id="modal-description">
+                            <br />여행지 소개<br /><br />
+                          </h3>
+                          <br />
+                          <!-- Portfolio Modal - Image -->
+                          <img id="modal-image" class="img-fluid rounded mb-5" src="icon/전북대.png" />
+                          <h4 id="modal-details">설명</h4>
+                          <br />
+                          <h4 id="modal-special">스페셜</h4>
+                          <!--여행지 주소 -->
+                          <br />
+                          <h6 id="modal-address"><br /><br />주소</h6>
+                          <br />
+                          <!-- Map Container -->
+                          <div id="modal-map" style="width: 100%; height: 300px;"></div>
+                          <br />
+                          <button class="btn btn-primary" data-bs-dismiss="modal">
+                            <i class="fas fa-xmark fa-fw"></i>
+                            닫기
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-      </div>
-      <div></div>
     </section>
 
     <!-- Content section... -->
     <div class="cd-signin-modal js-signin-modal">
       <div class="cd-signin-modal__container">
-        <ul
-          class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger"
-        >
+        <ul class="cd-signin-modal__switcher js-signin-modal-switcher js-signin-modal-trigger">
           <li><a href="#0" data-signin="login" data-type="login">로그인</a></li>
-          <li>
-            <a href="#0" data-signin="signup" data-type="signup">회원가입</a>
-          </li>
+          <li><a href="#0" data-signin="signup" data-type="signup">회원가입</a></li>
         </ul>
-        <div
-          class="cd-signin-modal__block js-signin-modal-block"
-          data-type="login"
-        >
+        <div class="cd-signin-modal__block js-signin-modal-block" data-type="login">
           <form class="cd-signin-modal__form" id="login-form">
             <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
-                for="signin-email"
-                >이메일</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signin-email"
-                type="email"
-                placeholder="E-mail"
-                required
-              />
+              <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signin-email">이메일</label>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-email" type="email" placeholder="E-mail" required />
             </p>
             <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
-                for="signin-password"
-                >비밀번호</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signin-password"
-                type="password"
-                placeholder="Password"
-                required
-              />
+              <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signin-password">비밀번호</label>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signin-password" type="password" placeholder="Password" required />
             </p>
             <p class="cd-signin-modal__fieldset">
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width"
-                type="submit"
-                value="Login"
-              />
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Login" />
             </p>
           </form>
         </div>
-        <div
-          class="cd-signin-modal__block js-signin-modal-block"
-          data-type="signup"
-        >
+        <div class="cd-signin-modal__block js-signin-modal-block" data-type="signup">
           <form class="cd-signin-modal__form" id="signup-form">
             <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace"
-                for="signup-username"
-                >이름</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signup-username"
-                type="text"
-                placeholder="Username"
-                required
-              />
+              <label class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace" for="signup-username">이름</label>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-username" type="text" placeholder="Username" required />
             </p>
             <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
-                for="signup-email"
-                >이메일</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signup-email"
-                type="email"
-                placeholder="E-mail"
-                required
-              />
+              <label class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace" for="signup-email">이메일</label>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-email" type="email" placeholder="E-mail" required />
             </p>
             <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
-                for="signup-password"
-                >비밀번호</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signup-password"
-                type="password"
-                placeholder="Password"
-                required
-              />
+              <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">비밀번호</label>
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="password" placeholder="Password" required />
             </p>
             <p class="cd-signin-modal__fieldset">
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width"
-                type="submit"
-                value="Create account"
-              />
+              <input class="cd-signin-modal__input cd-signin-modal__input--full-width" type="submit" value="Create account" />
             </p>
           </form>
         </div>
       </div>
     </div>
-     
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Your Website 2023
+        </p>
+      </div>
+    </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Firebase JS -->
@@ -493,10 +410,281 @@
 
       // Kakao Map and target locations
       const targetLocations = [
-        { name: "써미트", latitude: 35.961, longitude: 126.7366 },
-        { name: "광화문", latitude: 37.5759, longitude: 126.9769 },
-        { name: "여의도", latitude: 37.5264, longitude: 126.9334 },
-        { name: "조은빌", latitude: 35.8428, longitude: 127.1436 }
+      { name: "라마다 호텔", latitude: 35.1520063061274, longitude: 126.85052502344 },
+        //전북
+        { name: "금강미래체험관", latitude: 35.93659, longitude: 126.7470},
+        { name: "청암산 에코라운드", latitude: 35.93659, longitude: 126.7470},
+        { name: "금강생태습지공원", latitude: 36.02081, longitude: 126.7672},
+        { name: "금마 서동 생태관광지", latitude: 36.00152, longitude: 127.0610},
+        { name: "아가페정원", latitude: 36.01979, longitude: 126.9564},
+        { name: "용안습지생태공원", latitude: 36.13420, longitude: 126.9293},
+        { name: "구룡마을 대나무숲", latitude: 36.01615, longitude: 127.0521},
+        { name: "솔티 달빛 생태숲", latitude: 35.50979, longitude: 126.8921},
+        { name: "내장산 국립공원", latitude: 35.49355, longitude: 126.9279},
+        { name: "정읍 구절초 지방정원", latitude: 35.57972, longitude: 127.0236},
+        { name: "백두대간 생태관광벨트", latitude: 35.39770, longitude: 127.5076},
+        { name: "지리산 허브밸리", latitude: 35.43515, longitude: 127.5486},
+        { name: "김제 벽골제 생태농경원", latitude: 35.75753, longitude: 126.8549},
+        { name: "모악산도립공원", latitude: 35.72239, longitude: 127.0563},
+        { name: "미즈노씨네 트리하우스", latitude: 35.85309, longitude: 126.8513},
+        { name: "경천 싱그랭이 에코빌", latitude: 35.98804, longitude: 127.3050},
+        { name: "대둔산도립공원", latitude: 36.11730, longitude: 127.3329},
+        { name: "대아수목원", latitude: 35.98694, longitude: 127.3164 },
+        { name: "지오파크", latitude: 35.74877, longitude: 127.4159 },
+        { name: "용담호자연생태습지공원", latitude: 35.81828, longitude: 127.4583 },
+        { name: "마이산", latitude: 35.75712, longitude: 127.3938 },
+        { name: "반딧불이 생태관광지", latitude: 36.01288, longitude: 127.7586 },
+        { name: "덕유산국립공원", latitude: 35.88328, longitude: 127.7788 },
+        { name: "무주 구천동", latitude: 35.90079, longitude: 127.7752 },
+        { name: "칠연계곡", latitude: 35.85791, longitude: 127.6954 },
+        { name: "금강 첫물 뜬봉샘 생태관광지", latitude: 35.59288, longitude: 127.5012 },
+        { name: "장수물빛공원", latitude: 35.54076, longitude: 127.5416 },
+        { name: "뜬봉샘생태공원", latitude: 35.59225, longitude: 127.5013 },
+        { name: "성수산 왕의 숲", latitude: 35.63911, longitude: 127.4067 },
+        { name: "옥정호", latitude: 35.63322, longitude: 127.1517 },
+        { name: "섬진강 장군목 생태관광지", latitude: 35.46340, longitude: 127.2017 },
+        { name: "강천산 군립공원", latitude: 35.40880, longitude: 127.0675 },
+        { name: "운곡 람사르습지", latitude: 35.44117, longitude: 126.6521 },
+        { name: "선운산 도립공원", latitude: 35.50273, longitude: 126.5867 },
+        { name: "상하농원", latitude: 35.44725, longitude: 126.4517 },
+        { name: "학원관광농장", latitude: 35.37674, longitude: 126.5419 },
+        //전남
+        {
+          name: "전라병영성",
+          latitude: 34.7200812774994,
+          longitude: 126.817192536148
+        },
+        {
+          "name": "팔영산 편백 치유의 숲",
+          "latitude": 34.6185585869675,
+          "longitude": 127.409828697099
+        },
+        {
+          "name": "소록도",
+          "latitude": 34.5112312146781,
+          "longitude": 127.118957586323
+        },
+        {
+          "name": "쑥섬",
+          "latitude": 34.4657701048248,
+          "longitude": 127.453678331784
+        },
+        {
+          "name": "섬진강 도깨비마을",
+          "latitude": 35.2536935114039,
+          "longitude": 127.362611581324
+        },
+        {
+          "name": "가정농촌체험휴양마을",
+          "latitude": 35.2272759096785,
+          "longitude": 127.370411896029
+        },
+        {
+          "name": "농부네 텃밭도서관",
+          "latitude": 35.0146273350323,
+          "longitude": 127.726010561907
+        },
+        {
+          "name": "사라실 라벤더 치유정원",
+          "latitude": 34.9519995294512,
+          "longitude": 127.62312381654
+        },
+        {
+          "name": "섬진강 대나무숲길",
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "name": "야생화 테마랜드",
+          "latitude": 35.2825635539201,
+          "longitude": 127.450394613627
+        },
+        {
+          "name": "전라남도 산림자원연구소",
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "name": "금성산 생태숲",
+          "latitude": 35.0673455057139,
+          "longitude": 126.69277188547
+        },
+        {
+          "name": "관방제림",
+          "latitude": 35.3237317684995,
+          "longitude": 126.993698253483
+        },
+        {
+          "name": "담양시장",
+          "latitude": 35.3227985582982,
+          "longitude": 126.980490105062
+        },
+        {
+          "name": "추월산",
+          "latitude": 35.4023440740539,
+          "longitude": 126.999600612393
+        },
+        {
+          "name": "입암산 생태공원",
+          "latitude": 34.7936386769176,
+          "longitude": 126.419501090581
+        },
+        {
+          "name": "외달도",
+          "latitude": 34.7817287658908,
+          "longitude": 126.296369961337
+        },
+        {
+          "name": "양림동 펭귄마을",
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "name": "광주호 호수생태원",
+          "latitude": 35.1842189479917,
+          "longitude": 127.001121393505
+        },
+        {
+          "name": "황토갯벌랜드",
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "name": "무안 감풀마을 [농촌전통테마]",
+          "latitude": 35.0613021302547,
+          "longitude": 126.40604290316
+        },
+        {
+          "name": "율포해수욕장",
+          "latitude": 34.6700292567993,
+          "longitude": 127.08902412779
+        },
+        {
+          "name": "대한다원 보성녹차밭",
+          "latitude": 34.7186439977069,
+          "longitude": 127.080224519812
+        },
+        {
+          "name": "순천만국가정원",
+          "latitude": 34.928871680184,
+          "longitude": 127.500801495864
+        },
+        {
+          "name": "꽃마차마을",
+          "latitude": 34.9391162079133,
+          "longitude": 127.354430819982
+        },
+        {
+          "name": "세계거석 테마파크",
+          "latitude": 34.9887126145985,
+          "longitude": 126.915978533123
+        },
+        {
+          "name": "무등산 양떼목장",
+          "latitude": 35.0953031816714,
+          "longitude": 127.01187720858
+        },
+        {
+          "name": "독립운동 역사체험마을",
+          "latitude": 34.5858000170289,
+          "longitude": 126.644200287827
+        },
+        {
+          "name": "4est수목원",
+          "latitude": 34.4532436533582,
+          "longitude": 126.595524949541
+        },
+        {
+          "name": "농촌체험마을 모평",
+          "latitude": 35.1757361991292,
+          "longitude": 126.554257908643
+        },
+        {
+          "name": "함평 향교리 느티나무·팽나무·개서어나무 숲",
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "name": "국립진도자연휴양림",
+          "latitude": 34.3575366989737,
+          "longitude": 126.186438767693
+        },
+        {
+          "name": "신비의 바닷길",
+          "latitude": 34.4272243458804,
+          "longitude": 126.351358339902
+        },
+        {
+          "name": "물문화관",
+          "latitude": null,
+          "longitude": null
+        },
+        {
+          "name": "정남진 편백숲 우드랜드",
+          "latitude": 34.6696032763135,
+          "longitude": 126.933669158541
+        },
+        {
+          "name": "홍길동테마파크",
+          "latitude": 35.3186207091425,
+          "longitude": 126.726557828707
+        },
+        {
+          "name": "축령산 편백숲(편백치유의숲)",
+          "latitude": 35.3482990088632,
+          "longitude": 126.731023854647
+        },
+        {
+          "name": "보길도 윤선도 원림",
+          "latitude": 34.1651559131169,
+          "longitude": 126.558046627228
+        },
+        {
+          "name": "주도(천연기념물28호)",
+          "latitude": 34.3165204882084,
+          "longitude": 126.761150423611
+        },
+        {
+          "name": "전라남도 농업박물관",
+          "latitude": 34.777331067574,
+          "longitude": 126.459043836676
+        },
+        {
+          "name": "월출산 국립공원",
+          "latitude": 34.7538852757145,
+          "longitude": 126.659102995752
+        },
+        {
+          "name": "칠산타워",
+          "latitude": 35.1686337149423,
+          "longitude": 126.360306734241
+        },
+        {
+          "name": "숲쟁이공원",
+          "latitude": 35.3644850486412,
+          "longitude": 126.43460738044
+        },
+        {
+          "name": "여수 금오도 비렁길 5코스",
+          "latitude": 34.5996909352951,
+          "longitude": 127.744305750673
+        },
+        {
+          "name": "고소천사벽화마을",
+          "latitude": 34.738913948997,
+          "longitude": 127.738153514117
+        },
+        {
+          "name": "내촌마을 돌담",
+          "latitude": 34.746229918763,
+          "longitude": 125.902400292935
+        },
+        {
+          "name": "수국공원",
+          "latitude": 34.6877876710888,
+          "longitude": 125.929008368377
+        },
+        { "name": "뱀사골계곡", "latitude": 35.3708208483603, "longitude": 127.578717217735}
       ];
       const allowedRadius = 100; // 허용 반경 (단위: 미터)
 
@@ -650,5 +838,346 @@
     <script src="js/placeholders.min.js"></script>
     <!-- polyfill for the HTML5 placeholder attribute -->
     <script src="js/main.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+      import {
+          getFirestore,
+          doc,
+          getDoc,
+          getDocs,
+          collection,
+      } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+  
+      // Firebase 설정 정보
+      const firebaseConfig = {
+          apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
+          authDomain: "oasis-783c1.firebaseapp.com",
+          projectId: "oasis-783c1",
+          storageBucket: "oasis-783c1.appspot.com",
+          messagingSenderId: "36960403673",
+          appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
+          measurementId: "G-80936TQC87",
+      };
+  
+      // Firebase 초기화
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+  
+      document.addEventListener("DOMContentLoaded", function () {
+          fetchPlaces();
+  
+          // 모든 모달 트리거에 대한 이벤트 리스너 등록
+          document.addEventListener("click", function (event) {
+              if (event.target.matches('[data-bs-toggle="modal"]')) {
+                  const locationId = event.target.getAttribute("data-id"); // data-id에서 Firestore 문서 ID 가져오기
+  
+                  if (locationId) {
+                      const modalElement = document.querySelector("#placeModal"); // 타겟 모달 요소 선택
+                      if (modalElement) {
+                          loadModalData(modalElement, locationId); // Firestore에서 데이터 로드 및 모달 업데이트
+                      } else {
+                          console.error(`Modal element not found.`);
+                      }
+                  } else {
+                      console.error("Location ID is missing!");
+                  }
+              }
+          });
+      });
+  
+      // Firestore에서 데이터를 로드하고 모달을 업데이트하는 함수
+      async function loadModalData(modalElement, locationId) {
+    let map, roadview;  // map과 roadview 변수를 함수 내에서 선언
+
+    let docRef = doc(db, "여행지", locationId);
+    let docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+        docRef = doc(db, "data", locationId);
+        docSnap = await getDoc(docRef);
+    }
+
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        const placeName = data.name;  // 문서 이름을 장소 검색에 사용
+        const address = data.address; // 문서의 address 필드 사용
+
+        // 모달 내부 요소를 업데이트
+        modalElement.querySelector("#modal-name").textContent = data.name || "여행지 이름";
+        modalElement.querySelector("#modal-description").textContent = data.description || "여행지 소개";
+        modalElement.querySelector("#modal-image").src = data.imageUrl || "icon/default.png";
+        modalElement.querySelector("#modal-details").textContent = data.details || "설명";
+        modalElement.querySelector("#modal-special").textContent = data.special || "스페셜";
+        modalElement.querySelector("#modal-address").textContent = data.address || "주소";
+
+        // 기존의 지도 객체 제거
+        const mapContainer = modalElement.querySelector("#modal-map");
+        mapContainer.innerHTML = ""; // 지도 컨테이너를 비웁니다.
+
+        // 장소 검색 객체 생성
+        const ps = new kakao.maps.services.Places();
+
+        // 장소 검색 시도
+        ps.keywordSearch(placeName, function(result, status) {
+            if (status === kakao.maps.services.Status.OK && result.length > 0) {
+                // 장소 검색 성공
+                const location = result[0];
+                const latitude = location.y;
+                const longitude = location.x;
+
+                createMap(mapContainer, latitude, longitude);
+            } else {
+                // 장소 검색 실패 시 주소로 검색 시도
+                const geocoder = new kakao.maps.services.Geocoder();
+                geocoder.addressSearch(address, function(result, status) {
+                    if (status === kakao.maps.services.Status.OK && result.length > 0) {
+                        const location = result[0];
+                        const latitude = location.y;
+                        const longitude = location.x;
+
+                        createMap(mapContainer, latitude, longitude);
+                    } else {
+                        console.error("주소로도 장소를 찾을 수 없습니다.");
+                    }
+                });
+            }
+        });
+    } else {
+        console.error(`No such document: ${locationId}`);
+    }
+}
+
+// 공통적으로 지도를 생성하는 함수
+function createMap(mapContainer, latitude, longitude) {
+    try {
+        const mapOption = {
+            center: new kakao.maps.LatLng(latitude, longitude),
+            level: 3, // 지도의 확대 레벨
+        };
+
+        // 카카오맵 객체 생성
+        const map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 마커 추가
+        const markerPosition = new kakao.maps.LatLng(latitude, longitude);
+        const marker = new kakao.maps.Marker({
+            position: markerPosition,
+            map: map,
+        });
+
+        console.log("지도 및 마커 생성 성공");
+
+        // 로드뷰 컨테이너 생성
+        const roadviewContainer = document.createElement('div');
+        roadviewContainer.style.width = '100%';
+        roadviewContainer.style.height = '300px';
+        roadviewContainer.style.display = 'none'; // 초기에는 숨김
+        mapContainer.parentNode.insertBefore(roadviewContainer, mapContainer.nextSibling);
+
+        const roadview = new kakao.maps.Roadview(roadviewContainer);
+        const roadviewClient = new kakao.maps.RoadviewClient();
+
+        // 로드뷰로 전환하는 버튼 생성
+        // 로드뷰로 전환하는 버튼 생성
+const roadviewControl = document.createElement('div');
+roadviewControl.style.width = '80px';  // 버튼 크기 조정
+roadviewControl.style.height = '40px';
+roadviewControl.style.background = 'url(https://t1.daumcdn.net/localimg/localimages/07/2018/pc/roadview_minibutton.png) no-repeat center';
+roadviewControl.style.backgroundSize = '30px 30px';  // 이미지 크기 조정
+roadviewControl.style.cursor = 'pointer';
+roadviewControl.style.position = 'absolute';
+roadviewControl.style.top = '10px';
+roadviewControl.style.left = '10px';  // 왼쪽으로 이동
+roadviewControl.style.zIndex = '1000';
+roadviewControl.style.backgroundColor = '#ffffff'; // 배경색 추가
+roadviewControl.style.opacity = '1'; // 투명도 설정
+roadviewControl.style.border = 'none'; // 테두리 제거
+roadviewControl.id = 'roadviewControlButton';
+roadviewControl.style.display = 'flex';
+roadviewControl.style.alignItems = 'center';
+roadviewControl.style.justifyContent = 'center';
+roadviewControl.innerHTML = '<span style="font-size: 14px; font-weight: bold;">로드뷰</span>';  // 버튼에 텍스트 추가
+mapContainer.appendChild(roadviewControl);
+
+console.log("로드뷰 버튼 생성 시도:", roadviewControl);
+
+// 로드뷰로 전환하는 버튼 클릭 이벤트
+roadviewControl.onclick = function() {
+    console.log('로드뷰 버튼 클릭');
+    mapContainer.style.display = 'none';
+    roadviewContainer.style.display = 'block';
+    roadview.relayout();
+    roadviewClient.getNearestPanoId(markerPosition, 50, function(panoId) {
+        if (panoId !== null) {
+            roadview.setPanoId(panoId, markerPosition);
+        } else {
+            alert('근처에 로드뷰가 없습니다.');
+            roadviewContainer.style.display = 'none';
+            mapContainer.style.display = 'block';
+        }
+    });
+};
+
+// 모달이 닫힐 때 로드뷰와 지도 상태 초기화
+$('#placeModal').on('hide.bs.modal', function () {
+    roadviewContainer.style.display = 'none';
+    mapContainer.style.display = 'block';
+    console.log("모달 닫힘 - 로드뷰와 지도 상태 초기화");
+});
+
+// 모달이 완전히 열린 후 지도의 크기를 재조정
+$('#placeModal').on('shown.bs.modal', function () {
+    setTimeout(function() {
+        try {
+            map.relayout();
+            map.setCenter(new kakao.maps.LatLng(latitude, longitude));
+            console.log("지도 재설정 성공");
+        } catch (error) {
+            console.error("지도 재설정 중 오류 발생:", error);
+        }
+    }, 300); // 300ms의 지연 시간 추가
+});
+
+        // 로드뷰로 전환하는 버튼 클릭 이벤트
+        roadviewControl.onclick = function() {
+            console.log('로드뷰 버튼 클릭');
+            mapContainer.style.display = 'none';
+            roadviewContainer.style.display = 'block';
+            roadview.relayout();
+            roadviewClient.getNearestPanoId(markerPosition, 50, function(panoId) {
+                if (panoId !== null) {
+                    roadview.setPanoId(panoId, markerPosition);
+                    mapControl.style.display = 'block'; // 지도로 돌아가는 버튼 표시
+                    roadviewControl.style.display = 'none'; // 로드뷰 버튼 숨기기
+                } else {
+                    alert('근처에 로드뷰가 없습니다.');
+                    roadviewContainer.style.display = 'none';
+                    mapContainer.style.display = 'block';
+                    roadviewControl.style.display = 'block'; // 로드뷰 버튼 다시 표시
+                }
+            });
+        };
+
+        // 지도로 돌아가는 버튼 클릭 이벤트
+        mapControl.onclick = function() {
+            console.log('지도로 돌아가는 버튼 클릭');
+            roadviewContainer.style.display = 'none';
+            mapContainer.style.display = 'block';
+            map.relayout();
+            mapControl.style.display = 'none'; // 지도로 돌아가는 버튼 숨기기
+            roadviewControl.style.display = 'block'; // 로드뷰 버튼 다시 표시
+        };
+
+        // 모달이 닫힐 때 로드뷰와 지도 상태 초기화
+        $('#placeModal').on('hide.bs.modal', function () {
+            roadviewContainer.style.display = 'none';
+            mapContainer.style.display = 'block';
+            mapControl.style.display = 'none';
+            roadviewControl.style.display = 'block';
+            console.log("모달 닫힘 - 로드뷰와 지도 상태 초기화");
+        });
+
+        // 모달이 완전히 열린 후 지도의 크기를 재조정
+        $('#placeModal').on('shown.bs.modal', function () {
+            setTimeout(function() {
+                try {
+                    map.relayout();
+                    map.setCenter(new kakao.maps.LatLng(latitude, longitude));
+                    console.log("지도 재설정 성공");
+                } catch (error) {
+                    console.error("지도 재설정 중 오류 발생:", error);
+                }
+            }, 300); // 300ms의 지연 시간 추가
+        });
+    } catch (error) {
+        console.error("지도 생성 중 오류 발생:", error);
+    }
+}
+
+// 카카오맵 API 로드 체크
+if (typeof kakao === "undefined" || !kakao.maps) {
+    console.error("카카오맵 API가 로드되지 않았습니다.");
+} else {
+    console.log("카카오맵 API 로드 성공");
+}
+  
+      // Firestore에서 데이터를 가져와 카드들을 생성하는 함수
+      async function fetchPlaces() {
+          // 첫 번째 컬렉션 "여행지"에서 데이터 가져오기
+          const travelQuerySnapshot = await getDocs(collection(db, "여행지"));
+          let placesArray = [];
+          travelQuerySnapshot.forEach((doc) => {
+              placesArray.push({ ...doc.data(), id: doc.id });
+          });
+  
+          // 두 번째 컬렉션 "data"에서 데이터 가져오기
+          const dataQuerySnapshot = await getDocs(collection(db, "data"));
+          dataQuerySnapshot.forEach((doc) => {
+              placesArray.push({ ...doc.data(), id: doc.id });
+          });
+  
+          if (placesArray.length === 0) {
+              console.log("No documents found in '여행지' or 'data' collections!");
+              return;
+          }
+  
+          // 무작위로 섞지 않고 가져온 순서대로 슬라이드에 표시합니다.
+          const placesContainer = document.getElementById("places");
+  
+          // 슬라이드마다 8개의 카드를 표시합니다.
+          const chunkSize = 8;
+          for (let i = 0; i < placesArray.length; i += chunkSize) {
+              const chunk = placesArray.slice(i, i + chunkSize);
+              const itemDiv = document.createElement("div");
+              itemDiv.classList.add("carousel-item");
+              if (i === 0) {
+                  itemDiv.classList.add("active");
+              }
+  
+              const containerDiv = document.createElement("div");
+              containerDiv.classList.add("container", "px-4", "px-lg-5", "mt-5");
+  
+              const rowDiv = document.createElement("div");
+              rowDiv.classList.add(
+                  "row",
+                  "gx-4",
+                  "gx-lg-5",
+                  "row-cols-1",
+                  "row-cols-md-2",
+                  "row-cols-xl-4",
+                  "justify-content-center"
+              );
+  
+              chunk.forEach((place) => {
+                  const placeDiv = document.createElement("div");
+                  placeDiv.classList.add("col", "mb-5");
+                  placeDiv.innerHTML = `
+                <div class="card h-100">
+                  <img class="card-img-top" src="${place.imageUrl}" alt="${place.name}" />
+                  <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                    ${place.region}
+                  </div>
+                  <div class="card-body p-4">
+                    <div class="text-center">
+                      <h5 class="fw-bolder">${place.name}</h5>
+                      ${place.description}
+                    </div>
+                  </div>
+                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center">
+                      <a class="btn btn-outline-dark mt-auto" href="#" data-id="${place.id}" data-bs-toggle="modal" data-bs-target="#placeModal">더보기</a>
+                    </div>
+                  </div>
+                </div>`;
+                  rowDiv.appendChild(placeDiv);
+              });
+  
+              containerDiv.appendChild(rowDiv);
+              itemDiv.appendChild(containerDiv);
+              placesContainer.appendChild(itemDiv);
+          }
+      }
+      
+  </script>
   </body>
 </html>

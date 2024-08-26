@@ -85,21 +85,24 @@
     <section class="py-3 bg-light d-none" id="thirdFilterSection">
       <div class="container my-3">
         <div class="row justify-content-center">
-          <div class="col-lg-10">
+          <div class="col-lg-8">
             <h4>세부 요소를 선택하세요.</h4>
             <br /><br />
-            <div class="d-flex justify-content-center flex-wrap">
-              <button id="ecoExploreButton" class="btn btn-outline-dark mx-2">
-                생태탐사(생태체험, 생태공원)
+            <div class="d-flex justify-content-center">
+              <button
+                id="ecoExplorationButton"
+                class="btn btn-outline-dark mx-2"
+              >
+                생태탐사
               </button>
               <button
                 id="carbonNeutralButton"
                 class="btn btn-outline-dark mx-2"
               >
-                탄소중립(걷기, 산책로, 산 등)
+                탄소중립
               </button>
               <button
-                id="farmExperienceButton"
+                id="ruralExperienceButton"
                 class="btn btn-outline-dark mx-2"
               >
                 농촌 체험
@@ -167,13 +170,13 @@
       } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
       const firebaseConfig = {
-        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-        authDomain: "oasis-783c1.firebaseapp.com",
-        projectId: "oasis-783c1",
-        storageBucket: "oasis-783c1.appspot.com",
-        messagingSenderId: "36960403673",
-        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-        measurementId: "G-80936TQC87",
+        apiKey: "AIzaSy...",
+        authDomain: "your-project.firebaseapp.com",
+        projectId: "your-project-id",
+        storageBucket: "your-project.appspot.com",
+        messagingSenderId: "1234567890",
+        appId: "1:1234567890:web:abc123",
+        measurementId: "G-12345",
       };
 
       const app = initializeApp(firebaseConfig);
@@ -235,9 +238,6 @@
             doc.data()["1st"] === category || doc.data()["2st"] === category
         );
 
-        // 필터링된 데이터를 다시 currentQuerySnapshot에 저장
-        currentQuerySnapshot = filteredData;
-
         // 필터링된 데이터를 화면에 표시
         displayPlaces(filteredData);
 
@@ -250,6 +250,13 @@
       // 3차 필터링 함수
       function filterTertiary(category) {
         console.log("3차 필터링 카테고리: ", category);
+
+        // currentQuerySnapshot에 저장된 데이터를 출력해 확인해보기
+        currentQuerySnapshot.forEach((doc) => {
+          console.log("문서 데이터:", doc.data());
+          console.log("5st 필드 값: ", doc.data()["5st"]);
+          console.log("6st 필드 값: ", doc.data()["6st"]);
+        });
 
         // currentQuerySnapshot에서 5st 필드나 6st 필드가 해당 category인 데이터만 필터링
         const filteredData = currentQuerySnapshot.filter(
@@ -373,7 +380,7 @@
 
       // 3차 필터링 버튼 이벤트 리스너
       document
-        .getElementById("ecoExploreButton")
+        .getElementById("ecoExplorationButton")
         .addEventListener("click", function () {
           filterTertiary("생태탐사(생태체험, 생태공원)");
         });
@@ -385,7 +392,7 @@
         });
 
       document
-        .getElementById("farmExperienceButton")
+        .getElementById("ruralExperienceButton")
         .addEventListener("click", function () {
           filterTertiary("농촌 체험");
         });

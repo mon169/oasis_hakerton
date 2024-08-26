@@ -12,10 +12,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
-    <!-- 주아체 폰트임 --
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap" rel="stylesheet">
@@ -25,8 +21,8 @@
     <link href="css/login_sign.css" rel="stylesheet" />
 
     <style>
-        * {
-            font-family: "Gowun Dodum", sans-serif;
+        * body {
+        font-family: "Gowun Dodum", sans-serif;
         }
 
         /* 로그인 후 적용될 CSS 스타일 */
@@ -40,6 +36,7 @@
         .logged-in-button img {
             height: 3rem;
         }
+
     </style>
 
 
@@ -48,14 +45,14 @@
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">ECO-FRENDLY TRIP</a>
+        <a class="navbar-brand" href="#!">푸른발자국</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="tripmain.html">여행 가이드</a></li>
+                <li class="nav-item"><a class="nav-link" href="communitylist.html">커뮤니티</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="local_food.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">로컬 스토어</a></a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="local_food.html">로컬푸드</a></li>
                         <li><hr class="dropdown-divider" /></li>
@@ -64,6 +61,7 @@
                         <li><a class="dropdown-item" href="gift.html">상품권 교환</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="여행지추천시스템.html">나만의 여행지</a></li>
             </ul>
 
             <li class="nav-item dropdown d-none" id="userDropdown">
@@ -118,17 +116,19 @@
                                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                 <div class="divider-custom-line"></div>
                             </div>
-                            <h3><br>Q : 친환경 여행이 왜 필요할까?<br></h3>
-                            <h4>전 세계 온실가스 배출량은 약 약 6억 7,664만tCO2eq.<br> 이 중 관광업이 1/10을 차지하는데요.<br></h4>
-                            <h4>다양한 영역에서 탄소발자국이 짙게 드러나고 있습니다.<br><br></h4>
-                            <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="icon/팝업이미지.png">
-                            <!-- Portfolio Modal - Text-->
-                            <h3>Q : 친환경 여행 실천 방법은?</h3>
-                            <button id="loginbtn" class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
-                            </button>
+                            <div class="image-container">
+                                <h3><br>Q : 친환경 여행이 왜 필요할까?<br></h3>
+                                <h4>전 세계 온실가스 배출량은 약 약 6억 7,664만tCO2eq.<br> 이 중 관광업이 1/10을 차지하는데요.<br></h4>
+                                <h4>다양한 영역에서 탄소발자국이 짙게 드러나고 있습니다.<br><br></h4>
+                                <!-- Portfolio Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="icon/팝업이미지.png">
+                                <!-- Portfolio Modal - Text-->
+                                <h3><br>Q : 친환경 여행 실천 방법은?<br></h3>
+                                <img class="img-fluid rounded mb-5 custom-size" src="icon/팝업이미지2.jpg">
+                                <button id="loginbtn" class="btn btn-primary close-btn" data-bs-dismiss="modal">
+                                    <i class="fas fa-xmark fa-fw"></i> 닫기
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

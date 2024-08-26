@@ -45,6 +45,9 @@
       .logged-in-button img {
         height: 3rem;
       }
+      #checkLocationBtn {
+        width: 12rem;
+      }
     </style>
   </head>
   <body>
@@ -114,7 +117,7 @@
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
-                <a class="dropdown-item" href="mileage.html">마일리지 적립</a>
+                <a class="dropdown-item" href="eco_product.html">마일리지 적립</a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
@@ -128,6 +131,7 @@
               class="btn btn-outline-dark js-signin-modal-trigger"
               href="#0"
               data-signin="login"
+              id="loginButton"
             >
               로그인
             </a>
@@ -135,32 +139,31 @@
         </div>
       </div>
     </nav>
+    
     <!-- Header - set the background image for the header in the line below-->
     <header
       class="py-5 bg-image-full"
       style="
         background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900');
       "
-    >
-      <div class="text-center my-5">
-        <img
-          class="img-fluid rounded-circle mb-4"
-          src="icon/로그인이미지.png"
-          alt="..."
-        />
-        <h1 class="fs-3 fw-bolder">유소민</h1>
-        <h2>Email :</h2>
-        <div>
-          <h1>지정된 위치에 도착하면 포인트를 받을 수 있습니다!</h1>
-          <div id="map" style="width: 100%; height: 350px"></div>
-          <button id="checkLocationBtn">내 위치 확인하기</button>
-          <p id="result"></p>
-          <div id="userEmail"></div>
+    ><div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="text-center my-5">
+                <h1>친환경 여행지에 도착하면 마일리지를 받을 수 있어요!<br><br></h1>
+                <div id="map" style="width: 100%; height: 350px"></div>
+                <button id="checkLocationBtn" class="btn btn-primary btn-jelly">내 위치 확인하기</button>
+                <p id="result"></p>
+                <div id="userEmail"></div>
+            </div>
+          </div>
         </div>
-      </div>
     </header>
     <!-- Content section-->
     <section class="py-5 bg-light">
+        <div class="text-center my-5">
+            <h1>여행지 목록을 살펴봐요!</h1>
+        </div>
       <div class="container px-4 px-lg-5 mt-5">
         <div
           class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
@@ -371,11 +374,14 @@
         createUserWithEmailAndPassword,
         signInWithEmailAndPassword,
         signOut,
+        onAuthStateChanged,
       } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
       import {
         getFirestore,
         doc,
         setDoc,
+        updateDoc,
+        increment,
       } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -391,6 +397,19 @@
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
+
+      // 로그인 시 로그아웃 메뉴 활성화
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          document.getElementById("userDropdown").classList.remove("d-none");
+          document.getElementById("loginButton").classList.add("d-none");
+          document.getElementById("userEmail").textContent = `로그인된 사용자: ${user.email}`;
+        } else {
+          document.getElementById("userDropdown").classList.add("d-none");
+          document.getElementById("loginButton").classList.remove("d-none");
+          window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+        }
+      });
 
       // Sign up function
       document
@@ -445,9 +464,6 @@
 
               // 로그인 성공 시 UI 변경
               document
-                .querySelector(".navbar")
-                .classList.add("logged-in-navbar");
-              document
                 .querySelector(".js-signin-modal-trigger")
                 .classList.add("d-none");
               document
@@ -458,349 +474,36 @@
               const modal = document.querySelector(".cd-signin-modal");
               modal.classList.remove("cd-signin-modal--is-visible");
 
-              // 로그아웃 기능 구현
-              document
-                .getElementById("logout")
-                .addEventListener("click", function (event) {
-                  event.preventDefault();
-                  signOut(auth)
-                    .then(() => {
-                      alert("로그아웃 되었습니다.");
-                      // 로그아웃 후 메인 페이지로 리디렉션
-                      window.location.href = "mainsite.html";
-                    })
-                    .catch((error) => {
-                      console.error(
-                        "Error during sign-out:",
-                        error.code,
-                        error.message
-                      );
-                      alert("로그아웃에 실패했습니다: " + error.message);
-                    });
-                });
+              // 로그인된 사용자 정보 표시
+              document.getElementById("userEmail").textContent = `로그인된 사용자: ${user.email}`;
             })
             .catch((error) => {
               console.error("Error during sign-in:", error.code, error.message);
               alert("로그인에 실패했습니다: " + error.message);
             });
         });
-    </script>
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"
-    ></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-      import {
-        getAuth,
-        onAuthStateChanged,
-      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-      import {
-        getFirestore,
-        doc,
-        updateDoc,
-        increment,
-      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-      // Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-        authDomain: "oasis-783c1.firebaseapp.com",
-        projectId: "oasis-783c1",
-        storageBucket: "oasis-783c1.appspot.com",
-        messagingSenderId: "36960403673",
-        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-        measurementId: "G-80936TQC87",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+      // 로그아웃 기능 구현
+      document.getElementById("logout").addEventListener("click", function (event) {
+        event.preventDefault();
+        signOut(auth)
+          .then(() => {
+            alert("로그아웃 되었습니다.");
+            // 로그아웃 후 메인 페이지로 리디렉션
+            window.location.href = "mainsite.html";
+          })
+          .catch((error) => {
+            console.error("Error during sign-out:", error.code, error.message);
+            alert("로그아웃에 실패했습니다: " + error.message);
+          });
+      });
 
       // Kakao Map and target locations
       const targetLocations = [
-        { name: "라마다 호텔", latitude: 35.1520063061274, longitude: 126.85052502344 },
-        //전북
-        { name: "금강미래체험관", latitude: 35.93659, longitude: 126.7470},
-        { name: "청암산 에코라운드", latitude: 35.93659, longitude: 126.7470},
-        { name: "금강생태습지공원", latitude: 36.02081, longitude: 126.7672},
-        { name: "금마 서동 생태관광지", latitude: 36.00152, longitude: 127.0610},
-        { name: "아가페정원", latitude: 36.01979, longitude: 126.9564},
-        { name: "용안습지생태공원", latitude: 36.13420, longitude: 126.9293},
-        { name: "구룡마을 대나무숲", latitude: 36.01615, longitude: 127.0521},
-        { name: "솔티 달빛 생태숲", latitude: 35.50979, longitude: 126.8921},
-        { name: "내장산 국립공원", latitude: 35.49355, longitude: 126.9279},
-        { name: "정읍 구절초 지방정원", latitude: 35.57972, longitude: 127.0236},
-        { name: "백두대간 생태관광벨트", latitude: 35.39770, longitude: 127.5076},
-        { name: "지리산 허브밸리", latitude: 35.43515, longitude: 127.5486},
-        { name: "김제 벽골제 생태농경원", latitude: 35.75753, longitude: 126.8549},
-        { name: "모악산도립공원", latitude: 35.72239, longitude: 127.0563},
-        { name: "미즈노씨네 트리하우스", latitude: 35.85309, longitude: 126.8513},
-        { name: "경천 싱그랭이 에코빌", latitude: 35.98804, longitude: 127.3050},
-        { name: "대둔산도립공원", latitude: 36.11730, longitude: 127.3329},
-        { name: "대아수목원", latitude: 35.98694, longitude: 127.3164 },
-        { name: "지오파크", latitude: 35.74877, longitude: 127.4159 },
-        { name: "용담호자연생태습지공원", latitude: 35.81828, longitude: 127.4583 },
-        { name: "마이산", latitude: 35.75712, longitude: 127.3938 },
-        { name: "반딧불이 생태관광지", latitude: 36.01288, longitude: 127.7586 },
-        { name: "덕유산국립공원", latitude: 35.88328, longitude: 127.7788 },
-        { name: "무주 구천동", latitude: 35.90079, longitude: 127.7752 },
-        { name: "칠연계곡", latitude: 35.85791, longitude: 127.6954 },
-        { name: "금강 첫물 뜬봉샘 생태관광지", latitude: 35.59288, longitude: 127.5012 },
-        { name: "장수물빛공원", latitude: 35.54076, longitude: 127.5416 },
-        { name: "뜬봉샘생태공원", latitude: 35.59225, longitude: 127.5013 },
-        { name: "성수산 왕의 숲", latitude: 35.63911, longitude: 127.4067 },
-        { name: "옥정호", latitude: 35.63322, longitude: 127.1517 },
-        { name: "섬진강 장군목 생태관광지", latitude: 35.46340, longitude: 127.2017 },
-        { name: "강천산 군립공원", latitude: 35.40880, longitude: 127.0675 },
-        { name: "운곡 람사르습지", latitude: 35.44117, longitude: 126.6521 },
-        { name: "선운산 도립공원", latitude: 35.50273, longitude: 126.5867 },
-        { name: "상하농원", latitude: 35.44725, longitude: 126.4517 },
-        { name: "학원관광농장", latitude: 35.37674, longitude: 126.5419 },
-        //전남
-        {
-          "name": "전라병영성",
-          "latitude": 34.7200812774994,
-          "longitude": 126.817192536148
-        },
-        {
-          "name": "팔영산 편백 치유의 숲",
-          "latitude": 34.6185585869675,
-          "longitude": 127.409828697099
-        },
-        {
-          "name": "소록도",
-          "latitude": 34.5112312146781,
-          "longitude": 127.118957586323
-        },
-        {
-          "name": "쑥섬",
-          "latitude": 34.4657701048248,
-          "longitude": 127.453678331784
-        },
-        {
-          "name": "섬진강 도깨비마을",
-          "latitude": 35.2536935114039,
-          "longitude": 127.362611581324
-        },
-        {
-          "name": "가정농촌체험휴양마을",
-          "latitude": 35.2272759096785,
-          "longitude": 127.370411896029
-        },
-        {
-          "name": "농부네 텃밭도서관",
-          "latitude": 35.0146273350323,
-          "longitude": 127.726010561907
-        },
-        {
-          "name": "사라실 라벤더 치유정원",
-          "latitude": 34.9519995294512,
-          "longitude": 127.62312381654
-        },
-        {
-          "name": "섬진강 대나무숲길",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "야생화 테마랜드",
-          "latitude": 35.2825635539201,
-          "longitude": 127.450394613627
-        },
-        {
-          "name": "전라남도 산림자원연구소",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "금성산 생태숲",
-          "latitude": 35.0673455057139,
-          "longitude": 126.69277188547
-        },
-        {
-          "name": "관방제림",
-          "latitude": 35.3237317684995,
-          "longitude": 126.993698253483
-        },
-        {
-          "name": "담양시장",
-          "latitude": 35.3227985582982,
-          "longitude": 126.980490105062
-        },
-        {
-          "name": "추월산",
-          "latitude": 35.4023440740539,
-          "longitude": 126.999600612393
-        },
-        {
-          "name": "입암산 생태공원",
-          "latitude": 34.7936386769176,
-          "longitude": 126.419501090581
-        },
-        {
-          "name": "외달도",
-          "latitude": 34.7817287658908,
-          "longitude": 126.296369961337
-        },
-        {
-          "name": "양림동 펭귄마을",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "광주호 호수생태원",
-          "latitude": 35.1842189479917,
-          "longitude": 127.001121393505
-        },
-        {
-          "name": "황토갯벌랜드",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "무안 감풀마을 [농촌전통테마]",
-          "latitude": 35.0613021302547,
-          "longitude": 126.40604290316
-        },
-        {
-          "name": "율포해수욕장",
-          "latitude": 34.6700292567993,
-          "longitude": 127.08902412779
-        },
-        {
-          "name": "대한다원 보성녹차밭",
-          "latitude": 34.7186439977069,
-          "longitude": 127.080224519812
-        },
-        {
-          "name": "순천만국가정원",
-          "latitude": 34.928871680184,
-          "longitude": 127.500801495864
-        },
-        {
-          "name": "꽃마차마을",
-          "latitude": 34.9391162079133,
-          "longitude": 127.354430819982
-        },
-        {
-          "name": "세계거석 테마파크",
-          "latitude": 34.9887126145985,
-          "longitude": 126.915978533123
-        },
-        {
-          "name": "무등산 양떼목장",
-          "latitude": 35.0953031816714,
-          "longitude": 127.01187720858
-        },
-        {
-          "name": "독립운동 역사체험마을",
-          "latitude": 34.5858000170289,
-          "longitude": 126.644200287827
-        },
-        {
-          "name": "4est수목원",
-          "latitude": 34.4532436533582,
-          "longitude": 126.595524949541
-        },
-        {
-          "name": "농촌체험마을 모평",
-          "latitude": 35.1757361991292,
-          "longitude": 126.554257908643
-        },
-        {
-          "name": "함평 향교리 느티나무·팽나무·개서어나무 숲",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "국립진도자연휴양림",
-          "latitude": 34.3575366989737,
-          "longitude": 126.186438767693
-        },
-        {
-          "name": "신비의 바닷길",
-          "latitude": 34.4272243458804,
-          "longitude": 126.351358339902
-        },
-        {
-          "name": "물문화관",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "정남진 편백숲 우드랜드",
-          "latitude": 34.6696032763135,
-          "longitude": 126.933669158541
-        },
-        {
-          "name": "홍길동테마파크",
-          "latitude": 35.3186207091425,
-          "longitude": 126.726557828707
-        },
-        {
-          "name": "축령산 편백숲(편백치유의숲)",
-          "latitude": 35.3482990088632,
-          "longitude": 126.731023854647
-        },
-        {
-          "name": "보길도 윤선도 원림",
-          "latitude": 34.1651559131169,
-          "longitude": 126.558046627228
-        },
-        {
-          "name": "주도(천연기념물28호)",
-          "latitude": 34.3165204882084,
-          "longitude": 126.761150423611
-        },
-        {
-          "name": "전라남도 농업박물관",
-          "latitude": 34.777331067574,
-          "longitude": 126.459043836676
-        },
-        {
-          "name": "월출산 국립공원",
-          "latitude": 34.7538852757145,
-          "longitude": 126.659102995752
-        },
-        {
-          "name": "칠산타워",
-          "latitude": 35.1686337149423,
-          "longitude": 126.360306734241
-        },
-        {
-          "name": "숲쟁이공원",
-          "latitude": 35.3644850486412,
-          "longitude": 126.43460738044
-        },
-        {
-          "name": "여수 금오도 비렁길 5코스",
-          "latitude": 34.5996909352951,
-          "longitude": 127.744305750673
-        },
-        {
-          "name": "고소천사벽화마을",
-          "latitude": 34.738913948997,
-          "longitude": 127.738153514117
-        },
-        {
-          "name": "내촌마을 돌담",
-          "latitude": 34.746229918763,
-          "longitude": 125.902400292935
-        },
-        {
-          "name": "수국공원",
-          "latitude": 34.6877876710888,
-          "longitude": 125.929008368377
-        }
-      
-
-
-
-
-
-
+        { name: "써미트", latitude: 35.961, longitude: 126.7366 },
+        { name: "광화문", latitude: 37.5759, longitude: 126.9769 },
+        { name: "여의도", latitude: 37.5264, longitude: 126.9334 },
+        { name: "조은빌", latitude: 35.8428, longitude: 127.1436 }
       ];
       const allowedRadius = 100; // 허용 반경 (단위: 미터)
 
@@ -885,7 +588,7 @@
 
                 if (!isWithinTarget) {
                   document.getElementById("result").textContent =
-                    "지정된 위치에 도착하지 않았습니다.";
+                    "친환경 여행지가 아닙니다.";
                 }
               }, showError);
             } else {
@@ -923,14 +626,14 @@
                 points: increment(pointsToAdd),
               });
               console.log("Points updated successfully.");
-              alert("포인트가 100 추가되었습니다!");
+              alert("500 마일리지가 추가되었습니다!");
             } catch (error) {
               console.error("Error updating points:", error);
               alert("포인트 업데이트 중 오류 발생: " + error.message);
             }
           } else {
             alert("로그인된 사용자가 없습니다.");
-            window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+            window.location.href = "mainsite.html"; // 로그인 페이지로 리디렉션
           }
         }
 
@@ -941,13 +644,15 @@
               "userEmail"
             ).textContent = `로그인된 사용자: ${user.email}`;
           } else {
-            window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+            window.location.href = "mainsite.html"; // 로그인 페이지로 리디렉션
           }
         });
       });
     </script>
-
-    <!-- Core theme JS-->
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"
+    ></script>
     <script src="js/scripts.js"></script>
     <script src="js/placeholders.min.js"></script>
     <!-- polyfill for the HTML5 placeholder attribute -->

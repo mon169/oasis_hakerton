@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Filter Example</title>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Gowun Dodum", sans-serif;
+        color: black;
+      }
+      .card-img-top {
+        height: 200px;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Content section-->
+    <section class="py-5">
+      <div class="container my-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2>지역을 선택하세요.</h2>
+            <br /><br />
+            <div class="d-flex justify-content-center">
+              <button id="jeonbukButton" class="btn btn-outline-dark mx-2">
+                전북
+              </button>
+              <button id="jeonnamButton" class="btn btn-outline-dark mx-2">
+                전남
+              </button>
+              <button id="allButton" class="btn btn-outline-dark mx-2">
+                전체보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2차 필터링 섹션 -->
+    <section class="py-3 bg-light d-none" id="secondFilterSection">
+      <div class="container my-3">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h4>세부 요소를 선택하세요.</h4>
+            <br /><br />
+            <div class="d-flex justify-content-center">
+              <button id="natureButton" class="btn btn-outline-dark mx-2">
+                자연 관련
+              </button>
+              <button id="leisureButton" class="btn btn-outline-dark mx-2">
+                레저/체험 가능
+              </button>
+              <button id="historyButton" class="btn btn-outline-dark mx-2">
+                역사적 의미
+              </button>
+              <button id="cultureButton" class="btn btn-outline-dark mx-2">
+                문화적 요소
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3차 필터링 섹션 -->
+    <section class="py-3 bg-light d-none" id="thirdFilterSection">
+      <div class="container my-3">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <h4>세부 요소를 선택하세요.</h4>
+            <br /><br />
+            <div class="d-flex justify-content-center flex-wrap">
+              <button id="ecoExploreButton" class="btn btn-outline-dark mx-2">
+                생태탐사(생태체험, 생태공원)
+              </button>
+              <button
+                id="carbonNeutralButton"
+                class="btn btn-outline-dark mx-2"
+              >
+                탄소중립(걷기, 산책로, 산 등)
+              </button>
+              <button
+                id="farmExperienceButton"
+                class="btn btn-outline-dark mx-2"
+              >
+                농촌 체험
+              </button>
+              <button id="localFoodButton" class="btn btn-outline-dark mx-2">
+                농특산물/로컬푸드
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 bg-light">
+      <div class="text-center my-5">
+        <h3 id="section-title">전체 친환경 관광지</h3>
+      </div>
+      <div
+        id="carouselExampleDark"
+        class="carousel carousel-dark slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner" id="places">
+          <!-- Firebase에서 데이터를 동적으로 추가 -->
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleDark"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleDark"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Your Website 2023
+        </p>
+      </div>
+    </footer>
+
+    <!-- Firebase 및 Firestore 초기화 -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+        query,
+        where,
+      } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
+        authDomain: "oasis-783c1.firebaseapp.com",
+        projectId: "oasis-783c1",
+        storageBucket: "oasis-783c1.appspot.com",
+        messagingSenderId: "36960403673",
+        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
+        measurementId: "G-80936TQC87",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      let currentQuerySnapshot = [];
+
+      async function filterData(region) {
+        let q;
+        console.log("Filtering for region: ", region);
+        if (region === "전체") {
+          const q1 = collection(db, "data");
+          const q2 = collection(db, "여행지");
+          const querySnapshot1 = await getDocs(q1);
+          const querySnapshot2 = await getDocs(q2);
+          currentQuerySnapshot = [
+            ...querySnapshot1.docs,
+            ...querySnapshot2.docs,
+          ];
+          displayPlaces(currentQuerySnapshot);
+          document.getElementById("section-title").textContent =
+            "전체 친환경 관광지";
+        } else if (region === "전라북도") {
+          q = query(collection(db, "data"));
+          const querySnapshot = await getDocs(q);
+          currentQuerySnapshot = querySnapshot.docs;
+          displayPlaces(currentQuerySnapshot);
+          document.getElementById("section-title").textContent =
+            "전라북도의 친환경 관광지";
+        } else if (region === "전라남도") {
+          q = query(collection(db, "여행지"));
+          const querySnapshot = await getDocs(q);
+          currentQuerySnapshot = querySnapshot.docs;
+          displayPlaces(currentQuerySnapshot);
+          document.getElementById("section-title").textContent =
+            "전라남도의 친환경 관광지";
+        }
+
+        // 2차 필터링 섹션 보이기
+        document
+          .getElementById("secondFilterSection")
+          .classList.remove("d-none");
+      }
+
+      // 2차 필터링 함수
+      function filterSecondary(category) {
+        console.log("2차 필터링 카테고리: ", category);
+
+        // currentQuerySnapshot에 저장된 데이터를 출력해 확인해보기
+        currentQuerySnapshot.forEach((doc) => {
+          console.log("문서 데이터:", doc.data());
+          console.log("1st 필드 값: ", doc.data()["1st"]);
+          console.log("2st 필드 값: ", doc.data()["2st"]);
+        });
+
+        // currentQuerySnapshot에서 1st 필드나 2st 필드가 해당 category인 데이터만 필터링
+        const filteredData = currentQuerySnapshot.filter(
+          (doc) =>
+            doc.data()["1st"] === category || doc.data()["2st"] === category
+        );
+
+        // 필터링된 데이터를 다시 currentQuerySnapshot에 저장
+        currentQuerySnapshot = filteredData;
+
+        // 필터링된 데이터를 화면에 표시
+        displayPlaces(filteredData);
+
+        // 3차 필터링 섹션 보이기
+        document
+          .getElementById("thirdFilterSection")
+          .classList.remove("d-none");
+      }
+
+      // 3차 필터링 함수
+      function filterTertiary(category) {
+        console.log("3차 필터링 카테고리: ", category);
+
+        // currentQuerySnapshot에서 5st 필드나 6st 필드가 해당 category인 데이터만 필터링
+        const filteredData = currentQuerySnapshot.filter(
+          (doc) =>
+            doc.data()["5st"] === category || doc.data()["6st"] === category
+        );
+
+        // 필터링된 데이터를 화면에 표시
+        displayPlaces(filteredData);
+      }
+
+      // 데이터를 표시하는 함수 (한 슬라이드에 4개씩)
+      function displayPlaces(querySnapshots) {
+        const placesContainer = document.getElementById("places");
+        placesContainer.innerHTML = ""; // 기존 내용을 초기화합니다.
+
+        if (querySnapshots.length === 0) {
+          placesContainer.innerHTML = "<p>데이터가 없습니다.</p>";
+          return;
+        }
+
+        let currentItemDiv = null;
+        querySnapshots.forEach((doc, index) => {
+          const place = doc.data();
+
+          // 새로운 슬라이드 아이템을 만들거나 기존에 추가된 아이템에 카드 추가
+          if (index % 4 === 0) {
+            currentItemDiv = document.createElement("div");
+            currentItemDiv.classList.add("carousel-item");
+            if (index === 0) {
+              currentItemDiv.classList.add("active");
+            }
+            const rowDiv = document.createElement("div");
+            rowDiv.classList.add("container", "px-4", "px-lg-5", "mt-5");
+            currentItemDiv.appendChild(rowDiv);
+            placesContainer.appendChild(currentItemDiv);
+
+            const innerRowDiv = document.createElement("div");
+            innerRowDiv.classList.add(
+              "row",
+              "gx-4",
+              "gx-lg-5",
+              "row-cols-1",
+              "row-cols-md-2",
+              "row-cols-xl-4",
+              "justify-content-center"
+            );
+            rowDiv.appendChild(innerRowDiv);
+          }
+
+          const rowDiv = currentItemDiv.querySelector(".row");
+
+          const colDiv = document.createElement("div");
+          colDiv.classList.add("col", "mb-5");
+
+          colDiv.innerHTML = `
+                    <div class="card h-100">
+                        <img class="card-img-top" src="${place.imageUrl}" alt="${place.name}" />
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">${place.region}</div>
+                        <div class="card-body p-4 text-center">
+                            <h5 class="fw-bolder">${place.name}</h5>
+                            ${place.description}
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#" data-id="${doc.id}" data-bs-toggle="modal" data-bs-target="#${doc.id}">더보기</a></div>
+                        </div>
+                    </div>`;
+
+          rowDiv.appendChild(colDiv);
+        });
+      }
+
+      // 초기 로딩 시 전체 데이터를 불러옴
+      document.addEventListener("DOMContentLoaded", function () {
+        filterData("전체");
+      });
+
+      // 1차 필터링 버튼 이벤트 리스너
+      document
+        .getElementById("jeonbukButton")
+        .addEventListener("click", function () {
+          filterData("전라북도");
+        });
+
+      document
+        .getElementById("jeonnamButton")
+        .addEventListener("click", function () {
+          filterData("전라남도");
+        });
+
+      document
+        .getElementById("allButton")
+        .addEventListener("click", function () {
+          filterData("전체");
+        });
+
+      // 2차 필터링 버튼 이벤트 리스너
+      document
+        .getElementById("natureButton")
+        .addEventListener("click", function () {
+          filterSecondary("자연 관련");
+        });
+
+      document
+        .getElementById("leisureButton")
+        .addEventListener("click", function () {
+          filterSecondary("레저/체험 가능");
+        });
+
+      document
+        .getElementById("historyButton")
+        .addEventListener("click", function () {
+          filterSecondary("역사적 의미");
+        });
+
+      document
+        .getElementById("cultureButton")
+        .addEventListener("click", function () {
+          filterSecondary("문화적 요소");
+        });
+
+      // 3차 필터링 버튼 이벤트 리스너
+      document
+        .getElementById("ecoExploreButton")
+        .addEventListener("click", function () {
+          filterTertiary("생태탐사(생태체험, 생태공원)");
+        });
+
+      document
+        .getElementById("carbonNeutralButton")
+        .addEventListener("click", function () {
+          filterTertiary("탄소중립(걷기, 산책로, 산 등)");
+        });
+
+      document
+        .getElementById("farmExperienceButton")
+        .addEventListener("click", function () {
+          filterTertiary("농촌 체험");
+        });
+
+      document
+        .getElementById("localFoodButton")
+        .addEventListener("click", function () {
+          filterTertiary("농특산물/로컬푸드");
+        });
+    </script>
+
+    <!-- Bootstrap core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -116,4 +116,5 @@
 #mypage .points-icon {
     margin-right: 2rem; /* mypage 페이지에서만 간격을 다르게 설정 */
     font-size: 1.5rem;
+    margin-top: -2rem !important;
 }

@@ -22,7 +22,7 @@
     <link href="css/login_sign.css" rel="stylesheet" />
     <link href="css/shoppingsite.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/ff0ee1a3e7.js" crossorigin="anonymous"></script>
-`
+
     <style>
         * {
             font-family: "Gowun Dodum", sans-serif;
@@ -48,7 +48,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="mainsite.html">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
@@ -152,7 +152,7 @@
     <!-- Firebase JS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
     
         const firebaseConfig = {
@@ -169,38 +169,49 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
     
-        // Sign up function
-        document.getElementById('signup-form').addEventListener('submit', async function(event) {
-                event.preventDefault();
-                
-                const username = document.getElementById('signup-username').value;
-                const email = document.getElementById('signup-email').value;
-                const password = document.getElementById('signup-password').value;
-        
-                try {
-                    // Create a new user with email and password
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-        
-                    // Save additional user info to Firestore
-                    await setDoc(doc(db, "users", user.uid), {
-                        email: user.email,
-                        username: username, // Save username here
-                        points: 50 // Example additional data
-                    });
-        
-                    alert('회원가입이 완료되었습니다.');
-                    console.log('User signed up:', user);
-        
-                    // Optionally, redirect after signup
-                    // window.location.href = "map.html";
-                } catch (error) {
-                    console.error('Error during sign-up:', error.code, error.message);
-                    alert('회원가입에 실패했습니다: ' + error.message);
-                }
+        // 페이지 로드 시 사용자의 로그인 상태를 확인하여 UI를 업데이트
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // 사용자가 로그인한 상태일 때
+                document.querySelector('.js-signin-modal-trigger').classList.add('d-none'); // 로그인 버튼 숨기기
+                document.getElementById('userDropdown').classList.remove('d-none'); // 유저 드롭다운 표시
+                document.getElementById('userEmail').textContent = `로그인된 사용자: ${user.email}`;
+            } else {
+                // 사용자가 로그인하지 않은 상태일 때
+                document.querySelector('.js-signin-modal-trigger').classList.remove('d-none'); // 로그인 버튼 표시
+                document.getElementById('userDropdown').classList.add('d-none'); // 유저 드롭다운 숨기기
+                document.getElementById('userEmail').textContent = '';
+            }
         });
     
-        // Sign in function
+        // 회원가입 기능
+        document.getElementById('signup-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+    
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+    
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+    
+                // 추가 사용자 정보를 Firestore에 저장
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    username: username,
+                    points: 50
+                });
+    
+                alert('회원가입이 완료되었습니다.');
+                console.log('User signed up:', user);
+            } catch (error) {
+                console.error('Error during sign-up:', error.code, error.message);
+                alert('회원가입에 실패했습니다: ' + error.message);
+            }
+        });
+    
+        // 로그인 기능
         document.getElementById('login-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const email = document.getElementById('signin-email').value;
@@ -212,34 +223,44 @@
                     alert('로그인에 성공했습니다.');
                     console.log('User signed in:', user);
     
-                    // 로그인 성공 시 UI 변경
-                    document.querySelector('.navbar').classList.add('logged-in-navbar');
-                    document.querySelector('.js-signin-modal-trigger').classList.add('d-none');
-                    document.getElementById('userDropdown').classList.remove('d-none');
+                    // 로그인 상태 유지
+                    localStorage.setItem('user', JSON.stringify({ email: user.email, uid: user.uid }));
     
                     // 모달창 닫기
                     const modal = document.querySelector('.cd-signin-modal');
                     modal.classList.remove('cd-signin-modal--is-visible');
-    
-                    // 로그아웃 기능 구현
-                    document.getElementById('logout').addEventListener('click', function(event) {
-                        event.preventDefault();
-                        signOut(auth).then(() => {
-                            alert('로그아웃 되었습니다.');
-                            location.reload(); // 로그아웃 후 페이지 새로고침
-                        }).catch((error) => {
-                            console.error('Error during sign-out:', error.code, error.message);
-                            alert('로그아웃에 실패했습니다: ' + error.message);
-                        });
-                    });
-    
                 })
                 .catch((error) => {
                     console.error('Error during sign-in:', error.code, error.message);
                     alert('로그인에 실패했습니다: ' + error.message);
                 });
         });
-        </script>
+    
+        // 로그아웃 기능
+        document.getElementById('logout').addEventListener('click', function(event) {
+            event.preventDefault();
+            signOut(auth)
+                .then(() => {
+                    alert('로그아웃 되었습니다.');
+                    localStorage.removeItem('user'); // 로그아웃 시 localStorage에서 사용자 정보 제거
+                    location.reload(); // 로그아웃 후 페이지 새로고침
+                })
+                .catch((error) => {
+                    console.error('Error during sign-out:', error.code, error.message);
+                    alert('로그아웃에 실패했습니다: ' + error.message);
+                });
+        });
+    
+        // 페이지가 로드될 때 localStorage를 확인하여 로그인 상태 복원
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                document.querySelector('.js-signin-modal-trigger').classList.add('d-none');
+                document.getElementById('userDropdown').classList.remove('d-none');
+                document.getElementById('userEmail').textContent = `로그인된 사용자: ${user.email}`;
+            }
+        });
+    </script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script src="js/placeholders.min.js"></script> <!-- polyfill for the HTML5 placeholder attribute -->

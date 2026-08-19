@@ -9972,7 +9972,7 @@ fieldset:disabled .btn {
     padding: 1.5rem !important;
   }
   .p-lg-5 {
-    background-image: url("mainsiteicon/지구.png");
+    background-image: url("../assets/icons/main/지구.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;

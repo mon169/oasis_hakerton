@@ -12,7 +12,7 @@
     <title>푸른발자국 - 전라북도 여행지</title>
     <!-- Favicon-->
     <link
-    rel="icon\전라남도\type="image/x-icon\전라남도\href="assets/favicon.ico" />
+    rel="icon" type="image/png" href="assets/icons/common/푸른발자국.png" />
     <!-- Bootstrap icons-->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
@@ -20,7 +20,6 @@
     />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
-    <link href="css/jeonbuk.css" rel="stylesheet" />
     <link href="css/tooltip.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,7 +40,9 @@
             cursor: pointer;
         } */
       .card-img-top {
-        height: 50%;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
       }
       .map-container {
         overflow: hidden;
@@ -104,7 +105,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container px-4 px-lg-5">
           <a class="navbar-brand" href="mainsite.html"><img
-          src="icon/푸른발자국.png"
+          src="assets/icons/common/푸른발자국.png"
           style="width: 2.5rem"
         />&nbsp;푸른발자국</a
       ></a>
@@ -178,7 +179,7 @@
               id="markers"
               class="hoverGroup"
               data-tooltip="익산시"
-              data-image="icon\전라북도\익산시.jpg"
+              data-image="assets/images/regions/jeonbuk/익산시.jpg"
             >
               <path
                 style="opacity: 1"
@@ -195,7 +196,7 @@
             <g
               class="hoverGroup"
               data-tooltip="완주군"
-              data-image="icon\전라북도\완주군.jpg"
+              data-image="assets/images/regions/jeonbuk/완주군.jpg"
             >
               <path
                 style="opacity: 1"
@@ -212,7 +213,7 @@
             <g
               class="hoverGroup"
               data-tooltip="군산시"
-              data-image="icon\전라북도\군산시.jpg"
+              data-image="assets/images/regions/jeonbuk/군산시.jpg"
             >
               <path
                 style="opacity: 1"
@@ -229,7 +230,7 @@
             <g
               class="hoverGroup"
               data-tooltip="무주군"
-              data-image="icon\전라북도\무주군.jpg"
+              data-image="assets/images/regions/jeonbuk/무주군.jpg"
             >
               <path
                 style="opacity: 1"
@@ -246,7 +247,7 @@
             <g
               class="hoverGroup"
               data-tooltip="진안군"
-              data-image="icon\전라북도\진안군.jpg"
+              data-image="assets/images/regions/jeonbuk/진안군.jpg"
             >
               <path
                 style="opacity: 1"
@@ -270,7 +271,7 @@
             <g
               class="hoverGroup"
               data-tooltip="김제시"
-              data-image="icon\전라북도\김제시.jpg"
+              data-image="assets/images/regions/jeonbuk/김제시.jpg"
             >
               <path
                 style="opacity: 1"
@@ -287,7 +288,7 @@
             <g
               class="hoverGroup"
               data-tooltip="전주시"
-              data-image="icon\전라북도\전주시.jpg"
+              data-image="assets/images/regions/jeonbuk/전주시.jpg"
             >
               <path
                 style="opacity: 1"
@@ -304,7 +305,7 @@
             <g
               class="hoverGroup"
               data-tooltip="부안군"
-              data-image="icon\전라북도\부안군.jpg"
+              data-image="assets/images/regions/jeonbuk/부안군.jpg"
             >
               <path
                 style="opacity: 1"
@@ -321,7 +322,7 @@
             <g
               class="hoverGroup"
               data-tooltip="장수군"
-              data-image="icon\전라북도\장수군.jpg"
+              data-image="assets/images/regions/jeonbuk/장수군.jpg"
             >
               <path
                 style="opacity: 1"
@@ -338,7 +339,7 @@
             <g
               class="hoverGroup"
               data-tooltip="정읍시"
-              data-image="icon\전라북도\정읍시.jpg"
+              data-image="assets/images/regions/jeonbuk/정읍시.jpg"
             >
               <path
                 style="opacity: 1"
@@ -355,7 +356,7 @@
             <g
               class="hoverGroup"
               data-tooltip="임실군"
-              data-image="icon\전라북도\임실군.jpg"
+              data-image="assets/images/regions/jeonbuk/임실군.jpg"
             >
               <path
                 style="opacity: 1"
@@ -372,7 +373,7 @@
             <g
               class="hoverGroup"
               data-tooltip="고창군"
-              data-image="icon\전라북도\고창군.jpg"
+              data-image="assets/images/regions/jeonbuk/고창군.jpg"
             >
               <path
                 style="opacity: 1"
@@ -389,7 +390,7 @@
             <g
               class="hoverGroup"
               data-tooltip="순창군"
-              data-image="icon\전라북도\순창군.jpg"
+              data-image="assets/images/regions/jeonbuk/순창군.jpg"
             >
               <path
                 style="opacity: 1"
@@ -406,7 +407,7 @@
             <g
               class="hoverGroup"
               data-tooltip="남원시"
-              data-image="icon\전라북도\남원시.jpg"
+              data-image="assets/images/regions/jeonbuk/남원시.jpg"
             >
               <path
                 style="opacity: 1"
@@ -420,7 +421,7 @@
                 data-id="군산시_금강미래체험관"
               >
                 <image
-                  href="icon/나무마커.png"
+                  href="assets/icons/markers/나무마커.png"
                   x="536"
                   y="205"
                   width="7rem"
@@ -433,7 +434,7 @@
                 data-id="익산시_금마_서동_생태관광지"
               >
                 <image
-                  href="icon/나무마커2.png"
+                  href="assets/icons/markers/나무마커2.png"
                   x="756"
                   y="225"
                   width="7rem"
@@ -446,7 +447,7 @@
                 data-id="완주군_경천_싱그랭이_에코빌"
               >
                 <image
-                  href="icon/나뭇잎마커.png"
+                  href="assets/icons/markers/나뭇잎마커.png"
                   x="866"
                   y="250"
                   width="5rem"
@@ -459,7 +460,7 @@
                 data-id="진안군_지오파크"
               >
                 <image
-                  href="icon/나무마커2.png"
+                  href="assets/icons/markers/나무마커2.png"
                   x="996"
                   y="510"
                   width="7rem"
@@ -472,7 +473,7 @@
                 data-id="무주군_반딧불이_생태관광지"
               >
                 <image
-                  href="icon/나뭇잎마커.png"
+                  href="assets/icons/markers/나뭇잎마커.png"
                   x="1196"
                   y="295"
                   width="5rem"
@@ -485,7 +486,7 @@
                 data-id="장수군_뜬봉샘생태공원"
               >
                 <image
-                  href="icon/꽃마커.png"
+                  href="assets/icons/markers/꽃마커.png"
                   x="1106"
                   y="650"
                   width="5rem"
@@ -498,7 +499,7 @@
                 data-id="남원시_백두대간_생태관광벨트"
               >
                 <image
-                  href="icon/나무마커.png"
+                  href="assets/icons/markers/나무마커.png"
                   x="1056"
                   y="830"
                   width="7rem"
@@ -511,7 +512,7 @@
                 data-id="임실군_옥정호"
               >
                 <image
-                  href="icon/꽃마커.png"
+                  href="assets/icons/markers/꽃마커.png"
                   x="866"
                   y="650"
                   width="5rem"
@@ -524,7 +525,7 @@
                 data-id="순창군_섬진강_장군목_생태관광지"
               >
                 <image
-                  href="icon/나무마커2.png"
+                  href="assets/icons/markers/나무마커2.png"
                   x="766"
                   y="870"
                   width="7rem"
@@ -537,7 +538,7 @@
                 data-id="정읍시_솔티_달빛_생태숲"
               >
                 <image
-                  href="icon/나뭇잎마커.png"
+                  href="assets/icons/markers/나뭇잎마커.png"
                   x="520"
                   y="590"
                   width="5rem"
@@ -550,7 +551,7 @@
                 data-id="김제시_김제_벽골제_생태농경원"
               >
                 <image
-                  href="icon/꽃마커.png"
+                  href="assets/icons/markers/꽃마커.png"
                   x="545"
                   y="450"
                   width="5rem"
@@ -563,7 +564,7 @@
                 data-id="부안군_신재생에너지_테마파크"
               >
                 <image
-                  href="icon/나무마커2.png"
+                  href="assets/icons/markers/나무마커2.png"
                   x="385"
                   y="520"
                   width="7rem"
@@ -576,7 +577,7 @@
                 data-id="고창군_운곡_람사르습지"
               >
                 <image
-                  href="icon/나무마커.png"
+                  href="assets/icons/markers/나무마커.png"
                   x="355"
                   y="710"
                   width="7rem"
@@ -589,7 +590,7 @@
                 data-id="전주_전주자연생태관"
               >
                 <image
-                  href="icon/꽃마커.png"
+                  href="assets/icons/markers/꽃마커.png"
                   x="815"
                   y="435"
                   width="5rem"
@@ -654,11 +655,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!-- 여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -748,11 +749,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!-- 여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -842,11 +843,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -909,11 +910,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -976,11 +977,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1043,11 +1044,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1110,11 +1111,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1177,11 +1178,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1244,11 +1245,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1311,11 +1312,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1378,11 +1379,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1445,11 +1446,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1512,11 +1513,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1579,11 +1580,11 @@
                       <img
                         id="modal-image"
                         class="img-fluid rounded mb-5"
-                        src="icon/전북대.png"
+                        src="assets/icons/common/전북대.png"
                       />
                       <h4 id="modal-details">설명</h4>
                       <br />
-                      <h4 id="modal-special">스페셜</h4>
+                      <h4 id="modal-special"></h4>
                       <!--여행지 주소 -->
                       <br />
                       <h6 id="modal-address"><br /><br />주소</h6>
@@ -1683,12 +1684,12 @@
         var map = new kakao.maps.Map(mapContainer, mapOption);
 
         // 마커 이미지를 생성합니다
-        var markerImageSrc = "icon/카카오마커.png"; // 마커 이미지 경로
+        var markerImageSrc = "assets/icons/markers/카카오마커.png"; // 마커 이미지 경로
         var markerImageSize = new kakao.maps.Size(64, 69); // 마커 이미지의 크기
         var markerImageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커 이미지의 옵션
 
         // 마커 이미지를 생성합니다
-        var markerImageSrc = "icon/카카오마커.png"; // 마커 이미지 경로
+        var markerImageSrc = "assets/icons/markers/카카오마커.png"; // 마커 이미지 경로
         var markerImageSize = new kakao.maps.Size(64, 69); // 마커 이미지의 크기
         var markerImageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커 이미지의 옵션
 
@@ -1884,6 +1885,21 @@
         query,
         limit,
       } from "./js/firebase.js";
+      const DEFAULT_IMAGE = "assets/images/default.png";
+
+      function getPlaceImageUrl(imageUrl) {
+        if (!imageUrl) return DEFAULT_IMAGE;
+
+        const normalizedUrl = String(imageUrl).toLowerCase();
+        if (
+          normalizedUrl.includes("visitkorea.or.kr") ||
+          normalizedUrl.includes("kto.or.kr")
+        ) {
+          return DEFAULT_IMAGE;
+        }
+
+        return imageUrl;
+      }
 
       document.addEventListener("DOMContentLoaded", function () {
         fetchPlaces();
@@ -1926,12 +1942,22 @@
             data.name || "여행지 이름";
           modalElement.querySelector("#modal-description").textContent =
             data.description || "여행지 소개";
-          modalElement.querySelector("#modal-image").src =
-            data.imageUrl || "icon/default.png";
+          const modalImage = modalElement.querySelector("#modal-image");
+          modalImage.onerror = function () {
+            this.onerror = null;
+            this.src = DEFAULT_IMAGE;
+          };
+          modalImage.src = getPlaceImageUrl(data.imageUrl);
           modalElement.querySelector("#modal-details").textContent =
             data.details || "설명";
-          modalElement.querySelector("#modal-special").textContent =
-            data.special || "스페셜";
+          const modalSpecial = modalElement.querySelector("#modal-special");
+          if (data.special) {
+            modalSpecial.textContent = data.special;
+            modalSpecial.style.display = "";
+          } else {
+            modalSpecial.textContent = "";
+            modalSpecial.style.display = "none";
+          }
           modalElement.querySelector("#modal-address").textContent =
             data.address || "주소";
 
@@ -1968,8 +1994,12 @@
 
           const image = document.createElement("img");
           image.className = "card-img-top";
-          image.src = place.imageUrl || "";
           image.alt = place.name || "";
+          image.onerror = function () {
+            this.onerror = null;
+            this.src = DEFAULT_IMAGE;
+          };
+          image.src = getPlaceImageUrl(place.imageUrl);
 
           const badge = document.createElement("div");
           badge.className = "badge bg-dark text-white position-absolute";

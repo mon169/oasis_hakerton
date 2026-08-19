@@ -1634,27 +1634,11 @@
         var markerImageSize = new kakao.maps.Size(64, 69); // 마커 이미지의 크기
         var markerImageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커 이미지의 옵션
 
-        // 마커 이미지를 생성합니다
-        var markerImageSrc = "assets/icons/markers/카카오마커.png"; // 마커 이미지 경로
-        var markerImageSize = new kakao.maps.Size(64, 69); // 마커 이미지의 크기
-        var markerImageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커 이미지의 옵션
-
         var markerImage = new kakao.maps.MarkerImage(
           markerImageSrc,
           markerImageSize,
           markerImageOption
         );
-        // 두 번째 마커 이미지
-        var markerImageSrc2 = "icon/로드뷰마커.png"; // 두 번째 마커 이미지 경로
-        var markerImageSize2 = new kakao.maps.Size(50, 54); // 두 번째 마커 이미지의 크기
-        var markerImageOption2 = { offset: new kakao.maps.Point(25, 54) }; // 두 번째 마커 이미지의 옵션
-
-        var markerImage2 = new kakao.maps.MarkerImage(
-          markerImageSrc2,
-          markerImageSize2,
-          markerImageOption2
-        );
-
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
           position: mapCenter, // 마커가 표시될 위치
@@ -1687,7 +1671,7 @@
 
         // 드래그가 가능한 마커를 생성합니다
         var draggableMarker = new kakao.maps.Marker({
-          image: markerImage2,
+          image: markerImage,
           position: mapCenter,
           draggable: true,
         });
@@ -1788,37 +1772,98 @@
         };
       }
 
-      // 군산 지도 초기화
-      document
-        .getElementById("군산")
-        .addEventListener("shown.bs.modal", function () {
-          initializeMap(
-            "mapContainerGunsan",
-            "mapWrapperGunsan",
-            "mapGunsan",
-            "roadviewGunsan",
-            "roadviewControlGunsan",
-            "closeGunsan",
-            35.967521,
-            126.736711
-          ); // 군산의 좌표
-        });
+      function ensureMapElements(modalId, suffix) {
+        if (document.getElementById(`mapContainer${suffix}`)) {
+          return;
+        }
 
-      // 익산 지도 초기화
-      document
-        .getElementById("익산")
-        .addEventListener("shown.bs.modal", function () {
-          initializeMap(
-            "mapContainerIksan",
-            "mapWrapperIksan",
-            "mapIksan",
-            "roadviewIksan",
-            "roadviewControlIksan",
-            "closeIksan",
-            35.949924,
-            126.957507
-          ); // 익산의 좌표
+        var modal = document.getElementById(modalId);
+        var address = modal?.querySelector("#modal-address");
+        if (!address) {
+          return;
+        }
+
+        var mapContainer = document.createElement("div");
+        mapContainer.className = "map-container";
+        mapContainer.id = `mapContainer${suffix}`;
+        mapContainer.innerHTML = `
+          <div class="rv-wrapper" id="rvWrapper${suffix}">
+            <div id="roadview${suffix}" style="width: 100%; height: 300px"></div>
+            <div class="close-btn" id="close${suffix}" title="로드뷰닫기">
+              <span class="img"></span>
+            </div>
+          </div>
+          <div class="map-wrapper" id="mapWrapper${suffix}">
+            <div id="map${suffix}" style="width: 100%; height: 300px"></div>
+            <div class="roadview-control" id="roadviewControl${suffix}"></div>
+          </div>
+        `;
+
+        address.insertAdjacentElement("afterend", document.createElement("br"));
+        address.nextElementSibling.insertAdjacentElement("afterend", mapContainer);
+      }
+
+      var jeonbukMapConfigs = [
+        ["군산", "Gunsan", 35.967521, 126.736711],
+        ["익산", "Iksan", 35.949924, 126.957507],
+        ["완주", "Wanju", 35.9865, 127.2474],
+        ["진안", "Jinan", 35.7601, 127.4148],
+        ["장수", "Jangsu", 35.6255, 127.5299],
+        ["무주", "Muju", 36.0062, 127.7955],
+        ["남원", "Namwon", 35.4098, 127.5791],
+        ["임실", "Imsil", 35.5402, 127.1482],
+        ["순창", "Sunchang", 35.3975, 127.1377],
+        ["정읍", "Jeongeup", 35.5599, 126.8581],
+        ["김제", "Gimje", 35.7537, 126.8498],
+        ["부안", "Buan", 35.6068, 126.5288],
+        ["고창", "Gochang", 35.4359, 126.7041],
+        ["전주", "Jeonju", 35.8399, 127.1216],
+      ];
+
+      function getJeonbukMapConfig(modalId) {
+        return jeonbukMapConfigs.find(function (config) {
+          return config[0] === modalId;
         });
+      }
+
+      function renderJeonbukMap(modal, mapConfig) {
+        if (!modal || !mapConfig) {
+          return;
+        }
+
+        var modalId = mapConfig[0];
+        var suffix = mapConfig[1];
+        var lat = mapConfig[2];
+        var lng = mapConfig[3];
+
+        ensureMapElements(modalId, suffix);
+        initializeMap(
+          `mapContainer${suffix}`,
+          `mapWrapper${suffix}`,
+          `map${suffix}`,
+          `roadview${suffix}`,
+          `roadviewControl${suffix}`,
+          `close${suffix}`,
+          lat,
+          lng
+        );
+      }
+
+      window.getJeonbukMapConfig = getJeonbukMapConfig;
+      window.renderJeonbukMap = renderJeonbukMap;
+
+      jeonbukMapConfigs.forEach(function (config) {
+        var modalId = config[0];
+        var modal = document.getElementById(modalId);
+
+        if (!modal) {
+          return;
+        }
+
+        modal.addEventListener("shown.bs.modal", function () {
+          renderJeonbukMap(modal, modal.__jeonbukMapConfig || config);
+        });
+      });
     </script>
 
     <script type="module">
@@ -1845,6 +1890,66 @@
         }
 
         return imageUrl;
+      }
+
+      const PLACE_OVERRIDES = {
+        학원관광농장: {
+          address: "전북 고창군 공음면 학원농장길 158-6",
+          lat: 35.37674,
+          lng: 126.5419,
+        },
+      };
+
+      function getPlaceOverride(data, locationId) {
+        const placeName = data.name || "";
+
+        if (PLACE_OVERRIDES[placeName]) {
+          return PLACE_OVERRIDES[placeName];
+        }
+
+        if (
+          placeName.includes("학원관광농장") ||
+          locationId?.includes("학원관광농장")
+        ) {
+          return PLACE_OVERRIDES.학원관광농장;
+        }
+
+        return null;
+      }
+
+      function getDisplayAddress(data, locationId) {
+        const override = getPlaceOverride(data, locationId);
+        return override?.address || data.address || "주소";
+      }
+
+      function updateModalMap(modalElement, data, locationId) {
+        const modalId = modalElement.id;
+        const baseConfig = window.getJeonbukMapConfig
+          ? window.getJeonbukMapConfig(modalId)
+          : null;
+        const override = getPlaceOverride(data, locationId);
+
+        if (!baseConfig && !override) {
+          return;
+        }
+
+        const mapConfig = baseConfig
+          ? [...baseConfig]
+          : [modalId, modalId, override.lat, override.lng];
+
+        if (override) {
+          mapConfig[2] = override.lat;
+          mapConfig[3] = override.lng;
+        }
+
+        modalElement.__jeonbukMapConfig = mapConfig;
+
+        if (
+          modalElement.classList.contains("show") &&
+          window.renderJeonbukMap
+        ) {
+          window.renderJeonbukMap(modalElement, mapConfig);
+        }
       }
 
       document.addEventListener("DOMContentLoaded", function () {
@@ -1919,7 +2024,8 @@
             modalSpecial.style.display = "none";
           }
           modalElement.querySelector("#modal-address").textContent =
-            data.address || "주소";
+            getDisplayAddress(data, locationId);
+          updateModalMap(modalElement, data, locationId);
 
           console.log(`${locationId} 모달이 업데이트되었습니다.`);
         } else {

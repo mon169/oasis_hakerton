@@ -73,3 +73,6 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# metadata file of macOS
+.DS_Store

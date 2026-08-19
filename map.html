@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>카카오맵 기반 포인트 시스템</title>
+    <title>푸른발자국 - 마일리지 적립</title>
     <script type="module">
         import { auth, db, onAuthStateChanged, doc, updateDoc, increment } from "./js/firebase.js";
         import { loadKakaoMaps } from "./js/kakao-map-loader.js";
@@ -128,17 +128,18 @@
                         alert("포인트 업데이트 중 오류 발생: " + error.message);
                     }
                 } else {
-                    alert("로그인된 사용자가 없습니다.");
-                    window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+                    alert("로그인 후 마일리지를 적립할 수 있습니다.");
                 }
             }
 
             // Check if user is signed in
             onAuthStateChanged(auth, (user) => {
+                const userEmail = document.getElementById('userEmail');
+
                 if (user) {
-                    document.getElementById('userEmail').textContent = `로그인된 사용자: ${user.email}`;
+                    userEmail.textContent = `로그인된 사용자: ${user.email}`;
                 } else {
-                    window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+                    userEmail.textContent = "로그인 후 마일리지를 적립할 수 있습니다.";
                 }
             });
         });

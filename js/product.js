@@ -16,6 +16,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let productPrice = 0; // 초기값 설정
 
+    function updatePointsDisplay(points) {
+        const userPointsElement1 = document.getElementById('user-points1');
+        const userPointsElement2 = document.getElementById('user-points2');
+
+        if (userPointsElement1) {
+            userPointsElement1.textContent = `마일리지: ${points}`;
+        }
+
+        if (userPointsElement2) {
+            userPointsElement2.textContent = `보유: ${points}`;
+        }
+    }
+
     // 지역 선택 시 해당 지역 제품 로드
     if (regionSelect) {
         regionSelect.addEventListener('change', function() {
@@ -97,9 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         // 포인트를 차감하고 데이터베이스에 업데이트
                         const newPoints = currentPoints - usedMileage;
                         await updateUserPoints(user.uid, newPoints);
+                        updatePointsDisplay(newPoints);
 
                         alert('구매가 완료되었습니다! 남은 마일리지: ' + newPoints);
-                        loadUserPoints();
 
                         // 모달 닫기
                         const purchaseModalInstance = bootstrap.Modal.getInstance(purchaseModal);

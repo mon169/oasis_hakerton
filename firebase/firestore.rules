@@ -10,21 +10,38 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == userId;
     }
 
-    match /users/{userId} {
-      allow read: if isOwner(userId);
-
-      allow create: if isOwner(userId)
-        && request.resource.data.keys().hasOnly(['username', 'email', 'points'])
-        && request.resource.data.username is string
-        && request.resource.data.email is string
-        && request.resource.data.points is number;
-
-      allow update: if isOwner(userId)
-        && request.resource.data.diff(resource.data).changedKeys().hasOnly(['username', 'email', 'points'])
+    function hasValidUserFields() {
+      return request.resource.data.keys().hasOnly(['username', 'email', 'points'])
         && request.resource.data.username is string
         && request.resource.data.email is string
         && request.resource.data.points is number
         && request.resource.data.points >= 0;
+    }
+
+    function changedOnly(fields) {
+      return request.resource.data.diff(resource.data).changedKeys().hasOnly(fields);
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+
+      allow create: if isOwner(userId)
+        && hasValidUserFields()
+        && request.resource.data.points == 50;
+
+      allow update: if isOwner(userId)
+        && hasValidUserFields()
+        && (
+          changedOnly(['username', 'email'])
+          || (
+            changedOnly(['points'])
+            && request.resource.data.points == resource.data.points + 100
+          )
+          || (
+            changedOnly(['points'])
+            && request.resource.data.points < resource.data.points
+          )
+        );
 
       allow delete: if false;
     }

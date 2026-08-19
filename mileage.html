@@ -607,7 +607,7 @@
                 points: increment(pointsToAdd),
               });
               console.log("Points updated successfully.");
-              alert("500 마일리지가 추가되었습니다!");
+              alert(`${pointsToAdd} 마일리지가 추가되었습니다!`);
             } catch (error) {
               console.error("Error updating points:", error);
               alert("포인트 업데이트 중 오류 발생: " + error.message);

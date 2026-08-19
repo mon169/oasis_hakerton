@@ -1,4 +1,4 @@
-import { storage, database, ref, set, push, storageRef, uploadBytes, getDownloadURL } from './firebase.js';
+import { auth, storage, storageRef, uploadBytes, getDownloadURL } from './firebase.js';
 import { getAllProducts, saveProductData } from './firebase.js';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -23,8 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            const user = auth.currentUser;
+            if (!user) {
+                alert('로그인 후 상품을 등록해 주세요.');
+                return;
+            }
+
             //이미지를 Firebase Storage에 업로드
-            const imageRef = storageRef(storage, `products/${pageId}/${Date.now()}_${imageFile.name}`);
+            const imageRef = storageRef(storage, `products/${pageId}/${user.uid}/${Date.now()}_${imageFile.name}`);
             uploadBytes(imageRef, imageFile).then((snapshot) => {
                 return getDownloadURL(snapshot.ref);
             }).then((imageUrl) => {

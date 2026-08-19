@@ -50,6 +50,59 @@
         padding: 10px; /* 화살표 크기 및 패딩 조정 */
         border-radius: 50%; /* 둥근 모양의 화살표 */
       }
+      .map-container {
+        overflow: hidden;
+        height: 300px;
+        position: relative;
+      }
+      .map-wrapper {
+        width: 100%;
+        height: 300px;
+        z-index: 1;
+      }
+      .rv-wrapper {
+        width: 50%;
+        height: 300px;
+        top: 0;
+        right: 0;
+        position: absolute;
+        z-index: 0;
+      }
+      .map-container.view_roadview .map-wrapper {
+        width: 50%;
+      }
+      .roadview-control {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 42px;
+        height: 42px;
+        z-index: 1;
+        cursor: pointer;
+        background: url(https://t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png)
+          0 -450px no-repeat;
+      }
+      .roadview-control.active {
+        background-position: 0 -350px;
+      }
+      .close-btn {
+        position: absolute;
+        padding: 4px;
+        top: 5px;
+        left: 5px;
+        cursor: pointer;
+        background: #fff;
+        border-radius: 4px;
+        border: 1px solid #c8c8c8;
+        box-shadow: 0px 1px #888;
+      }
+      .close-btn .img {
+        display: block;
+        background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/rv_close.png)
+          no-repeat;
+        width: 14px;
+        height: 14px;
+      }
     </style>
   </head>
 
@@ -846,80 +899,6 @@
         >
           <div class="carousel-inner" id="places">
             <!-- Firebase에서 데이터를 동적으로 추가 -->
-            <div
-              class="portfolio-modal modal fade"
-              id="placeModal"
-              tabindex="-1"
-              aria-labelledby="placeModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                  <div class="modal-header border-0">
-                    <button
-                      class="btn-close"
-                      type="button"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body text-center pb-5">
-                    <div class="container">
-                      <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                          <!-- Portfolio Modal - Title -->
-                          <h2
-                            id="modal-name"
-                            class="portfolio-modal-title text-secondary text-uppercase mb-0"
-                          >
-                            여행지 이름
-                          </h2>
-                          <br />
-                          <!-- Icon Divider -->
-                          <div class="divider-custom">
-                            <div class="divider-custom-line"></div>
-                            <div class="divider-custom-icon">
-                              <i class="fas fa-star"></i>
-                            </div>
-                            <div class="divider-custom-line"></div>
-                          </div>
-                          <h3 id="modal-description">
-                            <br />여행지 소개<br /><br />
-                          </h3>
-                          <br />
-                          <!-- Portfolio Modal - Image -->
-                          <img
-                            id="modal-image"
-                            class="img-fluid rounded mb-5"
-                            src="assets/icons/common/전북대.png"
-                          />
-                          <h4 id="modal-details">설명</h4>
-                          <br />
-                          <h4 id="modal-special"></h4>
-                          <!--여행지 주소 -->
-                          <br />
-                          <h6 id="modal-address"><br /><br />주소</h6>
-                          <br />
-                          <!-- Map Container -->
-                          <div
-                            id="modal-map"
-                            style="width: 100%; height: 300px"
-                          ></div>
-                          <br />
-                          <button
-                            class="btn btn-primary"
-                            data-bs-dismiss="modal"
-                          >
-                            <i class="fas fa-xmark fa-fw"></i>
-                            닫기
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
           <button
             class="carousel-control-prev"
@@ -942,6 +921,80 @@
         </div>
       </div>
     </section>
+    <div
+      class="portfolio-modal modal fade"
+      id="placeModal"
+      tabindex="-1"
+      aria-labelledby="placeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <button
+              class="btn-close"
+              type="button"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body text-center pb-5">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-lg-8">
+                  <!-- Portfolio Modal - Title -->
+                  <h2
+                    id="modal-name"
+                    class="portfolio-modal-title text-secondary text-uppercase mb-0"
+                  >
+                    여행지 이름
+                  </h2>
+                  <br />
+                  <!-- Icon Divider -->
+                  <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon">
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <div class="divider-custom-line"></div>
+                  </div>
+                  <h3 id="modal-description">
+                    <br />여행지 소개<br /><br />
+                  </h3>
+                  <br />
+                  <!-- Portfolio Modal - Image -->
+                  <img
+                    id="modal-image"
+                    class="img-fluid rounded mb-5"
+                    src="assets/icons/common/전북대.png"
+                  />
+                  <h4 id="modal-details">설명</h4>
+                  <br />
+                  <h4 id="modal-special"></h4>
+                  <!--여행지 주소 -->
+                  <br />
+                  <h6 id="modal-address"><br /><br />주소</h6>
+                  <br />
+                  <!-- Map Container -->
+                  <div class="map-container" id="modal-map-container">
+                    <div class="rv-wrapper">
+                      <div id="modal-roadview" style="width: 100%; height: 100%"></div>
+                      <div class="close-btn" id="modal-roadview-close" title="로드뷰닫기">
+                        <span class="img"></span>
+                      </div>
+                    </div>
+                    <div class="map-wrapper" id="modal-map-wrapper">
+                      <div id="modal-map" style="width: 100%; height: 100%"></div>
+                      <div class="roadview-control" id="modal-roadview-control"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
      
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -962,22 +1015,23 @@
       getDocs,
       collection,
     } from "./js/firebase.js";
-      const DEFAULT_IMAGE = "assets/images/default.png";
-
-      function getPlaceImageUrl(imageUrl) {
-        if (!imageUrl) return DEFAULT_IMAGE;
-
-        const normalizedUrl = String(imageUrl).toLowerCase();
-        if (
-          normalizedUrl.includes("visitkorea.or.kr") ||
-          normalizedUrl.includes("kto.or.kr")
-        ) {
-          return DEFAULT_IMAGE;
-        }
-
-        return imageUrl;
-      }
     import { loadKakaoMaps } from "./js/kakao-map-loader.js";
+
+    const DEFAULT_IMAGE = "assets/images/default.png";
+
+    function getPlaceImageUrl(imageUrl) {
+      if (!imageUrl) return DEFAULT_IMAGE;
+
+      const normalizedUrl = String(imageUrl).toLowerCase();
+      if (
+        normalizedUrl.includes("visitkorea.or.kr") ||
+        normalizedUrl.includes("kto.or.kr")
+      ) {
+        return DEFAULT_IMAGE;
+      }
+
+      return imageUrl;
+    }
 
     document.addEventListener("DOMContentLoaded", function () {
       fetchPlaces();
@@ -985,30 +1039,33 @@
         .then(() => console.log("카카오맵 API 로드 성공"))
         .catch((error) => console.error("카카오맵 API가 로드되지 않았습니다.", error));
 
-      // 모든 모달 트리거에 대한 이벤트 리스너 등록
+      // 동적으로 생성되는 더보기 버튼 클릭 처리
       document.addEventListener("click", async function (event) {
-        if (event.target.matches('[data-bs-toggle="modal"]')) {
-          const locationId = event.target.getAttribute("data-id"); // data-id에서 Firestore 문서 ID 가져오기
+        const trigger = event.target.closest(".place-detail-link");
+        if (!trigger) return;
 
-          if (locationId) {
-            const modalElement = document.querySelector("#placeModal"); // 타겟 모달 요소 선택
-            if (modalElement) {
-              await loadKakaoMaps();
-              loadModalData(modalElement, locationId); // Firestore에서 데이터 로드 및 모달 업데이트
-            } else {
-              console.error(`Modal element not found.`);
-            }
-          } else {
-            console.error("Location ID is missing!");
-          }
+        event.preventDefault();
+
+        const locationId = trigger.getAttribute("data-id");
+        const targetModalId = trigger.getAttribute("data-bs-target");
+        if (!locationId || !targetModalId) {
+          console.error("Location ID or target modal ID is missing!");
+          return;
+        }
+
+        const modalElement = document.querySelector(targetModalId);
+        if (modalElement) {
+          bootstrap.Modal.getOrCreateInstance(modalElement).show();
+          await loadKakaoMaps();
+          await loadModalData(modalElement, locationId);
+        } else {
+          console.error(`Modal element not found: ${targetModalId}`);
         }
       });
     });
 
     // Firestore에서 데이터를 로드하고 모달을 업데이트하는 함수
     async function loadModalData(modalElement, locationId) {
-      let map, roadview; // map과 roadview 변수를 함수 내에서 선언
-
       let docRef = doc(db, "여행지", locationId);
       let docSnap = await getDoc(docRef);
 
@@ -1047,8 +1104,16 @@
           data.address || "주소";
 
         // 기존의 지도 객체 제거
+        const mapOuterContainer = modalElement.querySelector("#modal-map-container");
+        const mapWrapper = modalElement.querySelector("#modal-map-wrapper");
         const mapContainer = modalElement.querySelector("#modal-map");
-        mapContainer.replaceChildren(); // 지도 컨테이너를 비웁니다.
+        const roadviewContainer = modalElement.querySelector("#modal-roadview");
+        const roadviewControl = modalElement.querySelector("#modal-roadview-control");
+        mapOuterContainer.classList.remove("view_roadview");
+        mapWrapper.style.width = "";
+        roadviewControl.classList.remove("active");
+        mapContainer.replaceChildren();
+        roadviewContainer.replaceChildren();
 
         // 장소 검색 객체 생성
         const ps = new kakao.maps.services.Places();
@@ -1061,7 +1126,7 @@
             const latitude = location.y;
             const longitude = location.x;
 
-            createMap(mapContainer, latitude, longitude);
+            createMap(modalElement, latitude, longitude);
           } else {
             // 장소 검색 실패 시 주소로 검색 시도
             const geocoder = new kakao.maps.services.Geocoder();
@@ -1074,7 +1139,7 @@
                 const latitude = location.y;
                 const longitude = location.x;
 
-                createMap(mapContainer, latitude, longitude);
+                createMap(modalElement, latitude, longitude);
               } else {
                 console.error("주소로도 장소를 찾을 수 없습니다.");
               }
@@ -1087,163 +1152,148 @@
     }
 
     // 공통적으로 지도를 생성하는 함수
-    function createMap(mapContainer, latitude, longitude) {
+    function createMap(modalElement, latitude, longitude) {
       try {
+        let overlayOn = false;
+        const container = modalElement.querySelector("#modal-map-container");
+        const mapContainer = modalElement.querySelector("#modal-map");
+        const rvContainer = modalElement.querySelector("#modal-roadview");
+        const roadviewControl = modalElement.querySelector("#modal-roadview-control");
+        const closeButton = modalElement.querySelector("#modal-roadview-close");
+        const mapCenter = new kakao.maps.LatLng(latitude, longitude);
         const mapOption = {
-          center: new kakao.maps.LatLng(latitude, longitude),
+          center: mapCenter,
           level: 3, // 지도의 확대 레벨
         };
 
         // 카카오맵 객체 생성
         const map = new kakao.maps.Map(mapContainer, mapOption);
+        setTimeout(function () {
+          map.relayout();
+          map.setCenter(mapCenter);
+        }, 300);
+
+        const markerImage = new kakao.maps.MarkerImage(
+          "assets/icons/markers/카카오마커.png",
+          new kakao.maps.Size(64, 69),
+          { offset: new kakao.maps.Point(27, 69) }
+        );
+        const roadviewMarkerImage = new kakao.maps.MarkerImage(
+          "assets/icons/markers/카카오마커.png",
+          new kakao.maps.Size(50, 54),
+          { offset: new kakao.maps.Point(25, 54) }
+        );
 
         // 마커 추가
-        const markerPosition = new kakao.maps.LatLng(latitude, longitude);
         const marker = new kakao.maps.Marker({
-          position: markerPosition,
-          map: map,
+          position: mapCenter,
+          image: markerImage,
         });
+        marker.setMap(map);
 
         console.log("지도 및 마커 생성 성공");
 
-        // 로드뷰 컨테이너 생성
-        const roadviewContainer = document.createElement("div");
-        roadviewContainer.style.width = "100%";
-        roadviewContainer.style.height = "300px";
-        roadviewContainer.style.display = "none"; // 초기에는 숨김
-        mapContainer.parentNode.insertBefore(
-          roadviewContainer,
-          mapContainer.nextSibling
-        );
-
-        const roadview = new kakao.maps.Roadview(roadviewContainer);
+        const roadview = new kakao.maps.Roadview(rvContainer);
         const roadviewClient = new kakao.maps.RoadviewClient();
-
-        // 로드뷰로 전환하는 버튼 생성
-        // 로드뷰로 전환하는 버튼 생성
-        const roadviewControl = document.createElement("div");
-        roadviewControl.style.width = "80px"; // 버튼 크기 조정
-        roadviewControl.style.height = "40px";
-        roadviewControl.style.background =
-          "url(https://t1.daumcdn.net/localimg/localimages/07/2018/pc/roadview_minibutton.png) no-repeat center";
-        roadviewControl.style.backgroundSize = "30px 30px"; // 이미지 크기 조정
-        roadviewControl.style.cursor = "pointer";
-        roadviewControl.style.position = "absolute";
-        roadviewControl.style.top = "10px";
-        roadviewControl.style.left = "10px"; // 왼쪽으로 이동
-        roadviewControl.style.zIndex = "1000";
-        roadviewControl.style.backgroundColor = "#ffffff"; // 배경색 추가
-        roadviewControl.style.opacity = "1"; // 투명도 설정
-        roadviewControl.style.border = "none"; // 테두리 제거
-        roadviewControl.id = "roadviewControlButton";
-        roadviewControl.style.display = "flex";
-        roadviewControl.style.alignItems = "center";
-        roadviewControl.style.justifyContent = "center";
-        const roadviewLabel = document.createElement("span");
-        roadviewLabel.style.fontSize = "14px";
-        roadviewLabel.style.fontWeight = "bold";
-        roadviewLabel.textContent = "로드뷰";
-        roadviewControl.appendChild(roadviewLabel);
-        mapContainer.appendChild(roadviewControl);
-
-        console.log("로드뷰 버튼 생성 시도:", roadviewControl);
-
-        // 로드뷰로 전환하는 버튼 클릭 이벤트
-        roadviewControl.onclick = function () {
-          console.log("로드뷰 버튼 클릭");
-          mapContainer.style.display = "none";
-          roadviewContainer.style.display = "block";
-          roadview.relayout();
-          roadviewClient.getNearestPanoId(
-            markerPosition,
-            50,
-            function (panoId) {
-              if (panoId !== null) {
-                roadview.setPanoId(panoId, markerPosition);
-              } else {
-                alert("근처에 로드뷰가 없습니다.");
-                roadviewContainer.style.display = "none";
-                mapContainer.style.display = "block";
-              }
-            }
-          );
-        };
-
-        // 모달이 닫힐 때 로드뷰와 지도 상태 초기화
-        $("#placeModal").on("hide.bs.modal", function () {
-          roadviewContainer.style.display = "none";
-          mapContainer.style.display = "block";
-          console.log("모달 닫힘 - 로드뷰와 지도 상태 초기화");
+        const draggableMarker = new kakao.maps.Marker({
+          image: roadviewMarkerImage,
+          position: mapCenter,
+          draggable: true,
         });
 
-        // 모달이 완전히 열린 후 지도의 크기를 재조정
-        $("#placeModal").on("shown.bs.modal", function () {
-          setTimeout(function () {
-            try {
-              map.relayout();
-              map.setCenter(new kakao.maps.LatLng(latitude, longitude));
-              console.log("지도 재설정 성공");
-            } catch (error) {
-              console.error("지도 재설정 중 오류 발생:", error);
-            }
-          }, 300); // 300ms의 지연 시간 추가
+        kakao.maps.event.addListener(roadview, "position_changed", function () {
+          const roadviewPosition = roadview.getPosition();
+          map.setCenter(roadviewPosition);
+
+          if (overlayOn) {
+            marker.setPosition(roadviewPosition);
+          }
         });
 
-        // 로드뷰로 전환하는 버튼 클릭 이벤트
-        roadviewControl.onclick = function () {
-          console.log("로드뷰 버튼 클릭");
-          mapContainer.style.display = "none";
-          roadviewContainer.style.display = "block";
-          roadview.relayout();
-          roadviewClient.getNearestPanoId(
-            markerPosition,
-            50,
-            function (panoId) {
-              if (panoId !== null) {
-                roadview.setPanoId(panoId, markerPosition);
-                mapControl.style.display = "block"; // 지도로 돌아가는 버튼 표시
-                roadviewControl.style.display = "none"; // 로드뷰 버튼 숨기기
-              } else {
-                alert("근처에 로드뷰가 없습니다.");
-                roadviewContainer.style.display = "none";
-                mapContainer.style.display = "block";
-                roadviewControl.style.display = "block"; // 로드뷰 버튼 다시 표시
-              }
-            }
-          );
-        };
+        kakao.maps.event.addListener(draggableMarker, "dragend", function () {
+          toggleRoadview(draggableMarker.getPosition());
+        });
 
-        // 지도로 돌아가는 버튼 클릭 이벤트
-        mapControl.onclick = function () {
-          console.log("지도로 돌아가는 버튼 클릭");
-          roadviewContainer.style.display = "none";
-          mapContainer.style.display = "block";
+        kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+          if (!overlayOn) return;
+
+          const position = mouseEvent.latLng;
+          draggableMarker.setPosition(position);
+          toggleRoadview(position);
+        });
+
+        function toggleRoadview(position) {
+          roadviewClient.getNearestPanoId(position, 50, function (panoId) {
+            if (panoId === null) {
+              toggleMapWrapper(true, position);
+            } else {
+              toggleMapWrapper(false, position);
+              roadview.setPanoId(panoId, position);
+            }
+          });
+        }
+
+        function toggleMapWrapper(active, position) {
+          if (active) {
+            container.classList.remove("view_roadview");
+          } else if (!container.classList.contains("view_roadview")) {
+            container.classList.add("view_roadview");
+          }
+
           map.relayout();
-          mapControl.style.display = "none"; // 지도로 돌아가는 버튼 숨기기
-          roadviewControl.style.display = "block"; // 로드뷰 버튼 다시 표시
+          map.setCenter(position);
+        }
+
+        function toggleOverlay(active) {
+          if (active) {
+            overlayOn = true;
+            map.addOverlayMapTypeId(kakao.maps.MapTypeId.ROADVIEW);
+            draggableMarker.setMap(map);
+            draggableMarker.setPosition(map.getCenter());
+            toggleRoadview(map.getCenter());
+          } else {
+            overlayOn = false;
+            map.removeOverlayMapTypeId(kakao.maps.MapTypeId.ROADVIEW);
+            draggableMarker.setMap(null);
+          }
+        }
+
+        roadviewControl.onclick = function () {
+          if (!roadviewControl.classList.contains("active")) {
+            roadviewControl.classList.add("active");
+            toggleOverlay(true);
+          } else {
+            roadviewControl.classList.remove("active");
+            toggleOverlay(false);
+          }
         };
 
-        // 모달이 닫힐 때 로드뷰와 지도 상태 초기화
-        $("#placeModal").on("hide.bs.modal", function () {
-          roadviewContainer.style.display = "none";
-          mapContainer.style.display = "block";
-          mapControl.style.display = "none";
-          roadviewControl.style.display = "block";
-          console.log("모달 닫힘 - 로드뷰와 지도 상태 초기화");
-        });
+        closeButton.onclick = function () {
+          toggleMapWrapper(true, draggableMarker.getPosition());
+        };
 
         // 모달이 완전히 열린 후 지도의 크기를 재조정
-        $("#placeModal").on("shown.bs.modal", function () {
+        modalElement.addEventListener("shown.bs.modal", function () {
           setTimeout(function () {
             try {
               map.relayout();
-              map.setCenter(new kakao.maps.LatLng(latitude, longitude));
+              map.setCenter(mapCenter);
               console.log("지도 재설정 성공");
             } catch (error) {
               console.error("지도 재설정 중 오류 발생:", error);
             }
           }, 300); // 300ms의 지연 시간 추가
-        });
+        }, { once: true });
+
+        modalElement.addEventListener("hide.bs.modal", function () {
+          container.classList.remove("view_roadview");
+          roadviewControl.classList.remove("active");
+          toggleOverlay(false);
+          map.relayout();
+          map.setCenter(mapCenter);
+          console.log("모달 닫힘 - 로드뷰와 지도 상태 초기화");
+        }, { once: true });
+
       } catch (error) {
         console.error("지도 생성 중 오류 발생:", error);
       }
@@ -1339,10 +1389,9 @@
             actions.className = "text-center";
 
             const detailLink = document.createElement("a");
-            detailLink.className = "btn btn-outline-dark mt-auto";
+            detailLink.className = "btn btn-outline-dark mt-auto place-detail-link";
             detailLink.href = "#";
             detailLink.dataset.id = place.id;
-            detailLink.setAttribute("data-bs-toggle", "modal");
             detailLink.setAttribute("data-bs-target", "#placeModal");
             detailLink.textContent = "더보기";
 

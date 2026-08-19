@@ -1924,6 +1924,20 @@
               }
             });
           });
+
+        document.addEventListener("click", function (event) {
+          const trigger = event.target.closest(".place-detail-link");
+          if (!trigger) return;
+
+          const locationId = trigger.getAttribute("data-id");
+          const targetModalId = trigger.getAttribute("data-bs-target");
+          if (!locationId || !targetModalId) return;
+
+          const modalElement = document.querySelector(targetModalId);
+          if (modalElement) {
+            loadModalData(modalElement, locationId);
+          }
+        });
       });
 
       // Firestore에서 데이터를 로드하고 모달을 업데이트하는 함수
@@ -1985,6 +1999,26 @@
         const selectedPlaces = placesArray.slice(0, 4);
 
         const placesContainer = document.getElementById("places");
+        const getModalTarget = (place) => {
+          const candidates = [
+            place.region,
+            place.name,
+            place.id?.split("_")[0],
+          ];
+
+          for (const value of candidates) {
+            if (!value) continue;
+            const modalId = String(value).replace(
+              /(광역시|특별시|특별자치시|특별자치도|시|군|구)$/,
+              ""
+            );
+            if (document.getElementById(modalId)) {
+              return `#${modalId}`;
+            }
+          }
+
+          return null;
+        };
 
         selectedPlaces.forEach((place) => {
           const placeDiv = document.createElement("div");
@@ -2027,11 +2061,17 @@
           actions.className = "text-center";
 
           const detailLink = document.createElement("a");
-          detailLink.className = "btn btn-outline-dark mt-auto";
+          detailLink.className = "btn btn-outline-dark mt-auto place-detail-link";
           detailLink.href = "#";
           detailLink.dataset.id = place.id;
-          detailLink.setAttribute("data-bs-toggle", "modal");
-          detailLink.setAttribute("data-bs-target", `#${place.id}`);
+          const modalTarget = getModalTarget(place);
+          if (modalTarget) {
+            detailLink.setAttribute("data-bs-toggle", "modal");
+            detailLink.setAttribute("data-bs-target", modalTarget);
+          } else {
+            detailLink.classList.add("disabled");
+            detailLink.setAttribute("aria-disabled", "true");
+          }
           detailLink.textContent = "더보기";
 
           textWrapper.append(title, description);

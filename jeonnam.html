@@ -9,7 +9,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Shop Item - Start Bootstrap Template</title>
+    <title>푸른발자국 - 전라남도 여행지</title>
     <!-- Favicon-->
     <link
     rel="icon\전라남도\type="image/x-icon\전라남도\href="assets/favicon.ico" />
@@ -3864,7 +3864,7 @@
            document.querySelectorAll('.marker').forEach(marker => {
                marker.addEventListener('mouseenter', function() {
                    const tooltip = document.getElementById('tooltip');
-                   tooltip.innerHTML = marker.getAttribute('data-name');
+                   tooltip.textContent = marker.getAttribute('data-name');
                    tooltip.style.display = 'block';
                    tooltip.style.left = `${marker.getBoundingClientRect().left + window.pageXOffset}px`;
                    tooltip.style.top = `${marker.getBoundingClientRect().top + window.pageYOffset - 30}px`;
@@ -4518,24 +4518,53 @@
         selectedPlaces.forEach((place) => {
           const placeDiv = document.createElement("div");
           placeDiv.classList.add("col", "mb-5");
-          placeDiv.innerHTML = `
-            <div class="card h-100">
-              <img class="card-img-top" src="${place.imageUrl}" alt="${place.name}" />
-              <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                ${place.region}
-              </div>
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">${place.name}</h5>
-                  ${place.description}
-                </div>
-              </div>
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#" data-id="${place.id}" data-bs-toggle="modal" data-bs-target="#${place.id}">더보기</a>
-                </div>
-              </div>
-            </div>`;
+          const card = document.createElement("div");
+          card.className = "card h-100";
+
+          const image = document.createElement("img");
+          image.className = "card-img-top";
+          image.src = place.imageUrl || "";
+          image.alt = place.name || "";
+
+          const badge = document.createElement("div");
+          badge.className = "badge bg-dark text-white position-absolute";
+          badge.style.top = "0.5rem";
+          badge.style.right = "0.5rem";
+          badge.textContent = place.region || "";
+
+          const body = document.createElement("div");
+          body.className = "card-body p-4";
+
+          const textWrapper = document.createElement("div");
+          textWrapper.className = "text-center";
+
+          const title = document.createElement("h5");
+          title.className = "fw-bolder";
+          title.textContent = place.name || "";
+
+          const description = document.createElement("p");
+          description.textContent = place.description || "";
+
+          const footer = document.createElement("div");
+          footer.className = "card-footer p-4 pt-0 border-top-0 bg-transparent";
+
+          const actions = document.createElement("div");
+          actions.className = "text-center";
+
+          const detailLink = document.createElement("a");
+          detailLink.className = "btn btn-outline-dark mt-auto";
+          detailLink.href = "#";
+          detailLink.dataset.id = place.id;
+          detailLink.setAttribute("data-bs-toggle", "modal");
+          detailLink.setAttribute("data-bs-target", `#${place.id}`);
+          detailLink.textContent = "더보기";
+
+          textWrapper.append(title, description);
+          body.appendChild(textWrapper);
+          actions.appendChild(detailLink);
+          footer.appendChild(actions);
+          card.append(image, badge, body, footer);
+          placeDiv.appendChild(card);
           placesContainer.appendChild(placeDiv);
         });
       }

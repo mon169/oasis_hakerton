@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Shop Item - Start Bootstrap Template</title>
+    <title>푸른발자국 - 마일리지</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -633,7 +633,7 @@
     <script src="js/scripts.js"></script>
     <script src="js/placeholders.min.js"></script>
     <!-- polyfill for the HTML5 placeholder attribute -->
-    <script src="js/main.js"></script>
+    <script src="js/login_modal.js"></script>
     <script type="module">
       import {
           db,
@@ -697,7 +697,7 @@
 
         // 기존의 지도 객체 제거
         const mapContainer = modalElement.querySelector("#modal-map");
-        mapContainer.innerHTML = ""; // 지도 컨테이너를 비웁니다.
+        mapContainer.replaceChildren(); // 지도 컨테이너를 비웁니다.
 
         // 장소 검색 객체 생성
         const ps = new kakao.maps.services.Places();
@@ -781,7 +781,11 @@ roadviewControl.id = 'roadviewControlButton';
 roadviewControl.style.display = 'flex';
 roadviewControl.style.alignItems = 'center';
 roadviewControl.style.justifyContent = 'center';
-roadviewControl.innerHTML = '<span style="font-size: 14px; font-weight: bold;">로드뷰</span>';  // 버튼에 텍스트 추가
+const roadviewLabel = document.createElement('span');
+roadviewLabel.style.fontSize = '14px';
+roadviewLabel.style.fontWeight = 'bold';
+roadviewLabel.textContent = '로드뷰';
+roadviewControl.appendChild(roadviewLabel);
 mapContainer.appendChild(roadviewControl);
 
 console.log("로드뷰 버튼 생성 시도:", roadviewControl);
@@ -902,7 +906,7 @@ $('#placeModal').on('shown.bs.modal', function () {
   
           // 무작위로 섞지 않고 가져온 순서대로 슬라이드에 표시합니다.
           const placesContainer = document.getElementById("places");
-          placesContainer.innerHTML = "";
+          placesContainer.replaceChildren();
   
           // 슬라이드마다 8개의 카드를 표시합니다.
           const chunkSize = 8;
@@ -931,24 +935,53 @@ $('#placeModal').on('shown.bs.modal', function () {
               chunk.forEach((place) => {
                   const placeDiv = document.createElement("div");
                   placeDiv.classList.add("col", "mb-5");
-                  placeDiv.innerHTML = `
-                <div class="card h-100">
-                  <img class="card-img-top" src="${place.imageUrl}" alt="${place.name}" />
-                  <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
-                    ${place.region}
-                  </div>
-                  <div class="card-body p-4">
-                    <div class="text-center">
-                      <h5 class="fw-bolder">${place.name}</h5>
-                      ${place.description}
-                    </div>
-                  </div>
-                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center">
-                      <a class="btn btn-outline-dark mt-auto" href="#" data-id="${place.id}" data-bs-toggle="modal" data-bs-target="#placeModal">더보기</a>
-                    </div>
-                  </div>
-                </div>`;
+                  const card = document.createElement("div");
+                  card.className = "card h-100";
+
+                  const image = document.createElement("img");
+                  image.className = "card-img-top";
+                  image.src = place.imageUrl || "";
+                  image.alt = place.name || "";
+
+                  const badge = document.createElement("div");
+                  badge.className = "badge bg-dark text-white position-absolute";
+                  badge.style.top = "0.5rem";
+                  badge.style.right = "0.5rem";
+                  badge.textContent = place.region || "";
+
+                  const body = document.createElement("div");
+                  body.className = "card-body p-4";
+
+                  const textWrapper = document.createElement("div");
+                  textWrapper.className = "text-center";
+
+                  const title = document.createElement("h5");
+                  title.className = "fw-bolder";
+                  title.textContent = place.name || "";
+
+                  const description = document.createElement("p");
+                  description.textContent = place.description || "";
+
+                  const footer = document.createElement("div");
+                  footer.className = "card-footer p-4 pt-0 border-top-0 bg-transparent";
+
+                  const actions = document.createElement("div");
+                  actions.className = "text-center";
+
+                  const detailLink = document.createElement("a");
+                  detailLink.className = "btn btn-outline-dark mt-auto";
+                  detailLink.href = "#";
+                  detailLink.dataset.id = place.id;
+                  detailLink.setAttribute("data-bs-toggle", "modal");
+                  detailLink.setAttribute("data-bs-target", "#placeModal");
+                  detailLink.textContent = "더보기";
+
+                  textWrapper.append(title, description);
+                  body.appendChild(textWrapper);
+                  actions.appendChild(detailLink);
+                  footer.appendChild(actions);
+                  card.append(image, badge, body, footer);
+                  placeDiv.appendChild(card);
                   rowDiv.appendChild(placeDiv);
               });
   

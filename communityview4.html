@@ -155,7 +155,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             var postContent = localStorage.getItem('postContent');
             if (postContent) {
-                document.getElementById('postContent').innerHTML = postContent;
+                document.getElementById('postContent').textContent = postContent;
             }
         });
         </script>

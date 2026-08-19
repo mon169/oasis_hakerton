@@ -153,44 +153,82 @@
             const end = start + postsPerPage;
             const postsToDisplay = posts.slice(start, end);
             const boardList = document.getElementById('boardList');
-            boardList.innerHTML = '';
+            boardList.replaceChildren();
     
             postsToDisplay.forEach((post, index) => {
-                boardList.innerHTML += `
-                    <div style="display: flex; align-items: center; justify-content: space-between; height: auto;">
-                        <div class="num" style="font-size: 24px;">${start + index + 1}</div>
-                        <div class="title" style="flex-grow: 1;">
-                            <a href="communityview${start + index + 1}.html" class="${post.title === '커뮤니티 이용안내' ? 'special-title' : ''}">${post.title}</a>
-                        </div>
-                        <div class="writer" style="margin-left: 100px;">${post.writer}</div>
-                        <div class="date" style="margin-left: 10px;">${post.date}</div>
-                        <div class="count" style="margin-left: 10px;">${post.count}</div>
-                    </div>
-                    <hr style="border: 1px solid #ccc; margin: 0px 0;">
-                `;
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.alignItems = 'center';
+                row.style.justifyContent = 'space-between';
+                row.style.height = 'auto';
+
+                const number = document.createElement('div');
+                number.className = 'num';
+                number.style.fontSize = '24px';
+                number.textContent = start + index + 1;
+
+                const title = document.createElement('div');
+                title.className = 'title';
+                title.style.flexGrow = '1';
+
+                const titleLink = document.createElement('a');
+                titleLink.href = `communityview${start + index + 1}.html`;
+                if (post.title === '커뮤니티 이용안내') {
+                    titleLink.className = 'special-title';
+                }
+                titleLink.textContent = post.title;
+                title.appendChild(titleLink);
+
+                const writer = document.createElement('div');
+                writer.className = 'writer';
+                writer.style.marginLeft = '100px';
+                writer.textContent = post.writer;
+
+                const date = document.createElement('div');
+                date.className = 'date';
+                date.style.marginLeft = '10px';
+                date.textContent = post.date;
+
+                const count = document.createElement('div');
+                count.className = 'count';
+                count.style.marginLeft = '10px';
+                count.textContent = post.count;
+
+                const separator = document.createElement('hr');
+                separator.style.border = '1px solid #ccc';
+                separator.style.margin = '0px 0';
+
+                row.append(number, title, writer, date, count);
+                boardList.append(row, separator);
             });
         }
-    
+
         function setupPagination() {
             const pagination = document.getElementById('pagination');
             const totalPages = Math.ceil(posts.length / postsPerPage);
-            pagination.innerHTML = '';
-    
-            const firstPageButton = `<a href="#" class="bt" onclick="changePage(1)"><<</a>`;
-            pagination.innerHTML += firstPageButton;
-    
-            const prevPageButton = `<a href="#" class="bt ${currentPage === 1 ? 'disabled' : ''}" onclick="changePage(${currentPage - 1})"><</a>`;
-            pagination.innerHTML += prevPageButton;
-    
+            pagination.replaceChildren();
+
+            const createPageButton = (label, page, className = 'bt') => {
+                const button = document.createElement('a');
+                button.href = '#';
+                button.className = className;
+                button.textContent = label;
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    changePage(page);
+                });
+                return button;
+            };
+
+            pagination.appendChild(createPageButton('<<', 1));
+            pagination.appendChild(createPageButton('<', currentPage - 1, `bt ${currentPage === 1 ? 'disabled' : ''}`));
+
             for (let i = 1; i <= totalPages; i++) {
-                pagination.innerHTML += `<a href="#" class="num ${i === currentPage ? 'on' : ''}" onclick="changePage(${i})">${i}</a>`;
+                pagination.appendChild(createPageButton(String(i), i, `num ${i === currentPage ? 'on' : ''}`));
             }
-    
-            const nextPageButton = `<a href="#" class="bt ${currentPage === totalPages ? 'disabled' : ''}" onclick="changePage(${currentPage + 1})">></a>`;
-            pagination.innerHTML += nextPageButton;
-    
-            const lastPageButton = `<a href="#" class="bt" onclick="changePage(${totalPages})">>></a>`;
-            pagination.innerHTML += lastPageButton;
+
+            pagination.appendChild(createPageButton('>', currentPage + 1, `bt ${currentPage === totalPages ? 'disabled' : ''}`));
+            pagination.appendChild(createPageButton('>>', totalPages));
         }
     
         function changePage(page) {

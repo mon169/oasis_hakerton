@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const regionSelect = document.getElementById('regionSelect'); 
 
     const modal = document.getElementById('productModal');
-    const addToCartButton = modal.querySelector('.btn-primary');
+    const addToCartButton = modal ? modal.querySelector('.btn-primary') : null;
     const purchaseModal = document.getElementById('purchaseModal');
 
     const usePointsButton = document.getElementById('usePointsButton');
@@ -33,30 +33,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 모달이 표시될 때 제품 정보를 설정
-    modal.addEventListener('show.bs.modal', function(event) {
-        const button = event.relatedTarget;
-        const name = button.getAttribute('data-name');
-        const price = button.getAttribute('data-price');
-        const image = button.getAttribute('data-image');
-        const description = button.getAttribute('data-description');
+    if (modal) {
+        modal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const name = button.getAttribute('data-name') || '';
+            const price = button.getAttribute('data-price') || '';
+            const image = button.getAttribute('data-image') || '';
+            const description = button.getAttribute('data-description') || '';
 
-        modal.querySelector('#modalProductImage').src = image;
-        modal.querySelector('#modalProductName').textContent = name;
-        modal.querySelector('#modalProductPrice').textContent = price;
-        modal.querySelector('#modalProductDescription').innerHTML = description;
-    });
+            modal.querySelector('#modalProductImage').src = image;
+            modal.querySelector('#modalProductImage').alt = name;
+            modal.querySelector('#modalProductName').textContent = name;
+            modal.querySelector('#modalProductPrice').textContent = price;
+            modal.querySelector('#modalProductDescription').textContent = description;
+        });
+    }
 
     // purchaseModal 설정
-    purchaseModal.addEventListener('show.bs.modal', function(event) {
-        const button = event.relatedTarget;
-        const name = button.getAttribute('data-name');
-        const price = button.getAttribute('data-price');
-        productPrice = parseFloat(button.getAttribute('data-price')); // 상품 가격을 직접 파싱
+    if (purchaseModal) {
+        purchaseModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const name = button.getAttribute('data-name') || '';
+            const price = button.getAttribute('data-price') || '0';
+            productPrice = parseFloat(price) || 0; // 상품 가격을 직접 파싱
 
-        purchaseModal.querySelector('.modalProductName').textContent = name;
-        purchaseModal.querySelector('.modalProductPrice').textContent = `상품 금액: ${price}`;
-        finalPriceElement.textContent = `결제 금액: ${productPrice}`; // 모달 열 때 초기 결제 금액 설정
-    });
+            purchaseModal.querySelector('.modalProductName').textContent = name;
+            purchaseModal.querySelector('.modalProductPrice').textContent = `상품 금액: ${price}`;
+            finalPriceElement.textContent = `결제 금액: ${productPrice}`; // 모달 열 때 초기 결제 금액 설정
+        });
+    }
 
     // 마일리지 사용 버튼 클릭 시
     if (usePointsButton) {
@@ -142,6 +147,69 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Container not found for:', pageId);
         }
     
+     function createProductCard(product) {
+            const name = product.name || '';
+            const price = product.price || '';
+            const image = product.image || '';
+            const description = product.description || '';
+
+            const col = document.createElement('div');
+            col.className = 'col mb-5';
+
+            const card = document.createElement('div');
+            card.className = 'card h-100';
+
+            const img = document.createElement('img');
+            img.className = 'card-img-top product-image';
+            img.src = image;
+            img.alt = name;
+
+            const body = document.createElement('div');
+            body.className = 'card-body p-4';
+
+            const title = document.createElement('h5');
+            title.className = 'product-name';
+            title.textContent = name;
+
+            const priceElement = document.createElement('span');
+            priceElement.className = 'product-price';
+            priceElement.textContent = price;
+
+            const footer = document.createElement('div');
+            footer.className = 'card-footer p-4 pt-0 border-top-0 bg-transparent';
+
+            const actions = document.createElement('div');
+            actions.className = 'text-center';
+
+            const detailButton = document.createElement('a');
+            detailButton.className = 'btn btn-outline-dark mt-auto';
+            detailButton.href = '#';
+            detailButton.setAttribute('data-bs-toggle', 'modal');
+            detailButton.setAttribute('data-bs-target', '#productModal');
+            detailButton.dataset.name = name;
+            detailButton.dataset.price = price;
+            detailButton.dataset.image = image;
+            detailButton.dataset.description = description;
+            detailButton.textContent = '상세정보 확인';
+
+            const purchaseButton = document.createElement('a');
+            purchaseButton.className = 'btn btn-primary purchase-button';
+            purchaseButton.href = '#';
+            purchaseButton.setAttribute('data-bs-toggle', 'modal');
+            purchaseButton.setAttribute('data-bs-target', '#purchaseModal');
+            purchaseButton.dataset.name = name;
+            purchaseButton.dataset.price = price;
+            purchaseButton.textContent = '구매';
+
+            body.append(title, priceElement);
+            actions.append(detailButton, purchaseButton);
+            footer.appendChild(actions);
+            card.append(img, body, footer);
+            col.appendChild(card);
+
+            return col;
+        }
+
      //데이터베이스에서 불러오기
      function loadProducts(pageId, region) {
             let path;
@@ -159,23 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
              getAllProducts(path, (products) => {
                  if (container) {
-                     container.innerHTML = products.map(product => `
-                     <div class="col mb-5">
-                         <div class="card h-100">
-                         <img class="card-img-top product-image" src="${product.image}" alt="${product.name}"/>
-                         <div class="card-body p-4">
-                             <h5 class="product-name">${product.name}</h5>  
-                             <span class="product-price">${product.price}</span>     
-                         </div>
-                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                             <div class="text-center">
-                              <a class="btn btn-outline-dark mt-auto" href="#" data-bs-toggle="modal" data-bs-target="#productModal" data-name="${product.name}" data-price="${product.price}" data-image="${product.image}" data-description="${product.description}">상세정보 확인</a>
-                             <a class="btn btn-primary purchase-button" data-bs-toggle="modal" data-bs-target="#purchaseModal" data-name="${product.name}" data-price="${product.price}">구매</a>
-                             </div> 
-                         </div>     
-                         </div>
-                     </div>
-                     `).join('');
+                     container.replaceChildren(...products.map(createProductCard));
                  }
             });
         }

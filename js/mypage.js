@@ -1,15 +1,10 @@
 import {
-  getAuth,
+  auth,
+  db,
   onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-import {
-  getFirestore,
   doc,
   getDoc,
-} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-
-const auth = getAuth();
-const db = getFirestore();
+} from "./firebase.js";
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {

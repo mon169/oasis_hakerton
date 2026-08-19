@@ -1644,10 +1644,13 @@
                 });
             });
         </script>-->
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998"
-    ></script>
+    <script type="module">
+      import { loadKakaoMaps } from "./js/kakao-map-loader.js";
+
+      loadKakaoMaps().catch((error) => {
+        console.error("카카오맵 API가 로드되지 않았습니다.", error);
+      });
+    </script>
     <script>
       function initializeMap(
         containerId,
@@ -1659,6 +1662,11 @@
         lat,
         lng
       ) {
+        if (!window.kakao?.maps && window.loadKakaoMaps) {
+          window.loadKakaoMaps().then(() => initializeMap(...arguments));
+          return;
+        }
+
         var overlayOn = false, // 지도 위에 로드뷰 오버레이가 추가된 상태를 가지고 있을 변수
           container = document.getElementById(containerId), // 지도와 로드뷰를 감싸고 있는 div
           mapWrapper = document.getElementById(mapWrapperId), // 지도를 감싸고 있는 div
@@ -1867,31 +1875,15 @@
     </script>
 
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
       import {
-        getFirestore,
+        db,
         doc,
         getDoc,
         getDocs,
         collection,
         query,
         limit,
-      } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
-      // Firebase 설정 정보
-      const firebaseConfig = {
-        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-        authDomain: "oasis-783c1.firebaseapp.com",
-        projectId: "oasis-783c1",
-        storageBucket: "oasis-783c1.appspot.com",
-        messagingSenderId: "36960403673",
-        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-        measurementId: "G-80936TQC87",
-      };
-
-      // Firebase 초기화
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
+      } from "./js/firebase.js";
 
       document.addEventListener("DOMContentLoaded", function () {
         fetchPlaces();

@@ -1,0 +1,15 @@
+{
+  "rules": {
+    "products": {
+      ".read": true,
+      "$pageId": {
+        "$productId": {
+          ".write": "auth != null",
+          ".validate": "newData.hasChildren(['name', 'price', 'image', 'description'])"
+        }
+      }
+    },
+    ".read": false,
+    ".write": false
+  }
+}

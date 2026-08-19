@@ -966,50 +966,35 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
   </body>
-  <script
-    type="text/javascript"
-    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"
-  ></script>
   <script src="js/scripts.js"></script>
   <script src="js/placeholders.min.js"></script>
   <!-- polyfill for the HTML5 placeholder attribute -->
   <script src="js/main.js"></script>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
     import {
-      getFirestore,
+      db,
       doc,
       getDoc,
       getDocs,
       collection,
-    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
-    // Firebase 설정 정보
-    const firebaseConfig = {
-      apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-      authDomain: "oasis-783c1.firebaseapp.com",
-      projectId: "oasis-783c1",
-      storageBucket: "oasis-783c1.appspot.com",
-      messagingSenderId: "36960403673",
-      appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-      measurementId: "G-80936TQC87",
-    };
-
-    // Firebase 초기화
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    } from "./js/firebase.js";
+    import { loadKakaoMaps } from "./js/kakao-map-loader.js";
 
     document.addEventListener("DOMContentLoaded", function () {
       fetchPlaces();
+      loadKakaoMaps()
+        .then(() => console.log("카카오맵 API 로드 성공"))
+        .catch((error) => console.error("카카오맵 API가 로드되지 않았습니다.", error));
 
       // 모든 모달 트리거에 대한 이벤트 리스너 등록
-      document.addEventListener("click", function (event) {
+      document.addEventListener("click", async function (event) {
         if (event.target.matches('[data-bs-toggle="modal"]')) {
           const locationId = event.target.getAttribute("data-id"); // data-id에서 Firestore 문서 ID 가져오기
 
           if (locationId) {
             const modalElement = document.querySelector("#placeModal"); // 타겟 모달 요소 선택
             if (modalElement) {
+              await loadKakaoMaps();
               loadModalData(modalElement, locationId); // Firestore에서 데이터 로드 및 모달 업데이트
             } else {
               console.error(`Modal element not found.`);
@@ -1252,64 +1237,59 @@
       }
     }
 
-    // 카카오맵 API 로드 체크
-    if (typeof kakao === "undefined" || !kakao.maps) {
-      console.error("카카오맵 API가 로드되지 않았습니다.");
-    } else {
-      console.log("카카오맵 API 로드 성공");
-    }
-
     // Firestore에서 데이터를 가져와 카드들을 생성하는 함수
     async function fetchPlaces() {
-      // 첫 번째 컬렉션 "여행지"에서 데이터 가져오기
-      const travelQuerySnapshot = await getDocs(collection(db, "여행지"));
-      let placesArray = [];
-      travelQuerySnapshot.forEach((doc) => {
-        placesArray.push({ ...doc.data(), id: doc.id });
-      });
+      try {
+        // 첫 번째 컬렉션 "여행지"에서 데이터 가져오기
+        const travelQuerySnapshot = await getDocs(collection(db, "여행지"));
+        let placesArray = [];
+        travelQuerySnapshot.forEach((doc) => {
+          placesArray.push({ ...doc.data(), id: doc.id });
+        });
 
-      // 두 번째 컬렉션 "data"에서 데이터 가져오기
-      const dataQuerySnapshot = await getDocs(collection(db, "data"));
-      dataQuerySnapshot.forEach((doc) => {
-        placesArray.push({ ...doc.data(), id: doc.id });
-      });
+        // 두 번째 컬렉션 "data"에서 데이터 가져오기
+        const dataQuerySnapshot = await getDocs(collection(db, "data"));
+        dataQuerySnapshot.forEach((doc) => {
+          placesArray.push({ ...doc.data(), id: doc.id });
+        });
 
-      if (placesArray.length === 0) {
-        console.log("No documents found in '여행지' or 'data' collections!");
-        return;
-      }
-
-      // 무작위로 섞지 않고 가져온 순서대로 슬라이드에 표시합니다.
-      const placesContainer = document.getElementById("places");
-
-      // 슬라이드마다 8개의 카드를 표시합니다.
-      const chunkSize = 8;
-      for (let i = 0; i < placesArray.length; i += chunkSize) {
-        const chunk = placesArray.slice(i, i + chunkSize);
-        const itemDiv = document.createElement("div");
-        itemDiv.classList.add("carousel-item");
-        if (i === 0) {
-          itemDiv.classList.add("active");
+        if (placesArray.length === 0) {
+          console.log("No documents found in '여행지' or 'data' collections!");
+          return;
         }
 
-        const containerDiv = document.createElement("div");
-        containerDiv.classList.add("container", "px-4", "px-lg-5", "mt-5");
+        // 무작위로 섞지 않고 가져온 순서대로 슬라이드에 표시합니다.
+        const placesContainer = document.getElementById("places");
+        placesContainer.innerHTML = "";
 
-        const rowDiv = document.createElement("div");
-        rowDiv.classList.add(
-          "row",
-          "gx-4",
-          "gx-lg-5",
-          "row-cols-1",
-          "row-cols-md-2",
-          "row-cols-xl-4",
-          "justify-content-center"
-        );
+        // 슬라이드마다 8개의 카드를 표시합니다.
+        const chunkSize = 8;
+        for (let i = 0; i < placesArray.length; i += chunkSize) {
+          const chunk = placesArray.slice(i, i + chunkSize);
+          const itemDiv = document.createElement("div");
+          itemDiv.classList.add("carousel-item");
+          if (i === 0) {
+            itemDiv.classList.add("active");
+          }
 
-        chunk.forEach((place) => {
-          const placeDiv = document.createElement("div");
-          placeDiv.classList.add("col", "mb-5");
-          placeDiv.innerHTML = `
+          const containerDiv = document.createElement("div");
+          containerDiv.classList.add("container", "px-4", "px-lg-5", "mt-5");
+
+          const rowDiv = document.createElement("div");
+          rowDiv.classList.add(
+            "row",
+            "gx-4",
+            "gx-lg-5",
+            "row-cols-1",
+            "row-cols-md-2",
+            "row-cols-xl-4",
+            "justify-content-center"
+          );
+
+          chunk.forEach((place) => {
+            const placeDiv = document.createElement("div");
+            placeDiv.classList.add("col", "mb-5");
+            placeDiv.innerHTML = `
                 <div class="card h-100">
                   <img class="card-img-top" src="${place.imageUrl}" alt="${place.name}" />
                   <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
@@ -1327,12 +1307,15 @@
                     </div>
                   </div>
                 </div>`;
-          rowDiv.appendChild(placeDiv);
-        });
+            rowDiv.appendChild(placeDiv);
+          });
 
-        containerDiv.appendChild(rowDiv);
-        itemDiv.appendChild(containerDiv);
-        placesContainer.appendChild(itemDiv);
+          containerDiv.appendChild(rowDiv);
+          itemDiv.appendChild(containerDiv);
+          placesContainer.appendChild(itemDiv);
+        }
+      } catch (error) {
+        console.error("여행지 목록을 불러오지 못했습니다.", error);
       }
     }
   </script>

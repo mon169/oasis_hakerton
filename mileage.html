@@ -22,8 +22,6 @@
     <!-- 로그인&회원가입 모달 css -->
     <link href="css/login_sign.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"></script>
-
     <style>
       * {
         font-family: "Gowun Dodum", sans-serif;
@@ -278,35 +276,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Firebase JS -->
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
       import {
-        getAuth,
+        auth,
+        db,
         createUserWithEmailAndPassword,
         signInWithEmailAndPassword,
         signOut,
         onAuthStateChanged,
-      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-      import {
-        getFirestore,
         doc,
         setDoc,
         updateDoc,
         increment,
-      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-        authDomain: "oasis-783c1.firebaseapp.com",
-        projectId: "oasis-783c1",
-        storageBucket: "oasis-783c1.appspot.com",
-        messagingSenderId: "36960403673",
-        appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-        measurementId: "G-80936TQC87",
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+      } from "./js/firebase.js";
+      import { loadKakaoMaps } from "./js/kakao-map-loader.js";
 
       // 로그인 시 로그아웃 메뉴 활성화
       onAuthStateChanged(auth, (user) => {
@@ -317,7 +299,7 @@
         } else {
           document.getElementById("userDropdown").classList.add("d-none");
           document.getElementById("loginButton").classList.remove("d-none");
-          window.location.href = "login.html"; // 로그인 페이지로 리디렉션
+          window.location.href = "mainsite.html"; // 로그인 페이지로 리디렉션
         }
       });
 
@@ -449,246 +431,64 @@
         { name: "상하농원", latitude: 35.44725, longitude: 126.4517 },
         { name: "학원관광농장", latitude: 35.37674, longitude: 126.5419 },
         //전남
-        {
-          name: "전라병영성",
-          latitude: 34.7200812774994,
-          longitude: 126.817192536148
-        },
-        {
-          "name": "팔영산 편백 치유의 숲",
-          "latitude": 34.6185585869675,
-          "longitude": 127.409828697099
-        },
-        {
-          "name": "소록도",
-          "latitude": 34.5112312146781,
-          "longitude": 127.118957586323
-        },
-        {
-          "name": "쑥섬",
-          "latitude": 34.4657701048248,
-          "longitude": 127.453678331784
-        },
-        {
-          "name": "섬진강 도깨비마을",
-          "latitude": 35.2536935114039,
-          "longitude": 127.362611581324
-        },
-        {
-          "name": "가정농촌체험휴양마을",
-          "latitude": 35.2272759096785,
-          "longitude": 127.370411896029
-        },
-        {
-          "name": "농부네 텃밭도서관",
-          "latitude": 35.0146273350323,
-          "longitude": 127.726010561907
-        },
-        {
-          "name": "사라실 라벤더 치유정원",
-          "latitude": 34.9519995294512,
-          "longitude": 127.62312381654
-        },
-        {
-          "name": "섬진강 대나무숲길",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "야생화 테마랜드",
-          "latitude": 35.2825635539201,
-          "longitude": 127.450394613627
-        },
-        {
-          "name": "전라남도 산림자원연구소",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "금성산 생태숲",
-          "latitude": 35.0673455057139,
-          "longitude": 126.69277188547
-        },
-        {
-          "name": "관방제림",
-          "latitude": 35.3237317684995,
-          "longitude": 126.993698253483
-        },
-        {
-          "name": "담양시장",
-          "latitude": 35.3227985582982,
-          "longitude": 126.980490105062
-        },
-        {
-          "name": "추월산",
-          "latitude": 35.4023440740539,
-          "longitude": 126.999600612393
-        },
-        {
-          "name": "입암산 생태공원",
-          "latitude": 34.7936386769176,
-          "longitude": 126.419501090581
-        },
-        {
-          "name": "외달도",
-          "latitude": 34.7817287658908,
-          "longitude": 126.296369961337
-        },
-        {
-          "name": "양림동 펭귄마을",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "광주호 호수생태원",
-          "latitude": 35.1842189479917,
-          "longitude": 127.001121393505
-        },
-        {
-          "name": "황토갯벌랜드",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "무안 감풀마을 [농촌전통테마]",
-          "latitude": 35.0613021302547,
-          "longitude": 126.40604290316
-        },
-        {
-          "name": "율포해수욕장",
-          "latitude": 34.6700292567993,
-          "longitude": 127.08902412779
-        },
-        {
-          "name": "대한다원 보성녹차밭",
-          "latitude": 34.7186439977069,
-          "longitude": 127.080224519812
-        },
-        {
-          "name": "순천만국가정원",
-          "latitude": 34.928871680184,
-          "longitude": 127.500801495864
-        },
-        {
-          "name": "꽃마차마을",
-          "latitude": 34.9391162079133,
-          "longitude": 127.354430819982
-        },
-        {
-          "name": "세계거석 테마파크",
-          "latitude": 34.9887126145985,
-          "longitude": 126.915978533123
-        },
-        {
-          "name": "무등산 양떼목장",
-          "latitude": 35.0953031816714,
-          "longitude": 127.01187720858
-        },
-        {
-          "name": "독립운동 역사체험마을",
-          "latitude": 34.5858000170289,
-          "longitude": 126.644200287827
-        },
-        {
-          "name": "4est수목원",
-          "latitude": 34.4532436533582,
-          "longitude": 126.595524949541
-        },
-        {
-          "name": "농촌체험마을 모평",
-          "latitude": 35.1757361991292,
-          "longitude": 126.554257908643
-        },
-        {
-          "name": "함평 향교리 느티나무·팽나무·개서어나무 숲",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "국립진도자연휴양림",
-          "latitude": 34.3575366989737,
-          "longitude": 126.186438767693
-        },
-        {
-          "name": "신비의 바닷길",
-          "latitude": 34.4272243458804,
-          "longitude": 126.351358339902
-        },
-        {
-          "name": "물문화관",
-          "latitude": null,
-          "longitude": null
-        },
-        {
-          "name": "정남진 편백숲 우드랜드",
-          "latitude": 34.6696032763135,
-          "longitude": 126.933669158541
-        },
-        {
-          "name": "홍길동테마파크",
-          "latitude": 35.3186207091425,
-          "longitude": 126.726557828707
-        },
-        {
-          "name": "축령산 편백숲(편백치유의숲)",
-          "latitude": 35.3482990088632,
-          "longitude": 126.731023854647
-        },
-        {
-          "name": "보길도 윤선도 원림",
-          "latitude": 34.1651559131169,
-          "longitude": 126.558046627228
-        },
-        {
-          "name": "주도(천연기념물28호)",
-          "latitude": 34.3165204882084,
-          "longitude": 126.761150423611
-        },
-        {
-          "name": "전라남도 농업박물관",
-          "latitude": 34.777331067574,
-          "longitude": 126.459043836676
-        },
-        {
-          "name": "월출산 국립공원",
-          "latitude": 34.7538852757145,
-          "longitude": 126.659102995752
-        },
-        {
-          "name": "칠산타워",
-          "latitude": 35.1686337149423,
-          "longitude": 126.360306734241
-        },
-        {
-          "name": "숲쟁이공원",
-          "latitude": 35.3644850486412,
-          "longitude": 126.43460738044
-        },
-        {
-          "name": "여수 금오도 비렁길 5코스",
-          "latitude": 34.5996909352951,
-          "longitude": 127.744305750673
-        },
-        {
-          "name": "고소천사벽화마을",
-          "latitude": 34.738913948997,
-          "longitude": 127.738153514117
-        },
-        {
-          "name": "내촌마을 돌담",
-          "latitude": 34.746229918763,
-          "longitude": 125.902400292935
-        },
-        {
-          "name": "수국공원",
-          "latitude": 34.6877876710888,
-          "longitude": 125.929008368377
-        },
-        { "name": "뱀사골계곡", "latitude": 35.3708208483603, "longitude": 127.578717217735}
+        { name: "전라병영성", latitude: 34.7200812774994, longitude: 126.817192536148 },
+        { name: "팔영산 편백 치유의 숲", latitude: 34.6185585869675, longitude: 127.409828697099 },
+        { name: "소록도", latitude: 34.5112312146781, longitude: 127.118957586323 },
+        { name: "쑥섬", latitude: 34.4657701048248, longitude: 127.453678331784 },
+        { name: "섬진강 도깨비마을", latitude: 35.2536935114039, longitude: 127.362611581324 },
+        { name: "가정농촌체험휴양마을", latitude: 35.2272759096785, longitude: 127.370411896029 },
+        { name: "농부네 텃밭도서관", latitude: 35.0146273350323, longitude: 127.726010561907 },
+        { name: "사라실 라벤더 치유정원", latitude: 34.9519995294512, longitude: 127.62312381654 },
+        { name: "섬진강 대나무숲길", latitude: 35.186621087527, longitude: 127.464982058748 },
+        { name: "야생화 테마랜드", latitude: 35.2825635539201, longitude: 127.450394613627 },
+        { name: "전라남도 산림자원연구소", latitude: 35.0057671285131, longitude: 126.825789940727 },
+        { name: "금성산 생태숲", latitude: 35.0673455057139, longitude: 126.69277188547 },
+        { name: "관방제림", latitude: 35.3237317684995, longitude: 126.993698253483 },
+        { name: "담양시장", latitude: 35.3227985582982, longitude: 126.980490105062 },
+        { name: "추월산", latitude: 35.4023440740539, longitude: 126.999600612393 },
+        { name: "입암산 생태공원", latitude: 34.7936386769176, longitude: 126.419501090581 },
+        { name: "외달도", latitude: 34.7817287658908, longitude: 126.296369961337 },
+        { name: "양림동 펭귄마을", latitude: 35.1400773084297, longitude: 126.917036583737 },
+        { name: "광주호 호수생태원", latitude: 35.1842189479917, longitude: 127.001121393505 },
+        { name: "황토갯벌랜드", latitude: 35.10220118470509, longitude: 126.33364241904121 },
+        { name: "무안 감풀마을 [농촌전통테마]", latitude: 35.0613021302547, longitude: 126.40604290316 },
+        { name: "율포해수욕장", latitude: 34.6700292567993, longitude: 127.08902412779 },
+        { name: "대한다원 보성녹차밭", latitude: 34.7186439977069, longitude: 127.080224519812 },
+        { name: "순천만국가정원", latitude: 34.928871680184, longitude: 127.500801495864 },
+        { name: "꽃마차마을", latitude: 34.9391162079133, longitude: 127.354430819982 },
+        { name: "세계거석 테마파크", latitude: 34.9887126145985, longitude: 126.915978533123 },
+        { name: "무등산 양떼목장", latitude: 35.0953031816714, longitude: 127.01187720858 },
+        { name: "독립운동 역사체험마을", latitude: 34.5858000170289, longitude: 126.644200287827 },
+        { name: "4est수목원", latitude: 34.4532436533582, longitude: 126.595524949541 },
+        { name: "농촌체험마을 모평", latitude: 35.1757361991292, longitude: 126.554257908643 },
+        { name: "함평 향교리 느티나무·팽나무·개서어나무 숲", latitude: 35.06561710362662, longitude: 126.53360489760654 },
+        { name: "국립진도자연휴양림", latitude: 34.3575366989737, longitude: 126.186438767693 },
+        { name: "신비의 바닷길", latitude: 34.4272243458804, longitude: 126.351358339902 },
+        { name: "물문화관", latitude: 35.606395069594, longitude: 127.110140963808 },
+        { name: "정남진 편백숲 우드랜드", latitude: 34.6696032763135, longitude: 126.933669158541 },
+        { name: "홍길동테마파크", latitude: 35.3186207091425, longitude: 126.726557828707 },
+        { name: "축령산 편백숲(편백치유의숲)", latitude: 35.3482990088632, longitude: 126.731023854647 },
+        { name: "보길도 윤선도 원림", latitude: 34.1651559131169, longitude: 126.558046627228 },
+        { name: "주도(천연기념물28호)", latitude: 34.3165204882084, longitude: 126.761150423611 },
+        { name: "전라남도 농업박물관", latitude: 34.777331067574, longitude: 126.459043836676 },
+        { name: "월출산 국립공원", latitude: 34.7538852757145, longitude: 126.659102995752 },
+        { name: "칠산타워", latitude: 35.1686337149423, longitude: 126.360306734241 },
+        { name: "숲쟁이공원", latitude: 35.3644850486412, longitude: 126.43460738044 },
+        { name: "여수 금오도 비렁길 5코스", latitude: 34.5996909352951, longitude: 127.744305750673 },
+        { name: "고소천사벽화마을", latitude: 34.738913948997, longitude: 127.738153514117 },
+        { name: "내촌마을 돌담", latitude: 34.746229918763, longitude: 125.902400292935 },
+        { name: "수국공원", latitude: 34.6877876710888, longitude: 125.929008368377 },
+        { name: "뱀사골계곡", latitude: 35.3708208483603, longitude: 127.578717217735 }
       ];
       const allowedRadius = 100; // 허용 반경 (단위: 미터)
 
       document.addEventListener("DOMContentLoaded", () => {
+        loadKakaoMaps()
+          .then(() => initMileageMap())
+          .catch((error) => console.error("카카오맵 API가 로드되지 않았습니다.", error));
+      });
+
+      function initMileageMap() {
         const mapContainer = document.getElementById("map");
         const mapOption = {
           center: new kakao.maps.LatLng(
@@ -828,52 +628,37 @@
             window.location.href = "mainsite.html"; // 로그인 페이지로 리디렉션
           }
         });
-      });
+      }
     </script>
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"
-    ></script>
     <script src="js/scripts.js"></script>
     <script src="js/placeholders.min.js"></script>
     <!-- polyfill for the HTML5 placeholder attribute -->
     <script src="js/main.js"></script>
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
       import {
-          getFirestore,
+          db,
           doc,
           getDoc,
           getDocs,
           collection,
-      } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-  
-      // Firebase 설정 정보
-      const firebaseConfig = {
-          apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-          authDomain: "oasis-783c1.firebaseapp.com",
-          projectId: "oasis-783c1",
-          storageBucket: "oasis-783c1.appspot.com",
-          messagingSenderId: "36960403673",
-          appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-          measurementId: "G-80936TQC87",
-      };
-  
-      // Firebase 초기화
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
+      } from "./js/firebase.js";
+      import { loadKakaoMaps } from "./js/kakao-map-loader.js";
   
       document.addEventListener("DOMContentLoaded", function () {
           fetchPlaces();
+          loadKakaoMaps()
+              .then(() => console.log("카카오맵 API 로드 성공"))
+              .catch((error) => console.error("카카오맵 API가 로드되지 않았습니다.", error));
   
           // 모든 모달 트리거에 대한 이벤트 리스너 등록
-          document.addEventListener("click", function (event) {
+          document.addEventListener("click", async function (event) {
               if (event.target.matches('[data-bs-toggle="modal"]')) {
                   const locationId = event.target.getAttribute("data-id"); // data-id에서 Firestore 문서 ID 가져오기
   
                   if (locationId) {
                       const modalElement = document.querySelector("#placeModal"); // 타겟 모달 요소 선택
                       if (modalElement) {
+                          await loadKakaoMaps();
                           loadModalData(modalElement, locationId); // Firestore에서 데이터 로드 및 모달 업데이트
                       } else {
                           console.error(`Modal element not found.`);
@@ -1094,15 +879,9 @@ $('#placeModal').on('shown.bs.modal', function () {
     }
 }
 
-// 카카오맵 API 로드 체크
-if (typeof kakao === "undefined" || !kakao.maps) {
-    console.error("카카오맵 API가 로드되지 않았습니다.");
-} else {
-    console.log("카카오맵 API 로드 성공");
-}
-  
       // Firestore에서 데이터를 가져와 카드들을 생성하는 함수
       async function fetchPlaces() {
+        try {
           // 첫 번째 컬렉션 "여행지"에서 데이터 가져오기
           const travelQuerySnapshot = await getDocs(collection(db, "여행지"));
           let placesArray = [];
@@ -1123,6 +902,7 @@ if (typeof kakao === "undefined" || !kakao.maps) {
   
           // 무작위로 섞지 않고 가져온 순서대로 슬라이드에 표시합니다.
           const placesContainer = document.getElementById("places");
+          placesContainer.innerHTML = "";
   
           // 슬라이드마다 8개의 카드를 표시합니다.
           const chunkSize = 8;
@@ -1176,6 +956,9 @@ if (typeof kakao === "undefined" || !kakao.maps) {
               itemDiv.appendChild(containerDiv);
               placesContainer.appendChild(itemDiv);
           }
+        } catch (error) {
+          console.error("여행지 목록을 불러오지 못했습니다.", error);
+        }
       }
       
   </script>

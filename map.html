@@ -4,27 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>카카오맵 기반 포인트 시스템</title>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10b6403481b2428aa278eea4eca2d998&libraries=services"></script>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-        import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-            authDomain: "oasis-783c1.firebaseapp.com",
-            projectId: "oasis-783c1",
-            storageBucket: "oasis-783c1.appspot.com",
-            messagingSenderId: "36960403673",
-            appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-            measurementId: "G-80936TQC87"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        import { auth, db, onAuthStateChanged, doc, updateDoc, increment } from "./js/firebase.js";
+        import { loadKakaoMaps } from "./js/kakao-map-loader.js";
 
         // Kakao Map and target locations
         const targetLocations = [
@@ -35,7 +17,9 @@
         ];
         const allowedRadius = 100; // 허용 반경 (단위: 미터)
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadKakaoMaps();
+
             const mapContainer = document.getElementById('map');
             const mapOption = {
                 center: new kakao.maps.LatLng(targetLocations[0].latitude, targetLocations[0].longitude),

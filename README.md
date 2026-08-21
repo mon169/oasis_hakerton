@@ -12,22 +12,23 @@
 
 ## 실행 화면
 
-### 메인 화면
+### 1) 메인 화면
 
 ![메인 화면](assets/images/UI/mainsite.jpg)
 
-### 여행지 탐색
+### 2) 여행지 탐색
 
 ![여행지 탐색](assets/images/UI/tripmain.png)
 
+### 3) 여행지 조회
 
 ![여행지 리스트 및 상세 정보](assets/images/UI/triplist.png)
 
-### 방문 인증 및 마일리지 적립
+### 4) 방문 인증 및 마일리지 적립
 
-![마일리지 적립](assets/images/UI/mileage.jpg)
+![마일리지 적립](assets/images/UI/mileage.png)
 
-### 로컬 스토어
+### 5) 로컬 스토어
 
 ![로컬푸드](assets/images/UI/localstore_localfood.png)
 ![로컬 스토어](assets/images/UI/localstore_etc.png)

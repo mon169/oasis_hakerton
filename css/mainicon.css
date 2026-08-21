@@ -1,7 +1,7 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
 .🍌, .🔆, .🌳 {
-    background-image: url('mainsiteicon/image.png');
+    background-image: url('../assets/icons/main/image.png');
     background-repeat: no-repeat;
     background-size: contain center;
     font-family: "Gowun Dodum", sans-serif;
@@ -99,7 +99,7 @@ transform: none;
 }
 
 .🍦:before{
-background-image: url('mainsiteicon/자동차.png');
+background-image: url('../assets/icons/main/자동차.png');
 width: 263px;
 height: 454px;
 left: 50%;
@@ -140,7 +140,7 @@ transform: none;
 }
 
 .🍌:before{
-background-image: url('mainsiteicon/무지개3.png');
+background-image: url('../assets/icons/main/무지개3.png');
 width: 250px;
 height: 363px;
 left: 15%;
@@ -189,7 +189,7 @@ transform: scale(1.01) translate3d(-1%, 1%, 0);
 }
 
 .🍇:before{
-background-image: url('mainsiteicon/나뭇잎2.png');
+background-image: url('../assets/icons/main/나뭇잎2.png');
 width: 111px;
 height: 121px;
 right: 25%;
@@ -283,7 +283,7 @@ opacity: 0;
     }
     
     .🚶🏼‍♂️:before{
-    background-image: url('mainsiteicon/여행객2.png');
+    background-image: url('../assets/icons/main/여행객2.png');
     width: 193px;
     height: 394px;
     left: 60%;
@@ -325,7 +325,7 @@ opacity: 0;
     }
     
     .🔆:before{
-    background-image: url('mainsiteicon/해2.png');
+    background-image: url('../assets/icons/main/해2.png');
     width: 250px;
     height: 363px;
     left: 14%;
@@ -374,7 +374,7 @@ opacity: 0;
     }
     
     .🌸:before{
-    background-image: url('mainsiteicon/데이지.png');
+    background-image: url('../assets/icons/main/데이지.png');
     width: 131px;
     height: 115px;
     right: 15%;
@@ -521,7 +521,7 @@ opacity: 0;
     }
     
     .🏠:before{
-    background-image: url('mainsiteicon/상점2.png');
+    background-image: url('../assets/icons/main/상점2.png');
     width: 180px;
     height: 464px;
     left: 50%;
@@ -563,7 +563,7 @@ opacity: 0;
     }
     
     .🌳:before{
-    background-image: url('mainsiteicon/나무2.png');
+    background-image: url('../assets/icons/main/나무2.png');
     width: 250px;
     height: 363px;
     left: 15%;
@@ -612,7 +612,7 @@ opacity: 0;
     }
     
     .🍄:before{
-    background-image: url('mainsiteicon/쇼핑카트3.png');
+    background-image: url('../assets/icons/main/쇼핑카트3.png');
     width: 121px;
     height: 131px;
     right: 27%;

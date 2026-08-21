@@ -10,6 +10,12 @@ firebase-debug.*.log*
 # Firebase cache
 .firebase/
 
+# IDE settings
+.idea/
+
+# Local client config
+js/config.js
+
 # Firebase config
 
 # Uncomment this if you'd like others to create their own Firebase project.
@@ -67,3 +73,6 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# metadata file of macOS
+.DS_Store

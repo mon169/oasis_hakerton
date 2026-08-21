@@ -1,0 +1,63 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function hasValidUserFields() {
+      return request.resource.data.keys().hasOnly(['username', 'email', 'points'])
+        && request.resource.data.username is string
+        && request.resource.data.email is string
+        && request.resource.data.points is number
+        && request.resource.data.points >= 0;
+    }
+
+    function changedOnly(fields) {
+      return request.resource.data.diff(resource.data).changedKeys().hasOnly(fields);
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+
+      allow create: if isOwner(userId)
+        && hasValidUserFields()
+        && request.resource.data.points == 50;
+
+      allow update: if isOwner(userId)
+        && hasValidUserFields()
+        && (
+          changedOnly(['username', 'email'])
+          || (
+            changedOnly(['points'])
+            && request.resource.data.points == resource.data.points + 100
+          )
+          || (
+            changedOnly(['points'])
+            && request.resource.data.points < resource.data.points
+          )
+        );
+
+      allow delete: if false;
+    }
+
+    match /data/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /여행지/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

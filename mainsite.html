@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Shop Item - Start Bootstrap Template</title>
+    <title>푸른발자국</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/png" href="assets/icons/common/푸른발자국.png" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -38,6 +38,92 @@
         .logged-in-button img {
             height: 3rem;
         }
+
+        .eco-practice-list p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+
+        .about-modal-section-title {
+            color: #2f3d35;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .about-modal-section-title:first-of-type {
+            margin-top: 2rem;
+        }
+
+        .about-modal-copy {
+            color: #5f6963;
+        }
+
+        .about-modal-visual {
+            margin-bottom: 1.5rem !important;
+        }
+
+        .eco-practice-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: stretch;
+            gap: 1rem;
+        }
+
+        .eco-practice-item {
+            height: 100%;
+            min-height: 165px;
+            padding: 1rem;
+            border: 1px solid #d9e4dc;
+            border-radius: 8px;
+            background: #f7fbf8;
+        }
+
+        .eco-practice-item:last-child {
+            grid-column: 1 / -1;
+            width: calc(50% - 0.5rem);
+            justify-self: center;
+        }
+
+        .eco-practice-item h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #24382d;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .eco-practice-item i {
+            width: 1.8rem;
+            height: 1.8rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #2f7d46;
+            font-size: 1.35rem;
+            flex: 0 0 auto;
+        }
+
+        .eco-practice-item p {
+            color: #5f6963;
+            margin-bottom: 0;
+        }
+
+        .about-modal-divider {
+            border: 0;
+            border-top: 1px solid #d9e4dc;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .eco-practice-list {
+                grid-template-columns: 1fr;
+            }
+
+            .eco-practice-item:last-child {
+                width: 100%;
+            }
+        }
     </style>
 
 
@@ -46,17 +132,16 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="mainsite.html"><img
-        src="icon/푸른발자국.png"
+        src="assets/icons/common/푸른발자국.png"
         style="width: 2.5rem"
       />&nbsp;푸른발자국</a
     ></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">메인</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">로컬 스토어</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="local_food.html">로컬푸드</a></li>
                         <li><hr class="dropdown-divider" /></li>
@@ -65,11 +150,12 @@
                         <li><a class="dropdown-item" href="gift.html">상품권 교환</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="personal_trip.html">나만의 여행지</a></li>
             </ul>
 
             <li class="nav-item dropdown d-none" id="userDropdown">
                 <a class="nav-link dropdown-toggle logged-in-button" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="icon/로그인이미지.png" alt="User">
+                    <img src="assets/icons/common/로그인이미지.png" alt="User">
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="mypage.html">마이페이지</a></li>
@@ -109,7 +195,7 @@
             <div class="modal-body text-center pb-5">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-8">
+                        <div class="col-lg-10">
                             <!-- Portfolio Modal - Title-->
                             <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">탄소 배출량 줄이고 친환경 여행하자!</h2>
                             <!-- Icon Divider-->
@@ -118,17 +204,39 @@
                                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                 <div class="divider-custom-line"></div>
                             </div>
-                            <h3><br>Q : 친환경 여행이 왜 필요할까?<br></h3>
-                            <h4>전 세계 온실가스 배출량은 약 약 6억 7,664만tCO2eq.<br> 이 중 관광업이 1/10을 차지하는데요.<br></h4>
-                            <h4>다양한 영역에서 탄소발자국이 짙게 드러나고 있습니다.<br><br></h4>
+                            <h3 class="about-modal-section-title">친환경 여행이 왜 필요할까?</h3>
+                            <h4 class="about-modal-copy">전 세계 온실가스 배출량 약 6억 7,664만tCO2eq 중</h4>
+                            <h4 class="about-modal-copy">관광 산업이 차지하는 비율은 약 10%입니다.</h4>
+                            <h4 class="about-modal-copy">여행 과정에서는 이동수단뿐만 아니라 숙박, 식음료, 쇼핑 등</h4>
+                            <h4 class="about-modal-copy">다양한 활동에서 탄소가 배출됩니다.</h4>
+                            <h4 class="about-modal-copy">작은 실천을 통해 여행의 즐거움은 유지하면서 탄소발자국은 줄일 수 있습니다.</h4>
                             <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="icon/팝업이미지.png">
+                            <img class="img-fluid rounded about-modal-visual" src="assets/icons/common/팝업이미지.png">
                             <!-- Portfolio Modal - Text-->
-                            <h3>Q : 친환경 여행 실천 방법은?</h3>
-                            <button id="loginbtn" class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
-                            </button>
+                            <hr class="about-modal-divider">
+                            <h3 class="about-modal-section-title">친환경 여행 실천 방법은?</h3>
+                            <div class="text-start eco-practice-list">
+                                <div class="eco-practice-item">
+                                    <h4><i class="bi bi-truck"></i>친환경 이동</h4>
+                                    <p>가까운 거리는 걸어가거나 자전거를 타고, 멀리 갈 때는 대중교통을 이용해 보세요.</p>
+                                </div>
+                                <div class="eco-practice-item">
+                                    <h4><i class="bi bi-cup"></i>일회용품 줄이기</h4>
+                                    <p>카페나 식당에서는 텀블러, 장바구니 같은 다회용품을 챙기면 일회용품을 줄일 수 있어요.</p>
+                                </div>
+                                <div class="eco-practice-item">
+                                    <h4><i class="bi bi-shop"></i>지역 소비</h4>
+                                    <p>지역에서 생산된 음식과 상품을 이용해 운송 과정에서 발생하는 탄소 배출을 줄이고, 지역 경제에 힘을 보태요.</p>
+                                </div>
+                                <div class="eco-practice-item">
+                                    <h4><i class="bi bi-lightbulb"></i>에너지 절약</h4>
+                                    <p>숙소를 비울 때 조명과 냉난방을 끄고, 수건과 침구의 불필요한 교체를 줄여보아요.</p>
+                                </div>
+                                <div class="eco-practice-item">
+                                    <h4><i class="bi bi-recycle"></i>쓰레기 분리배출</h4>
+                                    <p>여행 중 발생하는 쓰레기를 줄이고, 재활용 가능한 자원은 올바르게 분리배출합니다.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,7 +266,7 @@
             </div>
             
             <div class="col mb-5">
-                <div class="👫🏼" OnClick="location.href ='communitylist.html'" style="cursor:pointer;">
+                <div class="👫🏼" OnClick="location.href ='community/communitylist.html'" style="cursor:pointer;">
                     <div class="🔆"></div>
                     <div class="🚶🏼‍♂️"></div>
                     <div class="🌸"></div>
@@ -243,23 +351,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Firebase JS -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-    
-        const firebaseConfig = {
-            apiKey: "AIzaSyAkzp6EvypKOxPLG6Y95b58MF80iwnKPfc",
-            authDomain: "oasis-783c1.firebaseapp.com",
-            projectId: "oasis-783c1",
-            storageBucket: "oasis-783c1.appspot.com",
-            messagingSenderId: "36960403673",
-            appId: "1:36960403673:web:db3367a4d3dc1f8a7dfec8",
-            measurementId: "G-80936TQC87"
-        };
-    
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        import {
+            auth,
+            db,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged,
+            doc,
+            setDoc
+        } from "./js/firebase.js";
     
         // 페이지 로드 시 사용자의 로그인 상태를 확인하여 UI를 업데이트
         onAuthStateChanged(auth, (user) => {
@@ -330,11 +431,27 @@
                     alert('로그인에 실패했습니다: ' + error.message);
                 });
         });
+
+        // 로그아웃 기능
+        document.getElementById('logout').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            signOut(auth)
+                .then(() => {
+                    localStorage.removeItem('user');
+                    alert('로그아웃되었습니다.');
+                    window.location.href = 'mainsite.html';
+                })
+                .catch((error) => {
+                    console.error('Error during sign-out:', error.code, error.message);
+                    alert('로그아웃에 실패했습니다: ' + error.message);
+                });
+        });
+
         </script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script src="js/placeholders.min.js"></script> <!-- polyfill for the HTML5 placeholder attribute -->
-    <script src="js/main.js"></script> <!-- Resource JavaScript -->
-    <script src="js/login_sign.js"></script> <!--로그인 및 회원가입 모달 js-->
+    <script src="js/login_modal.js"></script> <!-- 로그인 모달 UI -->
 </body>
 </html>
